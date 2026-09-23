@@ -31,9 +31,10 @@ type TabKey = 'qa' | 'documents' | 'offers' | 'terms' | 'audit';
 
 const STAGES = ['Deal room opened', 'Offers', 'Headline terms', 'Completion (later release)'];
 
-function stageIndex(stage: string, agreed: boolean): number {
+/** Offers is current while negotiating; Headline terms once an offer is accepted. */
+function stageIndex(hasTerms: boolean, agreed: boolean): number {
     if (agreed) return 3;
-    if (stage === 'offer' || stage === 'headline_terms') return 2;
+    if (hasTerms) return 2;
     return 1;
 }
 
@@ -108,7 +109,7 @@ export default function DealRoomShow(props: DealRoomProps) {
                     </div>
                 )}
 
-                <Stepper steps={STAGES} current={stageIndex(deal.stage, terms?.agreed ?? false)} />
+                <Stepper steps={STAGES} current={stageIndex(terms !== null, terms?.agreed ?? false)} />
 
                 <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
                     <div className="bg-card shadow-brand min-w-0 space-y-5 rounded-2xl border p-5">

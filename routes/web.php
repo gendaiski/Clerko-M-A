@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Buyer;
 use App\Http\Controllers\DealRoomController;
+use App\Http\Controllers\ExtractionWebhookController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MarketplaceController;
 use App\Http\Controllers\NotificationController;
@@ -19,8 +20,9 @@ Route::get('pricing', PricingController::class)->name('pricing');
 Route::get('marketplace', [MarketplaceController::class, 'index'])->name('marketplace.index');
 Route::get('marketplace/{listing:reference}', [MarketplaceController::class, 'show'])->name('marketplace.show');
 
-// Tap server-to-server notification (CSRF-exempt, see bootstrap/app.php).
+// Server-to-server notifications (CSRF-exempt, see bootstrap/app.php).
 Route::post('payments/webhook', [PaymentController::class, 'webhook'])->name('payments.webhook');
+Route::post('webhooks/extraction/{token}', ExtractionWebhookController::class)->middleware('throttle:60,1')->name('webhooks.extraction');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', WorkspaceController::class)->name('dashboard');
@@ -107,11 +109,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', Admin\DashboardController::class)->name('dashboard');
         Route::get('listings', [Admin\ListingController::class, 'index'])->name('listings.index');
         Route::get('listings/{listing}', [Admin\ListingController::class, 'show'])->name('listings.show');
+        Route::get('listings/{listing}/documents/{document}', [Admin\ListingController::class, 'document'])->name('listings.documents.show');
         Route::post('listings/{listing}/review', [Admin\ListingController::class, 'review'])->name('listings.review');
         Route::get('companies', [Admin\CompanyController::class, 'index'])->name('companies.index');
         Route::get('companies/{company}', [Admin\CompanyController::class, 'show'])->name('companies.show');
         Route::put('companies/{company}', [Admin\CompanyController::class, 'update'])->name('companies.update');
         Route::post('companies/{company}/verify', [Admin\CompanyController::class, 'verify'])->name('companies.verify');
+        Route::post('companies/{company}/extraction/retry', [Admin\CompanyController::class, 'retryExtraction'])->name('companies.extraction.retry');
+        Route::post('companies/{company}/extraction/manual', [Admin\CompanyController::class, 'manualEntry'])->name('companies.extraction.manual');
         Route::get('companies/{company}/authority-document', [Admin\CompanyController::class, 'authorityDocument'])->name('companies.authority-document');
         Route::get('kyc', [Admin\KycController::class, 'index'])->name('kyc.index');
         Route::get('kyc/{submission}', [Admin\KycController::class, 'show'])->name('kyc.show');

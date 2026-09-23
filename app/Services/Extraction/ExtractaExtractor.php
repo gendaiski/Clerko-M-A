@@ -2,31 +2,32 @@
 
 namespace App\Services\Extraction;
 
-use App\Models\Company;
 use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 use RuntimeException;
 
 /**
- * Extracta.ai: upload the PDF to the CR-profile extraction, then poll the batch
- * for the result. The extraction (template) is configured in Extracta itself.
+ * Extracta.ai: upload the PDF to an extraction, then poll the batch for the
+ * result. Endpoints are configuration (clerko.extraction.extracta).
  */
-class ExtractaExtractor implements ProfileExtractor
+class ExtractaExtractor implements ProfileExtractor, ReceivesWebhooks
 {
-    public function __construct(
-        private readonly string $apiKey,
-        private readonly string $baseUrl,
-        private readonly string $extractionId,
-    ) {}
+    /**
+     * @param  array<string, mixed>  $config
+     */
+    public function __construct(private readonly array $config) {}
 
-    public function submit(Company $company): string
+    public function name(): string
     {
-        $disk = Storage::disk(config('clerko.documents.disk'));
+        return 'extracta';
+    }
 
+    public function submit(string $pdf, string $filename): string
+    {
         $response = $this->client()
-            ->attach('files', $disk->get($company->cr_pdf_path), 'cr-profile-'.$company->id.'.pdf')
-            ->post('/uploadFiles', ['extractionId' => $this->extractionId])
+            ->attach('files', $pdf, $filename)
+            ->post($this->config['upload_path'], ['extractionId' => $this->config['extraction_id']])
             ->throw()
             ->json();
 
@@ -35,20 +36,38 @@ class ExtractaExtractor implements ProfileExtractor
             throw new RuntimeException('Extracta did not return a batch id.');
         }
 
-        return $batchId;
+        return (string) $batchId;
     }
 
-    public function fetch(Company $company): ExtractionResult
+    public function fetch(string $reference): ExtractionResult
     {
         $response = $this->client()
             ->asJson()
-            ->post('/getBatchResults', [
-                'extractionId' => $this->extractionId,
-                'batchId' => $company->extraction_reference,
+            ->post($this->config['results_path'], [
+                'extractionId' => $this->config['extraction_id'],
+                'batchId' => $reference,
             ])
             ->throw()
             ->json();
 
+        return $this->interpret(is_array($response) ? $response : []);
+    }
+
+    public function parseWebhook(Request $request): ?array
+    {
+        $data = $request->all();
+        $reference = $data['batchId'] ?? Payload::find($data, 'batchId');
+
+        return is_scalar($reference) && $reference !== ''
+            ? ['reference' => (string) $reference, 'result' => $this->interpret($data)]
+            : null;
+    }
+
+    /**
+     * @param  array<mixed>  $response
+     */
+    private function interpret(array $response): ExtractionResult
+    {
         $file = $response['files'][0] ?? null;
         $status = strtolower((string) ($file['status'] ?? $response['status'] ?? ''));
 
@@ -56,19 +75,21 @@ class ExtractaExtractor implements ProfileExtractor
             $file !== null && in_array($status, ['processed', 'completed', 'done'], true) => new ExtractionResult(
                 ExtractionResult::COMPLETED,
                 is_array($file['result'] ?? null) ? $file['result'] : [],
+                raw: $response,
             ),
             in_array($status, ['failed', 'error'], true) => new ExtractionResult(
                 ExtractionResult::FAILED,
                 error: (string) ($file['error'] ?? $response['message'] ?? 'Extraction failed.'),
+                raw: $response,
             ),
-            default => new ExtractionResult(ExtractionResult::PROCESSING),
+            default => new ExtractionResult(ExtractionResult::PROCESSING, raw: $response),
         };
     }
 
     private function client(): PendingRequest
     {
-        return Http::baseUrl($this->baseUrl)
-            ->withToken($this->apiKey)
+        return Http::baseUrl($this->config['base_url'])
+            ->withToken((string) $this->config['api_key'])
             ->acceptJson()
             ->timeout(60);
     }

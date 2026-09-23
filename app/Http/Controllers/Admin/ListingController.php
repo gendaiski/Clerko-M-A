@@ -6,14 +6,17 @@ use App\Enums\ListingStatus;
 use App\Http\Controllers\Controller;
 use App\Jobs\NotifyMatchingBuyers;
 use App\Models\Listing;
+use App\Models\ListingDocument;
 use App\Models\ListingReview;
 use App\Notifications\ClerkoNotification;
 use App\Services\Audit\AuditLog;
+use App\Services\Documents\DocumentServer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class ListingController extends Controller
 {
@@ -127,6 +130,14 @@ class ListingController extends Controller
         }
 
         return redirect()->route('admin.listings.index')->with('success', 'Review recorded.');
+    }
+
+    /** Admins read listing documents during moderation; the view is logged. */
+    public function document(Request $request, Listing $listing, ListingDocument $document, DocumentServer $server): HttpResponse
+    {
+        abort_unless($document->listing_id === $listing->id, 404);
+
+        return $server->serve($document, $request->user(), null, $request, false);
     }
 
     /**

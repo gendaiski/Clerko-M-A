@@ -6,8 +6,8 @@ use App\Models\DocumentAccessLog;
 use App\Models\Engagement;
 use App\Models\ListingDocument;
 use App\Models\User;
+use App\Support\PrivateFiles;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -20,7 +20,7 @@ class DocumentServer
 
     public function serve(ListingDocument $document, User $viewer, ?Engagement $engagement, Request $request, bool $download): Response
     {
-        $bytes = Storage::disk(config('clerko.documents.disk'))->get($document->path);
+        $bytes = PrivateFiles::get($document->path);
         $watermarked = false;
 
         if ($document->isPdf()) {

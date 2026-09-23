@@ -7,9 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\KycSubmission;
 use App\Notifications\ClerkoNotification;
 use App\Services\Audit\AuditLog;
+use App\Support\PrivateFiles;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -64,7 +64,7 @@ class KycController extends Controller
             default => abort(404),
         };
 
-        return Storage::disk(config('clerko.documents.disk'))->response($path, null, ['Cache-Control' => 'private, no-store']);
+        return PrivateFiles::inline($path, null, ['Cache-Control' => 'private, no-store']);
     }
 
     public function decide(Request $request, KycSubmission $submission, AuditLog $audit): RedirectResponse

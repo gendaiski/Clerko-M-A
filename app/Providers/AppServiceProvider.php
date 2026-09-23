@@ -7,7 +7,9 @@ use App\Models\User;
 use App\Policies\DealRoomPolicy;
 use App\Services\Extraction\ExtractaExtractor;
 use App\Services\Extraction\FakeExtractor;
+use App\Services\Extraction\ManualExtractor;
 use App\Services\Extraction\ProfileExtractor;
+use App\Services\Extraction\XtractaExtractor;
 use App\Services\Payments\FakeGateway;
 use App\Services\Payments\PaymentGateway;
 use App\Services\Payments\TapGateway;
@@ -33,13 +35,12 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(ProfileExtractor::class, function () {
-            return match (config('clerko.extraction.driver')) {
-                'extracta' => new ExtractaExtractor(
-                    (string) config('clerko.extraction.extracta.api_key'),
-                    (string) config('clerko.extraction.extracta.base_url'),
-                    (string) config('clerko.extraction.extracta.extraction_id'),
-                ),
+            return match ($driver = config('clerko.extraction.driver')) {
+                'xtracta' => new XtractaExtractor(config('clerko.extraction.xtracta')),
+                'extracta' => new ExtractaExtractor(config('clerko.extraction.extracta')),
+                'manual' => new ManualExtractor,
                 'fake' => new FakeExtractor,
+                default => throw new RuntimeException("Unknown extraction driver [{$driver}]."),
             };
         });
     }

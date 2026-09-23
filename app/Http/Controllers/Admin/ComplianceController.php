@@ -18,7 +18,7 @@ class ComplianceController extends Controller
 
         return Inertia::render('admin/compliance', [
             'flags' => ComplianceFlag::query()
-                ->with(['user', 'dealRoom.engagement.listing.company'])
+                ->with(['user', 'dealRoom.engagement.listing.company', 'dealRoom.engagement.buyer'])
                 ->when($status !== 'all', fn ($q) => $q->where('status', $status))
                 ->latest()
                 ->paginate(25)

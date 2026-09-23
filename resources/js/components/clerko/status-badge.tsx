@@ -23,6 +23,7 @@ const statusTone: Record<string, Tone> = {
     processing: 'blue',
     completed: 'green',
     failed: 'red',
+    manual: 'purple',
     // listings
     draft: 'slate',
     awaiting_payment: 'amber',

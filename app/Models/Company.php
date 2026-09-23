@@ -22,6 +22,9 @@ class Company extends Model
 
     public const EXTRACTION_FAILED = 'failed';
 
+    /** Waiting for an admin to enter the profile from the PDF. */
+    public const EXTRACTION_MANUAL = 'manual';
+
     public const SELLER_CAPACITIES = [
         'shareholder' => 'Shareholder / partner',
         'authorised_signatory' => 'Authorised signatory',
@@ -35,6 +38,7 @@ class Company extends Model
      */
     protected $attributes = [
         'extraction_status' => 'pending',
+        'extraction_attempts' => 0,
         'verification_status' => 'pending',
     ];
 
@@ -60,6 +64,11 @@ class Company extends Model
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'owner_id');
+    }
+
+    public function extractionRuns(): HasMany
+    {
+        return $this->hasMany(ExtractionRun::class)->latest('id');
     }
 
     public function listings(): HasMany

@@ -19,7 +19,7 @@ class AuditController extends Controller
                 ->when($request->query('event'), fn ($q, $e) => $q->where('event', 'like', $e.'%'))
                 ->latest('id')
                 ->paginate(50)
-                ->withQueryString()
+                ->appends($request->only('event'))
                 ->through(fn (AuditEvent $e) => [
                     'id' => $e->id,
                     'event' => $e->event,

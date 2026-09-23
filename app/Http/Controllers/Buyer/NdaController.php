@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Engagement;
 use App\Services\Nda\NdaSigner;
 use App\Services\Nda\NdaTemplate;
+use App\Support\PrivateFiles;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -68,7 +68,6 @@ class NdaController extends Controller
         $signature = $engagement->ndaSignature;
         abort_unless($signature, 404);
 
-        return Storage::disk(config('clerko.documents.disk'))
-            ->download($signature->pdf_path, "Clerko-NDA-{$engagement->listing->reference}.pdf");
+        return PrivateFiles::download($signature->pdf_path, "Clerko-NDA-{$engagement->listing->reference}.pdf");
     }
 }

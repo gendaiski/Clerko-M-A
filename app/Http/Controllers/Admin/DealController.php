@@ -21,6 +21,7 @@ class DealController extends Controller
                     'company' => $r->engagement->listing->company->name_en,
                     'listing_reference' => $r->engagement->listing->reference,
                     'buyer' => $r->engagement->buyer->buyerLabel(),
+                    'stage' => $r->engagement->stage->value,
                     'stage_label' => $r->engagement->stage->label(),
                     'status' => $r->status,
                     'agreed_price' => $r->headlineTerms?->isAgreed() ? (float) $r->headlineTerms->price : null,

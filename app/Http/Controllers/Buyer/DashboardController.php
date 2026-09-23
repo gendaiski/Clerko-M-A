@@ -46,6 +46,7 @@ class DashboardController extends Controller
                 'unlocks_used' => $unlocker->premiumUnlocksUsed($premium),
                 'unlocks_included' => config('clerko.buyer.premium_monthly_unlocks'),
             ] : null,
+            'prices' => config('clerko.buyer'),
             'kycStatus' => $user->kyc_status->value,
         ]);
     }

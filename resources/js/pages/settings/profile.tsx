@@ -1,4 +1,4 @@
-import { type BreadcrumbItem, type AuthedData } from '@/types';
+import { type AuthedData, type BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler } from 'react';

@@ -42,6 +42,12 @@ class DemoSeeder extends Seeder
             return;
         }
 
+        // The CR profile PDF the demo companies point at (CompanyFactory default path).
+        Storage::disk(config('clerko.documents.disk'))->put('companies/fake-cr.pdf', Pdf::loadHTML(
+            '<h2>Ministry of Industry and Commerce — Sijilat</h2><h3>Commercial Registration Profile (demo)</h3>'
+            .'<p>CR No.: 114231-1<br>Commercial Name (EN): Meridian Cloud W.L.L.<br>CR Type: With Limited Liability Company<br>Status: ACTIVE</p>'
+        )->output());
+
         $admin = User::factory()->admin()->kycVerified()->create(['name' => 'Clerko Admin', 'email' => 'admin@clerko.test']);
         $seller = User::factory()->kycVerified()->create(['name' => 'Michael Rodriguez', 'email' => 'seller@clerko.test']);
         $buyer = User::factory()->kycVerified()->create(['name' => 'Aisha Khan', 'email' => 'buyer@clerko.test', 'buyer_type' => 'strategic']);

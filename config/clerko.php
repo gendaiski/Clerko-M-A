@@ -56,33 +56,78 @@ return [
     ],
 
     'extraction' => [
-        // "extracta" for Extracta.ai, "fake" for local development and tests.
+        /*
+        | Which service reads the Sijilat CR profile PDF:
+        |   "xtracta"  – Xtracta (xtracta.com)
+        |   "extracta" – Extracta.ai
+        |   "manual"   – no API; admins enter the profile from the PDF
+        |   "fake"     – sample data, for local development and tests
+        */
         'driver' => env('CLERKO_EXTRACTION_DRIVER', 'fake'),
+
+        // Shared secret for POST /webhooks/extraction/{token} (providers that push results).
+        'webhook_token' => env('CLERKO_EXTRACTION_WEBHOOK_TOKEN'),
+
+        // Poll every N seconds, giving up (→ failed, admin can retry or enter manually) after M attempts.
+        'poll_interval' => (int) env('CLERKO_EXTRACTION_POLL_SECONDS', 15),
+        'max_polls' => (int) env('CLERKO_EXTRACTION_MAX_POLLS', 40),
+
+        /*
+        | Xtracta. Everything that depends on their API is here, so it can be
+        | aligned with Xtracta's documentation without code changes.
+        | Check with: php artisan clerko:extraction:test cr.pdf --driver=xtracta
+        */
+        'xtracta' => [
+            'api_key' => env('XTRACTA_API_KEY'),
+            'workflow_id' => env('XTRACTA_WORKFLOW_ID'),
+            'base_url' => env('XTRACTA_BASE_URL', 'https://api-app.xtracta.com/v1'),
+            'upload_path' => env('XTRACTA_UPLOAD_PATH', '/documents/upload'),
+            'status_path' => env('XTRACTA_STATUS_PATH', '/documents'),
+            'file_field' => 'userfile',
+            'reference_key' => 'document_id',
+            'status_key' => 'document_status',
+            'fields_key' => 'field_data',
+            'completed_statuses' => ['output', 'completed', 'complete'],
+            'failed_statuses' => ['reject', 'rejected', 'error', 'failed'],
+        ],
+
         'extracta' => [
             'api_key' => env('EXTRACTA_API_KEY'),
-            'base_url' => env('EXTRACTA_BASE_URL', 'https://api.extracta.ai/api/v1'),
             'extraction_id' => env('EXTRACTA_CR_EXTRACTION_ID'),
+            'base_url' => env('EXTRACTA_BASE_URL', 'https://api.extracta.ai/api/v1'),
+            'upload_path' => '/uploadFiles',
+            'results_path' => '/getBatchResults',
         ],
 
         /*
-        | Maps each company profile attribute to the field name used in the
-        | Extracta template for the Sijilat CR profile. Adjust these to match
-        | the template's field names exactly. The full raw result is always
-        | stored and shown to admins, so an unmapped field is never lost.
+        | Company profile attribute => candidate field names in the extraction
+        | result, tried in order. Names are compared after normalising, so
+        | "CR No.", "cr_no" and "CR NO" all match. Defaults follow the labels
+        | on the Sijilat CR page. The full raw result is always kept and shown
+        | to admins, so an unmapped field is never lost.
         */
         'field_map' => [
-            'cr_number' => 'cr_no',
-            'name_en' => 'commercial_name_en',
-            'name_ar' => 'commercial_name_ar',
-            'legal_form' => 'cr_type',
-            'cr_status' => 'status',
-            'registration_date' => 'registration_date',
-            'expiry_date' => 'expiration_date',
-            'capital' => 'issued_capital',
-            'address' => 'commercial_address',
-            'activities' => 'business_activities',
-            'shareholders' => 'partners_and_shareholders',
-            'signatories' => 'authorized_signatories',
+            'cr_number' => ['CR No.', 'CR Number', 'Commercial Registration No.', 'Registration Number'],
+            'name_en' => ['Commercial Name (EN)', 'Commercial Name', 'Company Name (EN)', 'Company Name'],
+            'name_ar' => ['Commercial Name (AR)', 'Company Name (AR)', 'Arabic Name'],
+            'legal_form' => ['CR Type', 'Company Type', 'Legal Form'],
+            'cr_status' => ['Status', 'CR Status'],
+            'registration_date' => ['Registration Date', 'Reg. Date'],
+            'expiry_date' => ['Expiration Date', 'Expiry Date', 'Exp. Date'],
+            'capital' => ['Issued Capital', 'Paid-up Capital', 'Authorized Capital', 'Capital'],
+            'address' => ['Commercial Address', 'Address'],
+            'activities' => ['Business Activities', 'Activities'],
+            'shareholders' => ['Partners and Shareholders', 'Shareholders', 'Partners'],
+            'signatories' => ['Authorized Signatories', 'Authorised Signatories', 'Signatories'],
+        ],
+
+        // Used to build the address when there is no single address field.
+        'address_parts' => [
+            'Flat' => ['Flat / Shop No.', 'Flat No.', 'Shop No.'],
+            'Building' => ['Building', 'Building No.'],
+            'Road' => ['Road/Street Number', 'Road', 'Street'],
+            'Block' => ['Block'],
+            '' => ['Town', 'City'],
         ],
     ],
 

@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\VerificationStatus;
 use App\Http\Controllers\Controller;
+use App\Jobs\ExtractCompanyProfile;
 use App\Models\Company;
 use App\Notifications\ClerkoNotification;
 use App\Services\Audit\AuditLog;
+use App\Services\Extraction\CompanyProfileExtraction;
+use App\Support\PrivateFiles;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -46,9 +48,10 @@ class CompanyController extends Controller
         ]);
     }
 
-    public function show(Company $company): Response
+    public function show(Company $company, CompanyProfileExtraction $extraction): Response
     {
         $company->load('owner');
+        $preview = $company->extracted_data ? $extraction->preview($company->extracted_data) : null;
 
         return Inertia::render('admin/companies/show', [
             'company' => [
@@ -61,13 +64,55 @@ class CompanyController extends Controller
                 'seller_capacity_label' => Company::SELLER_CAPACITIES[$company->seller_capacity] ?? $company->seller_capacity,
                 'has_authority_document' => $company->authority_document_path !== null,
                 'extracted_data' => $company->extracted_data,
+                'extraction_provider' => $company->extraction_provider,
+                'extraction_reference' => $company->extraction_reference,
+                'unmapped_keys' => $preview['unmapped_keys'] ?? [],
+                'cr_expires_soon' => $company->crExpiresSoon(),
+                'verified_at' => $company->verified_at?->toIso8601String(),
                 'owner' => [
                     'name' => $company->owner->name,
                     'email' => $company->owner->email,
                     'kyc_status' => $company->owner->kyc_status->value,
                 ],
             ],
+            'extraction' => [
+                'driver' => $extraction->provider(),
+                'runs' => $company->extractionRuns()->limit(20)->get()->map(fn ($run) => [
+                    'id' => $run->id,
+                    'provider' => $run->provider,
+                    'action' => $run->action,
+                    'status' => $run->status,
+                    'reference' => $run->reference,
+                    'error' => $run->error,
+                    'response' => $run->response,
+                    'duration_ms' => $run->duration_ms,
+                    'created_at' => $run->created_at->toIso8601String(),
+                ]),
+            ],
         ]);
+    }
+
+    /** Run the extraction again with the configured provider. */
+    public function retryExtraction(Request $request, Company $company, CompanyProfileExtraction $extraction, AuditLog $audit): RedirectResponse
+    {
+        abort_if($company->isVerified(), 409, 'This company is already verified.');
+
+        $extraction->restart($company);
+        ExtractCompanyProfile::dispatch($company);
+        $audit->record('company.extraction_retried', $company, $request->user());
+
+        return back()->with('success', 'Extraction restarted with '.$extraction->provider().'.');
+    }
+
+    /** Stop automatic extraction; the admin enters the profile from the PDF. */
+    public function manualEntry(Request $request, Company $company, CompanyProfileExtraction $extraction, AuditLog $audit): RedirectResponse
+    {
+        abort_if($company->extraction_status === Company::EXTRACTION_COMPLETED, 409);
+
+        $extraction->markManual($company, 'Entered manually by an admin.');
+        $audit->record('company.extraction_manual', $company, $request->user());
+
+        return back()->with('success', 'Enter the profile from the CR PDF, then verify it.');
     }
 
     public function update(Request $request, Company $company, AuditLog $audit): RedirectResponse
@@ -129,6 +174,6 @@ class CompanyController extends Controller
     {
         abort_unless($company->authority_document_path, 404);
 
-        return Storage::disk(config('clerko.documents.disk'))->response($company->authority_document_path);
+        return PrivateFiles::inline($company->authority_document_path);
     }
 }

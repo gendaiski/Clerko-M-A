@@ -2,41 +2,54 @@
 
 namespace App\Services\Extraction;
 
-use App\Models\Company;
+use Illuminate\Support\Str;
 
 /**
- * Local stand-in for Extracta that returns a plausible Sijilat CR profile.
+ * Local stand-in that returns a plausible Sijilat CR profile, labelled the
+ * way the Sijilat page labels it, so the normaliser and field map are
+ * exercised exactly as with a real provider.
  */
 class FakeExtractor implements ProfileExtractor
 {
-    public function submit(Company $company): string
+    public function name(): string
     {
-        return 'fake-batch-'.$company->id;
+        return 'fake';
     }
 
-    public function fetch(Company $company): ExtractionResult
+    public function submit(string $pdf, string $filename): string
     {
-        return new ExtractionResult(ExtractionResult::COMPLETED, [
-            'cr_no' => '114231-1',
-            'commercial_name_en' => 'Meridian Cloud W.L.L.',
-            'commercial_name_ar' => 'ميريديان كلاود ذ.م.م',
-            'cr_type' => 'With Limited Liability Company',
-            'status' => 'ACTIVE',
-            'registration_date' => '2018-03-14',
-            'expiration_date' => '2027-03-14',
-            'issued_capital' => '50000',
-            'commercial_address' => 'Flat 21, Building 1565, Road 1722, Block 317, Manama',
-            'business_activities' => [
-                ['isic4_code' => '6201', 'activity' => 'Computer programming activities'],
-                ['isic4_code' => '6311', 'activity' => 'Data processing, hosting and related activities'],
-            ],
-            'partners_and_shareholders' => [
-                ['name' => 'Michael Rodriguez', 'nationality' => 'Bahraini', 'shares' => 300, 'ownership_pct' => 60],
-                ['name' => 'Sara Al Khalifa', 'nationality' => 'Bahraini', 'shares' => 200, 'ownership_pct' => 40],
-            ],
-            'authorized_signatories' => [
-                ['name' => 'Michael Rodriguez', 'nationality' => 'Bahraini', 'authority_level' => 'Individually'],
-            ],
-        ]);
+        return 'fake-'.Str::ulid();
+    }
+
+    public function fetch(string $reference): ExtractionResult
+    {
+        $fields = [
+            ['field_name' => 'CR No.', 'field_value' => '114231-1'],
+            ['field_name' => 'Commercial Name (EN)', 'field_value' => 'Meridian Cloud W.L.L.'],
+            ['field_name' => 'Commercial Name (AR)', 'field_value' => 'ميريديان كلاود ذ.م.م'],
+            ['field_name' => 'CR Type', 'field_value' => 'With Limited Liability Company'],
+            ['field_name' => 'Status', 'field_value' => 'ACTIVE'],
+            ['field_name' => 'Registration Date', 'field_value' => '14/03/2018'],
+            ['field_name' => 'Expiration Date', 'field_value' => '14/03/2027'],
+            ['field_name' => 'Issued Capital', 'field_value' => '50,000.000'],
+            ['field_name' => 'Flat / Shop No.', 'field_value' => '21'],
+            ['field_name' => 'Building', 'field_value' => '1565'],
+            ['field_name' => 'Road/Street Number', 'field_value' => '1722'],
+            ['field_name' => 'Block', 'field_value' => '317'],
+            ['field_name' => 'Town', 'field_value' => 'Manama'],
+            ['field_name' => 'Business Activities', 'field_value' => [
+                ['ISIC4 Code' => '6201', 'Activities' => 'Computer programming activities'],
+                ['ISIC4 Code' => '6311', 'Activities' => 'Data processing, hosting and related activities'],
+            ]],
+            ['field_name' => 'Partners and Shareholders', 'field_value' => [
+                ['English Name' => 'Michael Rodriguez', 'Nationality' => 'Bahraini', 'No. of Shares' => '300', 'Ownership (%)' => '60'],
+                ['English Name' => 'Sara Al Khalifa', 'Nationality' => 'Bahraini', 'No. of Shares' => '200', 'Ownership (%)' => '40'],
+            ]],
+            ['field_name' => 'Authorized Signatories', 'field_value' => [
+                ['English Name' => 'Michael Rodriguez', 'Nationality' => 'Bahraini', 'Authority Level' => 'Individually'],
+            ]],
+        ];
+
+        return new ExtractionResult(ExtractionResult::COMPLETED, ['fields' => $fields], raw: ['fields' => $fields]);
     }
 }

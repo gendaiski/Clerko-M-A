@@ -7,6 +7,7 @@ use App\Models\ComplianceFlag;
 use App\Models\DealRoom;
 use App\Models\KycSubmission;
 use App\Models\Listing;
+use App\Models\Payment;
 use App\Models\User;
 use Database\Seeders\DemoSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -85,7 +86,7 @@ class PageSmokeTest extends TestCase
         $this->get(route('engagements.unlock', $new))->assertOk()->assertInertia(fn (Assert $p) => $p->component('buyer/unlock'));
 
         $this->post(route('engagements.unlock.pay', $new));
-        $payment = \App\Models\Payment::latest('id')->first();
+        $payment = Payment::latest('id')->first();
         $this->get(route('payments.fake-checkout', $payment))->assertOk()->assertInertia(fn (Assert $p) => $p->component('payments/fake-checkout'));
     }
 

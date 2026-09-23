@@ -57,9 +57,10 @@ MAIL_FROM_ADDRESS="no-reply@<your-domain>"
 CLERKO_DOCUMENTS_DISK=local     # files stay in storage/app/private, outside the webroot
 CLERKO_PAYMENT_DRIVER=tap
 TAP_SECRET_KEY=sk_live_...
-CLERKO_EXTRACTION_DRIVER=extracta
-EXTRACTA_API_KEY=...
-EXTRACTA_CR_EXTRACTION_ID=...
+CLERKO_EXTRACTION_DRIVER=xtracta   # or "manual" until Xtracta is connected
+XTRACTA_API_KEY=...
+XTRACTA_WORKFLOW_ID=...
+CLERKO_EXTRACTION_WEBHOOK_TOKEN=<long random string, only if Xtracta pushes results>
 CLERKO_AGENT_ENABLED=true
 CLERKO_AGENT_MODEL=claude-opus-5
 ANTHROPIC_API_KEY=...
@@ -96,6 +97,6 @@ It runs the daily subscription expiry and renewal reminders (06:00 Bahrain time)
 
 1. Register your own account, then promote it to admin:
    `php artisan tinker --execute "App\Models\User::where('email','you@…')->update(['is_admin'=>true]);"`
-2. Upload a real Sijilat CR PDF as a seller. In the admin console, check that the extracted fields line up. If they don't, adjust `extraction.field_map` in `config/clerko.php`.
+2. Run `php artisan clerko:extraction:test <a real Sijilat CR PDF> --driver=xtracta` and follow [EXTRACTION-INTEGRATION.md](EXTRACTION-INTEGRATION.md) to align the field map.
 3. Make a small live Tap payment and refund it.
 4. Back up `storage/app/private` as well as the database. It holds CR PDFs, identity documents, signed NDAs and deal documents. Cloudways application backups include it.

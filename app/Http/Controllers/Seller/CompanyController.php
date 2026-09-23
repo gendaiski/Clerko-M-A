@@ -7,9 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Jobs\ExtractCompanyProfile;
 use App\Models\Company;
 use App\Services\Audit\AuditLog;
+use App\Services\Extraction\CompanyProfileExtraction;
+use App\Support\PrivateFiles;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -73,12 +74,12 @@ class CompanyController extends Controller
         ]);
     }
 
-    public function retry(Request $request, Company $company): RedirectResponse
+    public function retry(Request $request, Company $company, CompanyProfileExtraction $extraction): RedirectResponse
     {
         abort_unless($company->owner_id === $request->user()->id, 403);
         abort_unless($company->extraction_status === Company::EXTRACTION_FAILED, 409);
 
-        $company->update(['extraction_status' => Company::EXTRACTION_PENDING, 'extraction_reference' => null, 'extraction_error' => null]);
+        $extraction->restart($company);
         ExtractCompanyProfile::dispatch($company);
 
         return back()->with('success', 'Trying again.');
@@ -88,7 +89,7 @@ class CompanyController extends Controller
     {
         abort_unless($company->owner_id === $request->user()->id || $request->user()->is_admin, 403);
 
-        return Storage::disk(config('clerko.documents.disk'))->response($company->cr_pdf_path, 'cr-profile.pdf', [
+        return PrivateFiles::inline($company->cr_pdf_path, 'cr-profile.pdf', [
             'Cache-Control' => 'private, no-store',
         ]);
     }

@@ -8,7 +8,7 @@ The build follows the interactive prototype in [`prototype/clerko-ma-site.html`]
 
 | Scenario | Flow |
 |---|---|
-| **1 — Seller** | Identity check (KYC) → upload the company's CR profile PDF saved from Sijilat → the profile is read automatically (Extracta) and checked by an admin (KYB) → build the anonymised teaser and the Details Pack → choose a tier and pay (Tap) → admin review, with revision requests → live on the marketplace → interest pipeline |
+| **1 — Seller** | Identity check (KYC) → upload the company's CR profile PDF saved from Sijilat → the profile is read automatically (Xtracta, see [extraction guide](docs/EXTRACTION-INTEGRATION.md)) and checked by an admin (KYB) → build the anonymised teaser and the Details Pack → choose a tier and pay (Tap) → admin review, with revision requests → live on the marketplace → interest pipeline |
 | **2 — Buyer** | Preferences and alerts → browse teasers for free → request access → KYC → sign the NDA (a signed PDF is stored with a SHA-256 hash) → unlock the pack (BD 250 per company, or Buyer Premium) → Company Details Pack with watermarked, logged documents |
 | **3 — Deal Room** | Q&A by topic → documents the seller releases to this buyer only → indicative offers and counter-offers → headline terms confirmed by both parties → audit trail. The **Clerko Agent** (Claude) summarises the room for both sides once both have opted in; it never advises or decides |
 | **Admin console** | Listing moderation, company verification side by side with the CR PDF, KYC review, compliance flags for off-platform contact attempts, deal rooms, and an audit trail with a hash-chain integrity check |
@@ -28,7 +28,7 @@ The build follows the interactive prototype in [`prototype/clerko-ma-site.html`]
 - **Inertia 2 + React 19 + TypeScript + Tailwind 4**, with the prototype's colours.
 - Integrations, each with a fake driver for local work:
   - Tap Payments: `app/Services/Payments/TapGateway.php`
-  - Extracta: `app/Services/Extraction/ExtractaExtractor.php`
+  - Xtracta, for reading the CR PDF: `app/Services/Extraction/XtractaExtractor.php`. The extraction layer works with any provider; see [docs/EXTRACTION-INTEGRATION.md](docs/EXTRACTION-INTEGRATION.md). There is also a `manual` mode where admins enter the profile, so the platform works before the API is connected
   - Claude API: `app/Services/Agent/ClerkoAgent.php`
 - PDF: dompdf for the signed NDA, FPDI for watermarks.
 
@@ -52,7 +52,7 @@ Open http://localhost:8000. The demo accounts all use the password `password`:
 | `buyer@clerko.test` | A verified buyer with an unlocked pack and an open offer in the Deal Room |
 | `admin@clerko.test` | The admin console, with a listing, a company and a KYC submission waiting for review |
 
-Locally, payments go to a **development checkout page** where you choose to pay or fail, and CR extraction returns a sample Sijilat profile. Set `CLERKO_PAYMENT_DRIVER=tap` and `CLERKO_EXTRACTION_DRIVER=extracta` (with their keys) to use the real services.
+Locally, payments go to a **development checkout page** where you choose to pay or fail, and CR extraction returns a sample Sijilat profile. Set `CLERKO_PAYMENT_DRIVER=tap` and `CLERKO_EXTRACTION_DRIVER=xtracta` (with their keys) to use the real services.
 
 ## Tests
 
@@ -60,11 +60,11 @@ Locally, payments go to a **development checkout page** where you choose to pay 
 php artisan test
 ```
 
-The feature tests cover all three scenarios end to end through HTTP. They also cover the integrations (Tap, Extracta, field mapping, watermarking) and render every page as each role against the demo data.
+The feature tests cover all three scenarios end to end through HTTP. They also cover the integrations (Tap, Xtracta and Extracta over XML and JSON, the webhook, manual entry, field mapping, watermarking) and render every page as each role against the demo data.
 
 ## Configuration
 
-Everything Clerko-specific is in [`config/clerko.php`](config/clerko.php): tier prices, the pack price, Buyer Premium, the NDA version, drivers, and the **Extracta field map**. The field map pairs each company profile field with the name used in your Extracta template for the Sijilat CR profile. Set these names to match the template exactly.
+Everything Clerko-specific is in [`config/clerko.php`](config/clerko.php): tier prices, the pack price, Buyer Premium, the NDA version, drivers, the Xtracta API settings and the **extraction field map**. The field map lists, for each company profile field, the names it may have in the extraction result. The defaults follow the Sijilat labels.
 
 ## Deployment
 
@@ -72,7 +72,7 @@ See [`docs/DEPLOYMENT-CLOUDWAYS.md`](docs/DEPLOYMENT-CLOUDWAYS.md).
 
 ## Open items
 
-- **Extracta template field names.** Confirm them with the team that built the template, and update `clerko.extraction.field_map`. The Extracta endpoints (`uploadFiles` / `getBatchResults`) should also be checked against your account.
+- **Xtracta.** Get the API key and workflow ID. Check the endpoint and status settings against Xtracta's documentation, then run `php artisan clerko:extraction:test <cr.pdf> --driver=xtracta` (see the [extraction guide](docs/EXTRACTION-INTEGRATION.md)). Until then, `CLERKO_EXTRACTION_DRIVER=manual` lets admins enter profiles by hand.
 - **Tap.** A merchant account is needed, with the webhook set to `https://<domain>/payments/webhook`. Plans are charged one month at a time. Automatic recurring billing (saved cards) is still to do.
 - **NDA wording** (`app/Services/Nda/NdaTemplate.php`) needs legal review before launch.
 - **Scenario 4** (escrow, transfer, completion) is deferred.

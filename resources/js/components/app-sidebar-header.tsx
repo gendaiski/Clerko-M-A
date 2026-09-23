@@ -13,7 +13,11 @@ export function AppSidebarHeader({ breadcrumbs = [] }: { breadcrumbs?: Breadcrum
                 <SidebarTrigger className="-ml-1" />
                 <Breadcrumbs breadcrumbs={breadcrumbs} />
             </div>
-            <Link href={route('notifications.index')} className="hover:bg-muted relative rounded-lg p-2" aria-label={`Notifications (${unreadNotifications} unread)`}>
+            <Link
+                href={route('notifications.index')}
+                className="hover:bg-muted relative rounded-lg p-2"
+                aria-label={`Notifications (${unreadNotifications} unread)`}
+            >
                 <Bell className="size-5" />
                 {unreadNotifications > 0 && (
                     <span className="bg-brand-gradient absolute -top-0.5 -right-0.5 flex min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-bold text-white">

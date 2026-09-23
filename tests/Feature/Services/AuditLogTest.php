@@ -4,6 +4,7 @@ namespace Tests\Feature\Services;
 
 use App\Models\AuditEvent;
 use App\Services\Audit\AuditLog;
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use LogicException;
@@ -47,7 +48,7 @@ class AuditLogTest extends TestCase
     {
         $first = app(AuditLog::class)->record('one');
 
-        $this->expectException(\Illuminate\Database\UniqueConstraintViolationException::class);
+        $this->expectException(UniqueConstraintViolationException::class);
         AuditEvent::create([
             'event' => 'fork', 'previous_hash' => $first->previous_hash ?? 'x', 'hash' => 'y', 'created_at' => now(),
         ]);

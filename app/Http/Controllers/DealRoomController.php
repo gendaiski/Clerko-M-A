@@ -59,7 +59,7 @@ class DealRoomController extends Controller
             'category' => Listing::DOCUMENT_CATEGORIES[$d->category] ?? $d->category,
             'is_pdf' => $d->isPdf(),
             'source' => $source,
-            'released_at' => $d->pivot?->created_at?->toIso8601String(),
+            'released_at' => $source === 'released' ? $d->pivot->created_at?->toIso8601String() : null,
         ];
 
         return Inertia::render('deal-room/show', [

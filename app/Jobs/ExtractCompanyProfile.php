@@ -3,82 +3,67 @@
 namespace App\Jobs;
 
 use App\Models\Company;
-use App\Models\User;
-use App\Notifications\ClerkoNotification;
-use App\Services\Audit\AuditLog;
+use App\Services\Extraction\CompanyProfileExtraction;
 use App\Services\Extraction\ExtractionResult;
-use App\Services\Extraction\ProfileExtractor;
-use App\Services\Extraction\ProfileMapper;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Support\Facades\Notification;
 use Throwable;
 
 /**
- * Submits the CR PDF to the extractor and polls until the profile is ready,
- * then fills in the company profile for an admin to verify.
+ * Submits the CR PDF to the extraction provider and polls until the profile
+ * is ready, then fills in the company profile for an admin to verify.
  */
 class ExtractCompanyProfile implements ShouldQueue
 {
     use Queueable;
 
-    public int $tries = 40;
+    /** Transient provider errors are retried by the queue; polling uses release(). */
+    public int $tries = 0;
+
+    public int $maxExceptions = 3;
 
     public function __construct(public Company $company) {}
 
-    public function handle(ProfileExtractor $extractor, ProfileMapper $mapper, AuditLog $audit): void
+    public function retryUntil(): \DateTimeInterface
     {
-        $company = $this->company;
+        return now()->addSeconds(config('clerko.extraction.poll_interval') * (config('clerko.extraction.max_polls') + 2) + 300);
+    }
 
-        if ($company->extraction_status === Company::EXTRACTION_COMPLETED) {
+    public function backoff(): array
+    {
+        return [30, 120, 300];
+    }
+
+    public function handle(CompanyProfileExtraction $extraction): void
+    {
+        $company = $this->company->fresh();
+
+        if (! $company || in_array($company->extraction_status, [Company::EXTRACTION_COMPLETED, Company::EXTRACTION_MANUAL, Company::EXTRACTION_FAILED], true)) {
             return;
         }
 
         if (! $company->extraction_reference) {
-            $company->update([
-                'extraction_reference' => $extractor->submit($company),
-                'extraction_status' => Company::EXTRACTION_PROCESSING,
-            ]);
+            $extraction->submit($company);
         }
 
-        $result = $extractor->fetch($company);
+        if ($extraction->poll($company) !== ExtractionResult::PROCESSING) {
+            return;
+        }
 
-        if ($result->status === ExtractionResult::PROCESSING) {
-            $this->release(15);
+        if ($company->fresh()->extraction_attempts >= config('clerko.extraction.max_polls')) {
+            $extraction->fail($company, 'The provider did not return a result in time.');
 
             return;
         }
 
-        if ($result->status === ExtractionResult::FAILED) {
-            $this->markFailed($result->error ?? 'Extraction failed.');
-
-            return;
-        }
-
-        $company->fill($mapper->map($result->fields));
-        $company->extracted_data = $result->fields;
-        $company->extraction_status = Company::EXTRACTION_COMPLETED;
-        $company->extraction_error = null;
-        $company->save();
-
-        $audit->record('company.profile_extracted', $company, $company->owner);
-
-        Notification::send(
-            User::where('is_admin', true)->get(),
-            new ClerkoNotification('Company to verify', "A company profile ({$company->name_en}) is ready for KYB verification.", route('admin.companies.show', $company)),
-        );
+        $this->release(config('clerko.extraction.poll_interval'));
     }
 
     public function failed(?Throwable $exception): void
     {
-        $this->markFailed($exception?->getMessage() ?? 'Extraction failed.');
-    }
-
-    private function markFailed(string $error): void
-    {
-        $this->company->update([
-            'extraction_status' => Company::EXTRACTION_FAILED,
-            'extraction_error' => $error,
-        ]);
+        $company = $this->company->fresh();
+        if ($company && $company->extraction_status !== Company::EXTRACTION_COMPLETED) {
+            app(CompanyProfileExtraction::class)->fail($company, $exception?->getMessage() ?? 'Extraction failed.');
+        }
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Listing;
 use App\Models\ListingDocument;
 use App\Services\Audit\AuditLog;
+use App\Support\PrivateFiles;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -41,7 +42,7 @@ class DocumentController extends Controller
         Gate::authorize('manage', $listing);
         abort_unless($document->listing_id === $listing->id, 404);
 
-        return Storage::disk(config('clerko.documents.disk'))->response($document->path, $document->original_name);
+        return PrivateFiles::inline($document->path, $document->original_name);
     }
 
     public function destroy(Request $request, Listing $listing, ListingDocument $document): RedirectResponse

@@ -82,6 +82,7 @@ class MarketplaceController extends Controller
                 'stage' => $engagement->stage->value,
                 'nda_signed' => $engagement->hasSignedNda(),
                 'pack_unlocked' => $engagement->hasUnlockedPack(),
+                'deal_room_id' => $engagement->dealRoom?->id,
             ] : null,
         ]);
     }
