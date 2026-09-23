@@ -34,15 +34,18 @@ The build follows the interactive prototype in [`prototype/clerko-ma-site.html`]
 
 ## Running it locally
 
+You need **PHP 8.3+**, **Composer** and **Node.js 20+**. On Mac or Windows, [Laravel Herd](https://herd.laravel.com) installs PHP and Composer in one step.
+
 ```bash
+git clone https://github.com/gendaiski/Clerko-M-A.git
+cd Clerko-M-A
+git checkout claude/clerco-ma-prototype-ndc088
 composer install
-npm install
-cp .env.example .env
-php artisan key:generate
-touch database/database.sqlite
-php artisan migrate --seed      # seeds demo data (see below)
-composer run dev                # app server, queue worker, logs and Vite
+composer run setup              # .env, database with demo data, frontend build
+composer run dev                # starts the app, queue worker and Vite
 ```
+
+To reset the demo data at any time: `php artisan migrate:fresh --seed`.
 
 Open http://localhost:8000. The demo accounts all use the password `password`:
 
@@ -76,4 +79,3 @@ See [`docs/DEPLOYMENT-CLOUDWAYS.md`](docs/DEPLOYMENT-CLOUDWAYS.md).
 - **Tap.** A merchant account is needed, with the webhook set to `https://<domain>/payments/webhook`. Plans are charged one month at a time. Automatic recurring billing (saved cards) is still to do.
 - **NDA wording** (`app/Services/Nda/NdaTemplate.php`) needs legal review before launch.
 - **Scenario 4** (escrow, transfer, completion) is deferred.
-- **Arabic / right-to-left** interface is not done yet.
