@@ -13,6 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // Behind Cloudways' Nginx/Varnish or a tunnel: honour X-Forwarded-Proto/Host.
+        $middleware->trustProxies(at: '*');
+
         $middleware->validateCsrfTokens(except: ['payments/webhook', 'webhooks/*']);
 
         $middleware->web(append: [
