@@ -25,7 +25,8 @@ php -r 'exit(version_compare(PHP_VERSION, "8.3.0", ">=") ? 0 : 1);' \
 php -m | grep -qi pdo_sqlite || fail "The PHP pdo_sqlite extension is missing. Contact Cloudways support to enable it."
 
 step "Installing PHP packages"
-composer install --no-dev --optimize-autoloader --no-interaction
+# Dev packages are included: the demo data is generated with Faker.
+composer install --optimize-autoloader --no-interaction
 
 step "Building the frontend"
 if ! command -v npm >/dev/null 2>&1; then
