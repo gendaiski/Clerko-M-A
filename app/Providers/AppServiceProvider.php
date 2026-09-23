@@ -47,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Model::preventAccessingMissingAttributes(! $this->app->isProduction());
+        Model::preventAccessingMissingAttributes($this->app->environment('local', 'testing'));
 
         Gate::define('admin', fn (User $user) => $user->is_admin);
         Gate::policy(DealRoom::class, DealRoomPolicy::class);
