@@ -1,0 +1,1612 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clerko M&A — The Future of M&A is Here</title>
+<script>document.documentElement.className+=' js-on';</script>
+<style>
+:root{
+  --blue:#2563eb; --indigo:#4f46e5; --purple:#7c3aed; --violet:#8b5cf6;
+  --green:#10b981; --green-d:#059669; --orange:#f97316; --pink:#ec4899;
+  --ink:#0f172a; --slate:#475569; --muted:#64748b; --line:#e7e9f5;
+  --bg:#ffffff; --lav:#f5f6ff; --dark:#0f172a;
+  --grad:linear-gradient(135deg,#4f46e5,#7c3aed);
+  --grad-green:linear-gradient(135deg,#10b981,#059669);
+  --grad-blue:linear-gradient(135deg,#3b82f6,#2563eb);
+  --grad-purple:linear-gradient(135deg,#8b5cf6,#7c3aed);
+  --grad-orange:linear-gradient(135deg,#fb923c,#f97316);
+  --shadow:0 10px 30px rgba(30,27,75,.08); --shadow-lg:0 24px 60px rgba(79,70,229,.15);
+  --r:16px; --r-lg:24px;
+  --font:"Segoe UI",ui-sans-serif,system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--font);color:var(--slate);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{color:var(--ink);margin:0;line-height:1.1;letter-spacing:-.02em}
+p{margin:0} a{text-decoration:none;color:inherit} img{max-width:100%;display:block}
+.container{max-width:1200px;margin:0 auto;padding:0 28px}
+.section{padding:80px 0}
+.accent{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.text-center{text-align:center}
+.sec-head{max-width:680px;margin:0 auto 52px;text-align:center}
+.sec-head h2{font-size:clamp(28px,3.8vw,42px);font-weight:800}
+.sec-head p{margin-top:14px;color:var(--muted);font-size:18px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 26px;border-radius:12px;font-weight:600;font-size:15px;cursor:pointer;border:1.5px solid transparent;font-family:inherit;transition:transform .15s,box-shadow .2s,background .2s;white-space:nowrap}
+.btn svg{width:18px;height:18px}
+.btn--dark{background:var(--dark);color:#fff}
+.btn--dark:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(15,23,42,.25)}
+.btn--green{background:var(--grad-green);color:#fff;box-shadow:0 10px 22px rgba(16,185,129,.3)}
+.btn--green:hover{transform:translateY(-2px)}
+.btn--grad{background:var(--grad);color:#fff;box-shadow:0 10px 22px rgba(79,70,229,.3)}
+.btn--grad:hover{transform:translateY(-2px)}
+.btn--outline{background:#fff;color:var(--ink);border-color:var(--line)}
+.btn--outline:hover{border-color:var(--indigo);color:var(--indigo)}
+.btn--sm{padding:10px 18px;font-size:14px}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav__in{display:flex;align-items:center;gap:20px;height:72px}
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;color:var(--ink);font-size:22px}
+.brand__logo{width:34px;height:34px;border-radius:9px;background:var(--grad);display:grid;place-items:center;color:#fff;font-size:11px;font-weight:700}
+.nav__links{display:flex;gap:6px;margin-left:14px}
+.nav__links a{display:inline-flex;align-items:center;gap:7px;font-size:15px;font-weight:500;color:var(--slate);padding:9px 14px;border-radius:10px}
+.nav__links a:hover{color:var(--indigo);background:var(--lav)}
+.nav__links a.active{color:var(--indigo);background:var(--lav);font-weight:600}
+.nav__right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.nav__right .signin{font-weight:600;color:var(--ink)}
+.nav__toggle{display:none;background:none;border:0;cursor:pointer}
+
+/* hero */
+.hero{background:radial-gradient(700px 380px at 85% 10%,#eef0ff,transparent 70%),linear-gradient(180deg,#fbfbff,#fff);padding:64px 0 72px}
+.hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:8px;background:var(--grad);color:#fff;padding:9px 18px;border-radius:999px;font-weight:600;font-size:14px;box-shadow:0 8px 18px rgba(79,70,229,.28)}
+.hero h1{font-size:clamp(42px,6vw,68px);font-weight:800;margin-top:22px}
+.hero__lead{font-size:19px;color:var(--muted);margin-top:22px;max-width:520px}
+.hero__lead b{color:var(--ink)}
+.hero__cta{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
+
+/* hero visual */
+.mock{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-lg);padding:22px;position:relative}
+.mock__row{display:flex;align-items:center;gap:12px;padding:12px 0}
+.mock__dot{width:36px;height:36px;border-radius:10px;flex:none}
+.mock__bar{height:10px;border-radius:6px;background:#eef0f6;flex:1}
+.mock__stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0 6px}
+.mock__stat{border-radius:14px;padding:16px}
+.mock__stat.g{background:linear-gradient(135deg,#ecfdf5,#d1fae5)}
+.mock__stat.b{background:linear-gradient(135deg,#eff6ff,#dbeafe)}
+.mock__stat b{display:block;font-size:24px;color:var(--ink);font-weight:800}
+.mock__stat span{font-size:13px;color:var(--muted)}
+.mock__listing{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-top:1px solid var(--line)}
+.mock__price{color:var(--green-d);font-weight:800}
+.float{position:absolute;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:12px 14px;display:flex;gap:10px;align-items:center}
+.float .ic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:#fff;flex:none}
+.float b{display:block;color:var(--ink);font-size:14px}.float span{color:var(--muted);font-size:12px}
+.float.tr{top:-18px;right:-16px}
+.float.bl{bottom:-18px;left:-16px}
+
+/* feature cards */
+.grid{display:grid;gap:24px}
+.g4{grid-template-columns:repeat(4,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:28px;box-shadow:var(--shadow);text-align:center;transition:transform .18s,box-shadow .2s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.tile{width:60px;height:60px;border-radius:16px;display:grid;place-items:center;color:#fff;margin:0 auto 18px}
+.tile svg{width:28px;height:28px}
+.card h3{font-size:19px;font-weight:700;margin-bottom:8px}
+.card p{color:var(--muted);font-size:15px}
+
+/* trusted band */
+.band{background:linear-gradient(120deg,#141a3a,#3b1f6b 60%,#5b2a8c);border-radius:var(--r-lg);padding:56px;text-align:center;color:#fff;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
+.band h2{color:#fff;font-size:clamp(26px,3.4vw,40px);font-weight:800}
+.band p{color:rgba(255,255,255,.85);margin:14px auto 0;max-width:600px;font-size:17px}
+.band__logos{display:flex;gap:40px;justify-content:center;flex-wrap:wrap;margin-top:32px;opacity:.9}
+.band__logos span{font-weight:700;font-size:18px;color:rgba(255,255,255,.75)}
+
+/* journey */
+.seg{display:flex;gap:10px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:10px;max-width:760px;margin:0 auto 30px;box-shadow:var(--shadow)}
+.seg button{flex:1;display:flex;align-items:center;gap:12px;justify-content:center;padding:16px;border:0;border-radius:12px;background:transparent;cursor:pointer;font-family:inherit;font-weight:700;color:var(--ink);font-size:16px;transition:.18s}
+.seg button .si{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;color:#fff;background:#cbd5e1;flex:none}
+.seg button small{display:block;font-weight:500;color:var(--muted);font-size:12px}
+.seg button.on{background:var(--grad-green);color:#fff}
+.seg button.on small{color:rgba(255,255,255,.9)}
+.seg button.on .si{background:rgba(255,255,255,.25)}
+.seg--buyer button.on{background:var(--grad)}
+.journey{border-radius:var(--r-lg);padding:44px;color:#fff;background:var(--grad-green);display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center;transition:.3s}
+.journey.buyer{background:var(--grad)}
+.journey__badges{display:flex;gap:10px;margin-bottom:18px}
+.journey__badge{background:rgba(255,255,255,.2);border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;display:inline-flex;gap:6px;align-items:center}
+.journey h3{color:#fff;font-size:clamp(28px,3.4vw,40px);font-weight:800}
+.journey .metrics{display:grid;gap:12px}
+.metric{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center}
+.metric span{font-size:14px;opacity:.9} .metric b{font-size:16px}
+.journey__mock{background:rgba(255,255,255,.16);border-radius:18px;min-height:230px;display:grid;place-items:center}
+.journey__mock .box{width:70%;background:rgba(255,255,255,.9);border-radius:14px;padding:20px}
+.journey__mock .box .l{height:12px;border-radius:6px;background:#e2e8f0;margin:8px 0}
+
+/* success */
+.statline{display:flex;gap:34px;justify-content:center;flex-wrap:wrap;margin:8px 0 40px;font-weight:600;color:var(--ink)}
+.statline span{display:inline-flex;align-items:center;gap:8px}
+.dot{width:10px;height:10px;border-radius:50%}
+.success{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.success-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;box-shadow:var(--shadow)}
+.success-card .top{display:flex;justify-content:space-between;align-items:flex-start}
+.tag{border-radius:999px;padding:6px 14px;font-size:13px;font-weight:700;display:inline-flex;gap:6px;align-items:center}
+.tag.g{background:#d1fae5;color:var(--green-d)} .tag.b{background:#e0e7ff;color:var(--indigo)}
+.success-card .amt{font-size:30px;font-weight:800;color:var(--ink);text-align:right}
+.success-card .amt small{display:block;font-size:13px;color:var(--muted);font-weight:500}
+.success-card h3{margin-top:16px;font-size:20px}
+.chip-up{color:var(--green-d);font-weight:700;background:#ecfdf5;border-radius:8px;padding:3px 8px;font-size:13px}
+
+/* testimonials */
+.quote{max-width:760px;margin:0 auto;text-align:center}
+.quote .stars{color:#f59e0b;letter-spacing:3px;font-size:20px}
+.quote blockquote{margin:20px 0;font-size:24px;color:var(--ink);font-weight:600;line-height:1.5}
+.who{display:flex;gap:14px;align-items:center;justify-content:center}
+.avatar{width:52px;height:52px;border-radius:50%;background:var(--grad);color:#fff;display:grid;place-items:center;font-weight:700}
+.who b{display:block;color:var(--ink)} .who span{color:var(--muted);font-size:14px} .who .co{color:var(--indigo);font-size:14px}
+.dots{display:flex;gap:8px;justify-content:center;margin-top:26px}
+.dots button{width:10px;height:10px;border-radius:999px;border:0;background:#cfd4e8;cursor:pointer;transition:.2s}
+.dots button.on{width:28px;background:var(--grad)}
+
+/* cta + footer */
+.cta{background:var(--grad);border-radius:var(--r-lg);padding:60px;text-align:center;color:#fff;box-shadow:var(--shadow-lg)}
+.cta h2{color:#fff;font-size:clamp(28px,3.6vw,42px);font-weight:800}
+.cta p{color:rgba(255,255,255,.9);margin:14px auto 28px;max-width:560px;font-size:18px}
+.cta .btn--dark{background:#fff;color:var(--indigo)}
+.cta .btn--outline{background:transparent;color:#fff;border-color:rgba(255,255,255,.6)}
+.footer{background:#0b1020;color:#94a3b8;padding:60px 0 26px;margin-top:10px}
+.footer a{color:#94a3b8;font-size:14px}.footer a:hover{color:#fff}
+.footer__grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px}
+.footer .brand{color:#fff;margin-bottom:16px}
+.footer__brand p{font-size:14px;max-width:320px}
+.footer h4{color:#fff;font-size:15px;margin-bottom:16px}
+.footer ul{list-style:none;padding:0;margin:0;display:grid;gap:11px}
+.footer__bottom{border-top:1px solid #1e293b;margin-top:42px;padding-top:22px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px}
+
+/* reveal */
+html.js-on .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s,transform .6s}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:1024px){.nav__links{display:none}.nav__toggle{display:inline-flex}
+  .hero__grid,.journey,.success{grid-template-columns:1fr}.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:1fr}
+  .footer__grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.section{padding:56px 0}.g4{grid-template-columns:1fr}.seg{flex-direction:column}.band,.cta,.journey{padding:36px}.footer__grid{grid-template-columns:1fr}}
+
+
+/* ---- Marketplace ---- */
+.subhero{background:radial-gradient(600px 300px at 80% 0%,#eef0ff,transparent 70%),#fff;padding:52px 0 24px}
+.subhero h1{font-size:clamp(34px,4.6vw,52px);font-weight:800}
+.subhero p{color:var(--muted);font-size:18px;margin-top:12px}
+.mkt-toolbar{display:flex;gap:14px;align-items:center;margin:22px 0 8px;flex-wrap:wrap}
+.search{flex:1;min-width:260px;display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 16px;box-shadow:var(--shadow)}
+.search input{border:0;outline:0;flex:1;font-family:inherit;font-size:15px;background:none}
+.mkt-sort{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;font-weight:600;color:var(--slate)}
+.mkt-view{display:flex;background:var(--dark);border-radius:10px;overflow:hidden}
+.mkt-view span{padding:12px;color:#fff;opacity:.6}.mkt-view span.on{opacity:1;background:rgba(255,255,255,.15)}
+.mkt-layout{display:grid;grid-template-columns:260px 1fr;gap:26px;align-items:start}
+.filters{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--shadow);position:sticky;top:88px}
+.filters h4{font-size:14px;color:var(--ink);margin:18px 0 12px;text-transform:none}
+.filters h4:first-of-type{margin-top:14px}
+.filters .ttl{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--ink)}
+.fopt{display:flex;align-items:center;gap:10px;padding:7px 0;color:var(--slate);font-size:14px;cursor:pointer}
+.fopt input{width:16px;height:16px;accent-color:var(--indigo)}
+.listings{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.listing{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);transition:.18s;display:flex;flex-direction:column}
+.listing:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.listing__img{height:170px;position:relative;display:flex;align-items:flex-end;padding:16px;color:#fff}
+.listing__img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,23,42,.05),rgba(15,23,42,.55))}
+.listing__badges{position:absolute;top:14px;left:14px;right:14px;display:flex;gap:6px;flex-wrap:wrap;z-index:2}
+.lbadge{font-size:11px;font-weight:700;padding:4px 9px;border-radius:999px;color:#fff;display:inline-flex;gap:4px;align-items:center}
+.lbadge.premium{background:var(--grad)}.lbadge.standard{background:#64748b}
+.lbadge.verified{background:#10b981}.lbadge.featured{background:var(--grad-orange)}
+.listing__price{position:relative;z-index:2}
+.listing__price b{font-size:26px;font-weight:800;display:block}
+.listing__price small{opacity:.9;font-size:12px}
+.listing__meta{position:absolute;bottom:16px;right:16px;z-index:2;display:flex;gap:12px;font-size:13px}
+.listing__body{padding:18px;display:flex;flex-direction:column;gap:12px;flex:1}
+.listing__body h3{font-size:18px}
+.kv2{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px;color:var(--muted)}
+.kv2 b{color:var(--ink);display:block;font-size:15px}
+.growth{color:var(--green-d);font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:6px}
+.ltags{display:flex;flex-wrap:wrap;gap:6px}
+.ltag{background:#f1f5f9;color:var(--slate);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:600}
+.listing__cta{display:flex;gap:10px;margin-top:auto}
+.listing__cta .btn{flex:1;padding:11px 12px;font-size:14px}
+.btn--green-o{background:#fff;color:var(--green-d);border-color:#bbf7d0}
+@media(max-width:1024px){.mkt-layout{grid-template-columns:1fr}.filters{position:static}.listings{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.listings{grid-template-columns:1fr}}
+
+/* ---- Pricing ---- */
+.pricegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;align-items:start;max-width:1080px;margin:0 auto}
+.pcard{background:#fff;border:1.5px solid var(--line);border-radius:var(--r-lg);padding:34px 28px;box-shadow:var(--shadow);position:relative;transition:.18s}
+.pcard:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.pcard--pop{border-color:var(--indigo);border-width:2px;box-shadow:var(--shadow-lg);transform:translateY(-8px)}
+.pcard__tag{position:absolute;top:-16px;left:50%;transform:translateX(-50%);background:var(--grad);color:#fff;font-weight:700;font-size:13px;padding:8px 18px;border-radius:999px;display:inline-flex;gap:8px;align-items:center;white-space:nowrap;box-shadow:0 8px 16px rgba(79,70,229,.35)}
+.pcard__ic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:var(--lav);color:var(--indigo);margin-bottom:16px}
+.pcard h3{font-size:22px;font-weight:800}
+.pcard .sub{color:var(--indigo);font-weight:600;font-size:14px}
+.pcard .price{font-size:44px;font-weight:800;color:var(--ink);margin:16px 0 2px;letter-spacing:-.03em}
+.pcard .per{color:var(--muted);font-size:14px}
+.pcard .desc{color:var(--muted);font-size:14px;margin:12px 0 18px}
+.prow{background:var(--lav);border-radius:12px;padding:13px 16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:14px}
+.prow span{color:var(--muted)}.prow b{color:var(--ink)}
+.pcard .checks{list-style:none;padding:0;margin:16px 0 22px;display:grid;gap:10px}
+.pcard .checks li{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--slate)}
+.pcard .checks li svg{width:18px;height:18px;color:var(--green-d);flex:none;margin-top:1px}
+@media(max-width:900px){.pricegrid{grid-template-columns:1fr}.pcard--pop{transform:none}}
+
+/* ---- Variations ---- */
+.vchips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;max-width:720px;margin:0 auto 30px;box-shadow:var(--shadow)}
+.vchip{border:0;background:transparent;font-family:inherit;font-weight:600;color:var(--slate);padding:9px 18px;border-radius:10px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.vchip.on{background:var(--dark);color:#fff}
+.vgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.vcard{background:#fff;border:2px solid var(--line);border-radius:var(--r);padding:22px;cursor:pointer;transition:.18s}
+.vcard:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.vcard.on{border-color:var(--indigo);box-shadow:var(--shadow-lg)}
+.vcard__ic{width:44px;height:44px;border-radius:12px;background:var(--lav);color:var(--indigo);display:grid;place-items:center;margin-bottom:14px}
+.vcard h3{font-size:17px;display:flex;flex-direction:column;gap:6px}
+.vcard .vb{align-self:flex-start;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;background:#eef2ff;color:var(--indigo)}
+.vcard p{font-size:13px;color:var(--muted);margin-top:10px}
+.vtags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.vpreview{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:32px;margin-top:26px;box-shadow:var(--shadow);display:flex;gap:18px;align-items:center}
+.vpreview .vcard__ic{margin:0;width:56px;height:56px;flex:none}
+.vpreview h3{font-size:24px;color:var(--ink)}
+.vpreview p{color:var(--muted);margin-top:6px}
+@media(max-width:1024px){.vgrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.vgrid{grid-template-columns:1fr}.vpreview{flex-direction:column;text-align:center}}
+
+
+/* ===== Platform / flow app shell ===== */
+.flowbar{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:72px;z-index:40}
+.flowbar__in{display:flex;align-items:center;gap:10px;padding:14px 0;flex-wrap:wrap}
+.flowbar .role{font-weight:700;color:var(--ink);margin-right:8px;display:inline-flex;gap:8px;align-items:center}
+.flowbar .role .b{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;color:#fff;font-size:13px}
+.steps2{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.step2{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;font-weight:600}
+.step2 .n{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#eef0f6;color:var(--muted);font-size:12px;font-weight:700}
+.step2.done .n{background:var(--green);color:#fff}
+.step2.on .n{background:var(--grad);color:#fff}
+.step2.on{color:var(--ink)}
+.step2 .sep{width:20px;height:2px;background:#e7e9f5}
+.apphead{padding:36px 0 8px}
+.apphead h1{font-size:clamp(28px,3.4vw,40px);font-weight:800}
+.apphead p{color:var(--muted);font-size:17px;margin-top:10px;max-width:680px}
+.appcard{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:32px}
+.field{margin-bottom:18px}
+.field label{display:block;font-weight:600;color:var(--ink);font-size:14px;margin-bottom:7px}
+.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:13px 15px;font-family:inherit;font-size:15px;color:var(--ink);background:#fff}
+.field textarea{min-height:90px;resize:vertical}
+.grid-f{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.flow-actions{display:flex;justify-content:space-between;gap:12px;margin-top:26px;flex-wrap:wrap}
+.pill-tag{display:inline-flex;align-items:center;gap:7px;background:var(--lav);color:var(--indigo);border-radius:999px;padding:6px 14px;font-weight:600;font-size:13px}
+.pill-tag.green{background:#ecfdf5;color:var(--green-d)}
+.pill-tag.amber{background:#fef3c7;color:#b45309}
+.note{background:var(--lav);border:1px solid #e0e3f5;border-radius:12px;padding:14px 16px;color:var(--slate);font-size:14px;display:flex;gap:10px}
+.note.amber{background:#fffbeb;border-color:#fde68a;color:#92400e}
+.note.green{background:#ecfdf5;border-color:#a7f3d0;color:#065f46}
+.kyc-item{display:flex;align-items:center;gap:14px;padding:16px;border:1px solid var(--line);border-radius:14px;margin-bottom:12px}
+.kyc-item .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;color:#fff;flex:none}
+.kyc-item .st{margin-left:auto;font-weight:700;font-size:13px}
+.kyc-item .st.ok{color:var(--green-d)} .kyc-item .st.pend{color:#b45309}
+
+/* two-column flow layout with preview */
+.flow2{display:grid;grid-template-columns:1.3fr .9fr;gap:26px;align-items:start}
+@media(max-width:960px){.flow2{grid-template-columns:1fr}.grid-f{grid-template-columns:1fr}}
+.preview-teaser{position:sticky;top:150px;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden}
+.preview-teaser .cap{height:120px;background:linear-gradient(135deg,#4f46e5,#7c3aed);display:flex;align-items:flex-end;padding:16px;color:#fff}
+.preview-teaser .bd{padding:20px}
+.anon{display:inline-flex;gap:6px;align-items:center;background:rgba(255,255,255,.2);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:600}
+
+/* tier cards (reuse pcard) small */
+.tier3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:900px){.tier3{grid-template-columns:1fr}}
+.tsel{cursor:pointer;border:2px solid var(--line);border-radius:var(--r);padding:24px;background:#fff;transition:.18s}
+.tsel:hover{border-color:#c7cbf0}
+.tsel.on{border-color:var(--indigo);box-shadow:var(--shadow-lg)}
+.tsel h3{font-size:20px} .tsel .pr{font-size:30px;font-weight:800;color:var(--ink);margin:10px 0}
+.tsel .checks{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:9px;font-size:14px;color:var(--slate)}
+.tsel .checks li{display:flex;gap:9px}.tsel .checks li svg{width:17px;height:17px;color:var(--green-d);flex:none}
+
+/* dashboard */
+.dash-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+@media(max-width:900px){.dash-stats{grid-template-columns:repeat(2,1fr)}}
+.dstat{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.dstat .ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;color:#fff;margin-bottom:12px}
+.dstat b{font-size:26px;color:var(--ink);display:block;line-height:1}
+.dstat span{color:var(--muted);font-size:13px}
+.table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.table th,.table td{padding:14px 16px;text-align:left;font-size:14px;border-bottom:1px solid var(--line)}
+.table th{background:#f8f9ff;color:var(--ink);font-weight:700}
+.badge2{border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700}
+.badge2.new{background:#dbeafe;color:var(--blue)} .badge2.nda{background:#ede9fe;color:var(--purple)} .badge2.offer{background:#dcfce7;color:var(--green-d)}
+
+/* deal room */
+.deal{display:grid;grid-template-columns:200px 1fr 320px;gap:20px;align-items:start}
+@media(max-width:1100px){.deal{grid-template-columns:1fr}}
+.deal-nav{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:12px;position:sticky;top:150px}
+.deal-nav a{display:flex;align-items:center;gap:10px;padding:11px 13px;border-radius:10px;color:var(--slate);font-weight:600;font-size:14px;cursor:pointer}
+.deal-nav a.on,.deal-nav a:hover{background:var(--lav);color:var(--indigo)}
+.qa{display:flex;flex-direction:column;gap:14px}
+.msg{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+.msg .who{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.msg .av{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:700}
+.msg.q{border-left:3px solid var(--blue)} .msg.a{border-left:3px solid var(--green)}
+.agent{position:sticky;top:150px;background:linear-gradient(160deg,#f5f6ff,#fff);border:1px solid #e0e3f5;border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden}
+.agent__hd{background:var(--grad);color:#fff;padding:16px 18px;display:flex;gap:10px;align-items:center;font-weight:700}
+.agent__bd{padding:18px}
+.agent h4{font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:16px 0 8px}
+.agent h4:first-child{margin-top:0}
+.agent ul{margin:0;padding-left:18px;font-size:14px;color:var(--slate);display:grid;gap:6px}
+.agent .term{display:flex;justify-content:space-between;font-size:14px;padding:7px 0;border-bottom:1px dashed #e0e3f5}
+.agent .term b{color:var(--ink)}
+.agent .foot{font-size:12px;color:var(--muted);margin-top:14px;font-style:italic}
+.terms-card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--shadow)}
+.terms-card .row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
+.terms-card .row b{color:var(--ink)}
+
+/* pack viewer tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin-bottom:20px}
+.tabs button{border:0;background:none;font-family:inherit;font-weight:600;color:var(--muted);padding:12px 16px;cursor:pointer;border-bottom:2px solid transparent}
+.tabs button.on{color:var(--indigo);border-bottom-color:var(--indigo)}
+.tabpane{display:none} .tabpane.on{display:block}
+.watermark{position:relative}
+.wm-banner{background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:10px;padding:10px 14px;font-size:13px;font-weight:600;display:flex;gap:8px;align-items:center;margin-bottom:18px}
+
+/* escrow deferred */
+.deferred{filter:saturate(.6);opacity:.9}
+.esc-steps{display:grid;gap:14px}
+.esc-step{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}
+.esc-step .n{width:38px;height:38px;border-radius:50%;background:var(--lav);color:var(--indigo);display:grid;place-items:center;font-weight:700;flex:none}
+
+/* hub */
+.hub{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media(max-width:900px){.hub{grid-template-columns:1fr}}
+.hubcard{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;box-shadow:var(--shadow);transition:.18s;display:block}
+.hubcard:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.hubcard .ic{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;color:#fff;margin-bottom:16px;font-size:22px}
+.hubcard h3{font-size:20px} .hubcard p{color:var(--muted);font-size:14px;margin-top:8px}
+.hubcard .go{margin-top:16px;color:var(--indigo);font-weight:700;font-size:14px}
+
+
+/* ===== Dashboard shell ===== */
+.dsh{display:grid;grid-template-columns:250px 1fr;min-height:calc(100vh - 72px);background:#f6f7fb}
+.dsh-side{background:#0b1020;color:#c7cde0;padding:22px 16px;display:flex;flex-direction:column;gap:6px}
+.dsh-side .brandm{display:flex;align-items:center;gap:9px;color:#fff;font-weight:800;font-size:18px;padding:6px 8px 14px}
+.dsh-side .brandm .bx{width:30px;height:30px;border-radius:8px;background:var(--grad);display:grid;place-items:center;font-size:11px;font-weight:700}
+.roleswitch{display:flex;background:#161c33;border-radius:12px;padding:5px;margin-bottom:10px}
+.roleswitch button{flex:1;border:0;background:transparent;color:#9aa3c0;font-family:inherit;font-weight:600;font-size:13px;padding:8px;border-radius:8px;cursor:pointer}
+.roleswitch button.on{background:var(--grad);color:#fff}
+.dsh-side a,.dsh-side button.nav{display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:10px;color:#aab2cc;font-weight:600;font-size:14px;cursor:pointer;border:0;background:transparent;width:100%;text-align:left;font-family:inherit}
+.dsh-side a:hover,.dsh-side button.nav:hover{background:#161c33;color:#fff}
+.dsh-side a.on,.dsh-side button.nav.on{background:var(--grad);color:#fff}
+.dsh-side .grow{flex:1}
+.dsh-side .side-badge{margin-left:auto;background:#f43f5e;color:#fff;font-size:11px;font-weight:700;border-radius:999px;padding:1px 7px}
+.dsh-main{padding:24px 28px}
+.dsh-top{display:flex;align-items:center;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.dsh-top h1{font-size:24px;font-weight:800}
+.dsh-top .sub{color:var(--muted);font-size:14px}
+.dsh-search{margin-left:auto;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:220px}
+.dsh-search input{border:0;outline:0;font-family:inherit;font-size:14px;flex:1;background:none}
+.dsh-ic{width:42px;height:42px;border-radius:12px;background:#fff;border:1px solid var(--line);display:grid;place-items:center;position:relative;cursor:pointer}
+.dsh-ic .dot{position:absolute;top:8px;right:9px;width:8px;height:8px;background:#f43f5e;border-radius:50%}
+.dsh-av{width:42px;height:42px;border-radius:12px;background:var(--grad);color:#fff;display:grid;place-items:center;font-weight:700}
+.dspane{display:none}.dspane.on{display:block}
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.kpis.four{grid-template-columns:repeat(4,1fr)}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+.kpi .kt{display:flex;align-items:center;justify-content:space-between}
+.kpi .ki{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;color:#fff}
+.kpi b{font-size:26px;color:var(--ink);display:block;margin-top:10px;line-height:1}
+.kpi span{color:var(--muted);font-size:13px}
+.delta{font-size:12px;font-weight:700;border-radius:999px;padding:2px 8px}
+.delta.up{background:#dcfce7;color:var(--green-d)} .delta.down{background:#fee2e2;color:#dc2626}
+.spark{margin-top:10px;height:34px;width:100%}
+/* card + grid */
+.dgrid{display:grid;gap:18px;margin-top:18px}
+.d-2{grid-template-columns:1.6fr 1fr}.d-3{grid-template-columns:repeat(3,1fr)}.d-2e{grid-template-columns:1fr 1fr}
+.dcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow)}
+.dcard h3{font-size:16px;display:flex;align-items:center;justify-content:space-between}
+.dcard h3 a{color:var(--indigo);font-size:13px;font-weight:600}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:13px;color:var(--slate)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.lg-dot{width:10px;height:10px;border-radius:3px}
+/* funnel */
+.funnel{display:grid;gap:8px;margin-top:8px}
+.fn{display:flex;align-items:center;gap:12px}
+.fn .bar{height:34px;border-radius:8px;color:#fff;display:flex;align-items:center;padding:0 12px;font-weight:700;font-size:13px}
+.fn .lb{width:120px;font-size:13px;color:var(--slate);font-weight:600}
+/* activity */
+.feed{list-style:none;padding:0;margin:0;display:grid;gap:2px}
+.feed li{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.feed li:last-child{border-bottom:0}
+.feed .fi{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:#fff;flex:none;font-size:14px}
+.feed b{color:var(--ink);font-size:14px;display:block}.feed span{color:var(--muted);font-size:13px}
+.feed time{margin-left:auto;color:var(--muted);font-size:12px;white-space:nowrap}
+/* table */
+.dtable{width:100%;border-collapse:collapse}
+.dtable th,.dtable td{padding:12px 12px;text-align:left;font-size:13.5px;border-bottom:1px solid var(--line)}
+.dtable th{color:var(--muted);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.03em}
+.dtable td{color:var(--slate)}
+.st-pill{border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;display:inline-block}
+.st-pill.pend{background:#fef3c7;color:#b45309}.st-pill.ok{background:#dcfce7;color:var(--green-d)}
+.st-pill.rev{background:#dbeafe;color:var(--blue)}.st-pill.flag{background:#fee2e2;color:#dc2626}
+.mini-actions{display:flex;gap:6px}
+.mini-actions button{border:0;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
+.ma-ok{background:var(--grad-green);color:#fff}.ma-rev{background:#fef3c7;color:#b45309}.ma-no{background:#fee2e2;color:#dc2626}
+.progress{height:8px;background:#eef0f6;border-radius:99px;overflow:hidden}.progress i{display:block;height:100%;background:var(--grad);border-radius:99px}
+@media(max-width:1100px){.kpis,.kpis.four{grid-template-columns:repeat(2,1fr)}.d-2,.d-3,.d-2e{grid-template-columns:1fr}}
+@media(max-width:820px){.dsh{grid-template-columns:1fr}.dsh-side{flex-direction:row;flex-wrap:wrap;gap:6px}.dsh-side .grow,.dsh-side .brandm{display:none}.dsh-side .side-badge{display:none}}
+
+
+.view{display:none}
+html.js-on .view.active-view{display:block;animation:vin .35s ease}
+html:not(.js-on) .view:target{display:block}
+html:not(.js-on) main:not(:has(.view:target)) #home{display:block}
+@keyframes vin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+[id]{scroll-margin-top:88px}
+.menu-cb{display:none}
+@media(max-width:1024px){.nav__links{display:none;position:absolute;top:72px;left:0;right:0;background:#fff;flex-direction:column;padding:12px 28px;border-bottom:1px solid var(--line);box-shadow:var(--shadow);z-index:70}
+ .nav__links.show,#clerko-menu:checked ~ .nav__links{display:flex}
+ .nav__toggle{display:inline-flex;cursor:pointer}}
+</style></head><body>
+<header class="nav"><div class="container nav__in">
+  <a class="brand" href="#home" data-page="home"><span class="brand__logo">Clerko</span> M&amp;A</a>
+  <input type="checkbox" id="clerko-menu" class="menu-cb">
+  <nav class="nav__links">
+    <a href="#home" data-page="home" class="active">🏠 Home</a>
+    <a href="#variations" data-page="variations">▤ Variations</a>
+    <a href="#marketplace" data-page="marketplace">🏢 Marketplace</a>
+    <a href="#pricing" data-page="pricing">💳 Pricing</a>
+    <a href="#platform" data-page="platform">🧭 Platform</a>
+  </nav>
+  <div class="nav__right">
+    <a class="signin" href="#dashboard" data-page="dashboard">Sign In</a>
+    <a class="btn btn--dark btn--sm" href="#platform" data-page="platform">Get Started</a>
+    <label class="nav__toggle" for="clerko-menu" aria-label="Menu"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></label>
+  </div>
+</div></header>
+<main id="app">
+<section class="view active-view" id="home" data-title="Home">
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero__grid">
+    <div>
+      <span class="pill">⚡ #1 M&amp;A Platform in the Middle East</span>
+      <h1>The Future of <span class="accent">M&amp;A is Here</span></h1>
+      <p class="hero__lead">Connect buyers and sellers on Bahrain's premier M&amp;A marketplace. <b>Secure transactions, expert guidance, and global reach</b> for your business deals.</p>
+      <div class="hero__cta">
+        <a class="btn btn--green" data-page="marketplace" href="#marketplace">🏢 Sell Your Business
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        <a class="btn btn--outline" data-page="marketplace" href="#marketplace">👥 Find Opportunities</a>
+      </div>
+    </div>
+    <div class="reveal in" style="position:relative">
+      <div class="mock">
+        <div class="mock__row"><span class="mock__dot" style="background:var(--grad)"></span><span class="mock__bar"></span></div>
+        <div class="mock__stats">
+          <div class="mock__stat g"><b>$12.7B</b><span>Deal Value</span></div>
+          <div class="mock__stat b"><b>2,500+</b><span>Deals Closed</span></div>
+        </div>
+        <div class="mock__listing"><span class="mock__dot" style="width:30px;height:30px;background:var(--grad-purple)"></span><span class="mock__price">$2.5M</span></div>
+        <div class="mock__listing"><span class="mock__dot" style="width:30px;height:30px;background:var(--grad-orange)"></span><span class="mock__price">$2.5M</span></div>
+        <div class="mock__listing"><span class="mock__dot" style="width:30px;height:30px;background:var(--grad-blue)"></span><span class="mock__price">$2.5M</span></div>
+      </div>
+      <div class="float tr"><span class="ic" style="background:var(--grad-green)">✓</span><div><b>Deal Completed</b><span>$3.2M · TechCorp</span></div></div>
+      <div class="float bl"><span class="ic" style="background:var(--grad)">💬</span><div><b>New Inquiry</b><span>Manufacturing Co.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section">
+  <div class="container">
+    <div class="sec-head reveal"><h2>Everything you need to close the deal</h2><p>A complete platform built for Bahrain's M&amp;A market — from discovery to closing.</p></div>
+    <div class="grid g4 reveal">
+      <div class="card"><div class="tile" style="background:var(--grad-green)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 7v6c0 5 3.5 7.5 8 9 4.5-1.5 8-4 8-9V7z"/></svg></div><h3>Secure &amp; Confidential</h3><p>Bank-level security with NDA protection</p></div>
+      <div class="card"><div class="tile" style="background:var(--grad-blue)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg></div><h3>Fast Transactions</h3><p>Average deal completion in 45 days</p></div>
+      <div class="card"><div class="tile" style="background:var(--grad-purple)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4L12 17l-6.3 4.4L8 14 2 9.4h7.6z"/></svg></div><h3>Expert Support</h3><p>Dedicated M&amp;A specialists guide you</p></div>
+      <div class="card"><div class="tile" style="background:var(--grad-orange)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M2 12h20M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg></div><h3>Global Reach</h3><p>Access to international markets</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUSTED -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="band reveal">
+      <h2>Trusted by Leading Financial Institutions</h2>
+      <p>Join Bahrain's most respected banks, investment firms, and advisory houses on our platform</p>
+      <div class="band__logos"><span>BENEFIT</span><span>NBB</span><span>GFH</span><span>Investcorp</span><span>Bahrain EDB</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY (interactive seller/buyer) -->
+<section class="section" style="background:var(--lav)">
+  <div class="container">
+    <div class="sec-head reveal"><h2>Built for buyers and sellers</h2><p>A guided journey whichever side of the deal you're on</p></div>
+    <div class="seg reveal" data-seg>
+      <button class="on" data-side="seller"><span class="si">🏢</span><span>Business Sellers<small>Maximize your business value</small></span></button>
+      <button data-side="buyer"><span class="si">🎯</span><span>Business Buyers<small>Discover strategic opportunities</small></span></button>
+    </div>
+    <div class="journey reveal" data-journey>
+      <div>
+        <div class="journey__badges"><span class="journey__badge" data-j-step>Step 1 of 4</span><span class="journey__badge">📈 <b data-j-pct>98%</b></span></div>
+        <h3 data-j-title>Complete Professional Verification</h3>
+        <p style="color:rgba(255,255,255,.9);margin-top:12px" data-j-desc>Get verified with our secure KYC process and unlock full access to qualified opportunities.</p>
+        <div class="metrics" style="margin-top:22px">
+          <div class="metric"><span>⏱ Timeframe</span><b data-j-time>2-3 business days</b></div>
+          <div class="metric"><span>⭐ Success Rate</span><b>98%</b></div>
+          <div class="metric"><span>🎁 Benefits</span><b data-j-benefit>Verified badge + priority listing</b></div>
+        </div>
+      </div>
+      <div class="journey__mock"><div class="box"><div class="l" style="width:60%"></div><div class="l" style="width:90%"></div><div class="l" style="width:40%"></div><div style="width:44px;height:44px;border-radius:50%;border:3px solid #10b981;margin-top:12px"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- NAVIGATE SUCCESS -->
+<section class="section">
+  <div class="container">
+    <div class="sec-head reveal"><h2>Navigate Your <span class="accent">M&amp;A Success</span></h2><p>Experience Bahrain's most sophisticated M&amp;A platform. Our proven methodology combines cutting-edge technology with regulatory expertise to deliver exceptional results for both buyers and sellers.</p></div>
+    <div class="statline reveal"><span><span class="dot" style="background:var(--green)"></span>1,247+ Verified Users</span><span><span class="dot" style="background:var(--blue)"></span>89 Active Listings</span><span><span class="dot" style="background:var(--purple)"></span>BD 142M+ Deal Volume</span></div>
+    <div class="success reveal">
+      <div class="success-card"><div class="top"><span class="tag g">🏢 Seller Success</span><span class="amt">BD 2.4M<small>12 weeks</small></span></div><h3>Manufacturing Company</h3><p style="margin-top:6px">Sold to a regional strategic buyer above asking price.</p><div style="margin-top:14px"><span class="chip-up">↑ +127% vs valuation</span></div></div>
+      <div class="success-card"><div class="top"><span class="tag b">🎯 Buyer Success</span><span class="amt">BD 850K<small>8 weeks</small></span></div><h3>Tech Startup</h3><p style="margin-top:6px">Acquired a complementary SaaS business to expand market share.</p><div style="margin-top:14px"><span class="chip-up">↑ +89% growth in 6 months</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section" style="background:var(--lav)">
+  <div class="container">
+    <div class="sec-head reveal"><h2>What Our Clients Say</h2><p>Real stories from successful M&amp;A transactions</p></div>
+    <div class="quote reveal" data-testi>
+      <div class="stars">★★★★★</div>
+      <blockquote data-t-quote>"The platform's due diligence tools saved us weeks of work. Highly recommended."</blockquote>
+      <div class="who"><div class="avatar" data-t-init>MR</div><div style="text-align:left"><b data-t-name>Michael Rodriguez</b><span data-t-role>Business Owner</span><br><span class="co" data-t-co>TechFlow Solutions</span></div></div>
+      <div class="dots" data-t-dots></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+  <div class="container">
+    <div class="cta reveal">
+      <h2>Ready to make your next deal?</h2>
+      <p>Join Bahrain's premier M&amp;A marketplace and connect with verified buyers and sellers today.</p>
+      <div class="hero__cta" style="justify-content:center;margin-top:0">
+        <a class="btn btn--dark" data-page="marketplace" href="#marketplace">Get Started</a>
+        <a class="btn btn--outline" data-page="marketplace" href="#marketplace">Browse Marketplace</a>
+      </div>
+    </div>
+  </div>
+</section>
+</section>
+<!-- ===================== MARKETPLACE ===================== -->
+<section class="view" id="marketplace" data-title="Marketplace">
+  <section class="subhero"><div class="container">
+    <h1><span class="accent">M&amp;A Marketplace</span></h1>
+    <p>Discover and acquire exceptional businesses in Bahrain's thriving market</p>
+    <div class="mkt-toolbar">
+      <div class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input data-search placeholder="Search companies, industries, or locations..."></div>
+      <span class="mkt-sort">↕ Featured First ▾</span>
+      <span class="mkt-view"><span class="on">▦</span><span>☰</span></span>
+    </div>
+  </div></section>
+  <section class="section" style="padding-top:20px"><div class="container">
+    <div class="mkt-layout">
+      <aside class="filters reveal">
+        <div class="ttl">▽ Filters</div>
+        <h4>Quick Filters</h4>
+        <label class="fopt"><input type="checkbox" data-filter="verified">Verified Only</label>
+        <label class="fopt"><input type="checkbox" data-filter="featured">Featured Only</label>
+        <h4>Industry</h4>
+        <label class="fopt"><input type="checkbox">Technology</label>
+        <label class="fopt"><input type="checkbox">Manufacturing</label>
+        <label class="fopt"><input type="checkbox">Consulting</label>
+        <label class="fopt"><input type="checkbox">Food &amp; Beverage</label>
+        <label class="fopt"><input type="checkbox">Marketing</label>
+        <h4>Location</h4>
+        <label class="fopt"><input type="checkbox">Manama, Bahrain</label>
+        <label class="fopt"><input type="checkbox">Riffa, Bahrain</label>
+        <label class="fopt"><input type="checkbox">Muharraq, Bahrain</label>
+        <label class="fopt"><input type="checkbox">Sitra, Bahrain</label>
+      </aside>
+      <div>
+        <h2 style="font-size:22px;margin-bottom:20px" data-count>6 Companies Available</h2>
+        <div class="listings reveal">
+
+          <article class="listing" data-cat="verified featured">
+            <div class="listing__img" style="background:linear-gradient(135deg,#1e293b,#334155)">
+              <div class="listing__badges"><span class="lbadge premium">⚡ Premium</span><span class="lbadge verified">✓ Verified</span><span class="lbadge featured">✦ Featured</span></div>
+              <div class="listing__price"><b>BD 8.5M</b><small>Asking Price</small></div>
+              <div class="listing__meta"><span>👁 245</span><span>♥ 8</span></div>
+            </div>
+            <div class="listing__body">
+              <h3>Premium Tech Solutions</h3>
+              <div class="kv2"><div><b>BD 3.2M</b>Revenue</div><div><b>45</b>Employees</div></div>
+              <div style="display:flex;justify-content:space-between;align-items:center"><span class="growth">↗ +25% Growth</span><span class="ltag">Est. 2018</span></div>
+              <div class="ltags"><span class="ltag">Proprietary Technology</span><span class="ltag">Strong Client Base</span><span class="ltag">+1 more</span></div>
+              <div class="listing__cta"><a class="btn btn--grad" href="#" data-demo="Listing details — demo">↗ View Details</a><a class="btn btn--green-o" href="#" data-demo="Contact owner — demo">💬 Contact</a></div>
+            </div>
+          </article>
+
+          <article class="listing" data-cat="verified featured">
+            <div class="listing__img" style="background:linear-gradient(135deg,#7c3aed,#db2777)">
+              <div class="listing__badges"><span class="lbadge premium">⚡ Premium</span><span class="lbadge verified">✓ Verified</span><span class="lbadge featured">✦ Featured</span></div>
+              <div class="listing__price"><b>BD 2.8M</b><small>Asking Price</small></div>
+              <div class="listing__meta"><span>👁 156</span><span>♥ 12</span></div>
+            </div>
+            <div class="listing__body">
+              <h3>Bahrain Consulting Group</h3>
+              <div class="kv2"><div><b>BD 950K</b>Revenue</div><div><b>18</b>Employees</div></div>
+              <div style="display:flex;justify-content:space-between;align-items:center"><span class="growth">↗ +35% Growth</span><span class="ltag">Est. 2019</span></div>
+              <div class="ltags"><span class="ltag">Digital Transformation</span><span class="ltag">High-Value Clients</span><span class="ltag">+1 more</span></div>
+              <div class="listing__cta"><a class="btn btn--grad" href="#" data-demo="Listing details — demo">↗ View Details</a><a class="btn btn--green-o" href="#" data-demo="Contact owner — demo">💬 Contact</a></div>
+            </div>
+          </article>
+
+          <article class="listing" data-cat="verified">
+            <div class="listing__img" style="background:linear-gradient(135deg,#334155,#0ea5e9)">
+              <div class="listing__badges"><span class="lbadge standard">☆ Standard</span><span class="lbadge verified">✓ Verified</span></div>
+              <div class="listing__price"><b>BD 5.2M</b><small>Asking Price</small></div>
+              <div class="listing__meta"><span>👁 189</span><span>♥ 5</span></div>
+            </div>
+            <div class="listing__body">
+              <h3>Gulf Manufacturing Co.</h3>
+              <div class="kv2"><div><b>BD 4.1M</b>Revenue</div><div><b>120</b>Employees</div></div>
+              <div style="display:flex;justify-content:space-between;align-items:center"><span class="growth">↗ +12% Growth</span><span class="ltag">Est. 2015</span></div>
+              <div class="ltags"><span class="ltag">ISO Certified</span><span class="ltag">Export Ready</span><span class="ltag">+1 more</span></div>
+              <div class="listing__cta"><a class="btn btn--grad" href="#" data-demo="Listing details — demo">↗ View Details</a><a class="btn btn--green-o" href="#" data-demo="Contact owner — demo">💬 Contact</a></div>
+            </div>
+          </article>
+
+          <article class="listing" data-cat="verified">
+            <div class="listing__img" style="background:linear-gradient(135deg,#059669,#10b981)">
+              <div class="listing__badges"><span class="lbadge standard">☆ Standard</span><span class="lbadge verified">✓ Verified</span></div>
+              <div class="listing__price"><b>BD 1.4M</b><small>Asking Price</small></div>
+              <div class="listing__meta"><span>👁 98</span><span>♥ 6</span></div>
+            </div>
+            <div class="listing__body">
+              <h3>Fresh Foods Bahrain</h3>
+              <div class="kv2"><div><b>BD 720K</b>Revenue</div><div><b>32</b>Employees</div></div>
+              <div style="display:flex;justify-content:space-between;align-items:center"><span class="growth">↗ +18% Growth</span><span class="ltag">Est. 2017</span></div>
+              <div class="ltags"><span class="ltag">Retail Network</span><span class="ltag">Brand Recognition</span></div>
+              <div class="listing__cta"><a class="btn btn--grad" href="#" data-demo="Listing details — demo">↗ View Details</a><a class="btn btn--green-o" href="#" data-demo="Contact owner — demo">💬 Contact</a></div>
+            </div>
+          </article>
+
+          <article class="listing" data-cat="verified featured">
+            <div class="listing__img" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">
+              <div class="listing__badges"><span class="lbadge premium">⚡ Premium</span><span class="lbadge verified">✓ Verified</span><span class="lbadge featured">✦ Featured</span></div>
+              <div class="listing__price"><b>BD 3.9M</b><small>Asking Price</small></div>
+              <div class="listing__meta"><span>👁 210</span><span>♥ 15</span></div>
+            </div>
+            <div class="listing__body">
+              <h3>Marina Hospitality</h3>
+              <div class="kv2"><div><b>BD 2.6M</b>Revenue</div><div><b>85</b>Employees</div></div>
+              <div style="display:flex;justify-content:space-between;align-items:center"><span class="growth">↗ +22% Growth</span><span class="ltag">Est. 2016</span></div>
+              <div class="ltags"><span class="ltag">Prime Location</span><span class="ltag">Loyal Customers</span><span class="ltag">+1 more</span></div>
+              <div class="listing__cta"><a class="btn btn--grad" href="#" data-demo="Listing details — demo">↗ View Details</a><a class="btn btn--green-o" href="#" data-demo="Contact owner — demo">💬 Contact</a></div>
+            </div>
+          </article>
+
+          <article class="listing" data-cat="">
+            <div class="listing__img" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">
+              <div class="listing__badges"><span class="lbadge standard">☆ Standard</span></div>
+              <div class="listing__price"><b>BD 680K</b><small>Asking Price</small></div>
+              <div class="listing__meta"><span>👁 74</span><span>♥ 3</span></div>
+            </div>
+            <div class="listing__body">
+              <h3>Creative Media Agency</h3>
+              <div class="kv2"><div><b>BD 410K</b>Revenue</div><div><b>14</b>Employees</div></div>
+              <div style="display:flex;justify-content:space-between;align-items:center"><span class="growth">↗ +40% Growth</span><span class="ltag">Est. 2020</span></div>
+              <div class="ltags"><span class="ltag">Digital First</span><span class="ltag">Recurring Revenue</span></div>
+              <div class="listing__cta"><a class="btn btn--grad" href="#" data-demo="Listing details — demo">↗ View Details</a><a class="btn btn--green-o" href="#" data-demo="Contact owner — demo">💬 Contact</a></div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </div>
+  </div></section>
+</section>
+
+<!-- ===================== PRICING ===================== -->
+<section class="view" id="pricing" data-title="Pricing">
+  <section class="subhero" style="text-align:center;padding-bottom:8px"><div class="container">
+    <h1><span class="accent">Choose Your Success Plan</span></h1>
+    <p style="max-width:720px;margin:12px auto 0">Transparent pricing designed for your success. Join thousands of successful businesses and investors who trust Clerko M&amp;A for their strategic transactions in Bahrain and beyond.</p>
+  </div></section>
+  <section class="section" style="padding-top:26px"><div class="container">
+    <div class="seg reveal" data-seg style="max-width:520px">
+      <button class="on" data-side="seller"><span class="si">🏢</span><span>Business Sellers</span></button>
+      <button data-side="buyer"><span class="si">🎯</span><span>Business Buyers</span></button>
+    </div>
+    <div class="sec-head reveal" style="margin-bottom:40px"><h2 data-plan-title>Business Listing Plans</h2><p data-plan-sub>Showcase your business with confidence. Our comprehensive verification process and premium marketplace ensure you connect with serious, qualified buyers.</p></div>
+    <div class="pricegrid reveal">
+      <div class="pcard">
+        <div class="pcard__ic">▤</div>
+        <h3>Essential</h3><div class="sub">Perfect Start</div>
+        <div class="price">BD 299</div><div class="per">per month</div>
+        <p class="desc">Ideal for small businesses taking their first step into M&amp;A</p>
+        <div class="prow"><span>Duration</span><b>3 months</b></div>
+        <div class="prow"><span>Inquiries</span><b>10 / month</b></div>
+        <ul class="checks">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Verified business listing</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Standard marketplace placement</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Email support</li>
+        </ul>
+        <a class="btn btn--outline" style="width:100%" href="#" data-demo="Start Essential — demo">Get Started</a>
+      </div>
+      <div class="pcard pcard--pop">
+        <span class="pcard__tag">👑 Most Popular ✦</span>
+        <div class="pcard__ic" style="background:var(--grad);color:#fff">🚀</div>
+        <h3>Professional</h3><div class="sub">Best Value</div>
+        <div class="price">BD 699</div><div class="per">per month</div>
+        <p class="desc">Complete solution for established businesses seeking premium exposure</p>
+        <div class="prow"><span>Duration</span><b>6 months</b></div>
+        <div class="prow"><span>Inquiries</span><b>Unlimited inquiries</b></div>
+        <ul class="checks">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Featured &amp; verified listing</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Priority marketplace placement</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Dedicated M&amp;A advisor</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Analytics dashboard</li>
+        </ul>
+        <a class="btn btn--grad" style="width:100%" href="#" data-demo="Start Professional — demo">Get Started</a>
+      </div>
+      <div class="pcard">
+        <div class="pcard__ic">◈</div>
+        <h3>Enterprise</h3><div class="sub" style="color:var(--purple)">White Glove</div>
+        <div class="price">BD 1,299</div><div class="per">per month</div>
+        <p class="desc">Premium solution with dedicated support for high-value transactions</p>
+        <div class="prow"><span>Duration</span><b>12 months</b></div>
+        <div class="prow"><span>Inquiries</span><b>Unlimited + VIP</b></div>
+        <ul class="checks">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Everything in Professional</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>White-glove deal management</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Dedicated transaction team</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Legal &amp; due-diligence support</li>
+        </ul>
+        <a class="btn btn--outline" style="width:100%" href="#" data-demo="Start Enterprise — demo">Contact Sales</a>
+      </div>
+    </div>
+  </div></section>
+</section>
+
+<!-- ===================== VARIATIONS ===================== -->
+<section class="view" id="variations" data-title="Variations">
+  <section class="subhero" style="text-align:center"><div class="container">
+    <h1><span class="accent">Design Variations</span></h1>
+    <p style="max-width:680px;margin:12px auto 0">Explore five distinct presentation styles for the Clerko M&amp;A platform — pick the look that fits your brand.</p>
+  </div></section>
+  <section class="section" style="padding-top:24px"><div class="container">
+    <div class="vchips reveal" data-vchips>
+      <button class="vchip on" data-vf="all">All <b style="background:#fff;color:var(--dark);border-radius:999px;padding:0 8px;margin-left:4px">5</b></button>
+      <button class="vchip" data-vf="Professional">Professional</button>
+      <button class="vchip" data-vf="Modern">Modern</button>
+      <button class="vchip" data-vf="Minimal">Minimal</button>
+      <button class="vchip" data-vf="Financial">Financial</button>
+      <button class="vchip" data-vf="Bold">Bold</button>
+    </div>
+    <div class="vgrid reveal" data-vgrid>
+      <div class="vcard on" data-vtype="Professional" data-vtitle="Classic Corporate" data-vdesc="Traditional business-focused layout with professional styling and corporate appeal">
+        <div class="vcard__ic">▤</div><h3>Classic Corporate<span class="vb">Professional</span></h3>
+        <p>Traditional business-focused layout with professional styling and corporate appeal</p>
+        <div class="vtags"><span class="ltag">Corporate styling</span><span class="ltag">Traditional layout</span></div>
+      </div>
+      <div class="vcard" data-vtype="Modern" data-vtitle="Modern SaaS" data-vdesc="Contemporary software-as-a-service style with clean design and modern aesthetics">
+        <div class="vcard__ic">🖥</div><h3>Modern SaaS<span class="vb">Modern</span></h3>
+        <p>Contemporary software-as-a-service style with clean design and modern aesthetics</p>
+        <div class="vtags"><span class="ltag">Clean design</span><span class="ltag">Modern aesthetics</span></div>
+      </div>
+      <div class="vcard" data-vtype="Minimal" data-vtitle="Minimal Professional" data-vdesc="Clean, minimal approach focusing on essential information with plenty of white space">
+        <div class="vcard__ic">▦</div><h3>Minimal Professional<span class="vb">Minimal</span></h3>
+        <p>Clean, minimal approach focusing on essential information with plenty of white space</p>
+        <div class="vtags"><span class="ltag">Minimal design</span><span class="ltag">White space</span></div>
+      </div>
+      <div class="vcard" data-vtype="Financial" data-vtitle="Investment Focus" data-vdesc="Finance and investment-oriented design targeting serious investors and financial professionals">
+        <div class="vcard__ic">📈</div><h3>Investment Focus<span class="vb">Financial</span></h3>
+        <p>Finance and investment-oriented design targeting serious investors and financial professionals</p>
+        <div class="vtags"><span class="ltag">Investment focus</span><span class="ltag">Financial data</span></div>
+      </div>
+      <div class="vcard" data-vtype="Bold" data-vtitle="Market Leader" data-vdesc="Bold, market-leading presentation with dynamic elements and strong visual impact">
+        <div class="vcard__ic">🏆</div><h3>Market Leader<span class="vb">Bold</span></h3>
+        <p>Bold, market-leading presentation with dynamic elements and strong visual impact</p>
+        <div class="vtags"><span class="ltag">Bold design</span><span class="ltag">Market leadership</span></div>
+      </div>
+    </div>
+    <div class="vpreview reveal" data-vpreview>
+      <div class="vcard__ic">▤</div>
+      <div><h3 data-vp-title>Classic Corporate</h3><p data-vp-desc>Traditional business-focused layout with professional styling and corporate appeal</p></div>
+      <a class="btn btn--grad" style="margin-left:auto" data-page="home" href="#home" data-demo="Applying variation — demo">Preview Style</a>
+    </div>
+  </div></section>
+</section>
+<!-- ===================== PLATFORM HUB ===================== -->
+<section class="view" id="platform" data-title="Platform">
+  <section class="subhero" style="text-align:center"><div class="container">
+    <span class="pill">🧭 Interactive Product Flows</span>
+    <h1 style="margin-top:18px"><span class="accent">Clerko Platform</span> — Guided Journeys</h1>
+    <p style="max-width:720px;margin:12px auto 0">Walk the core Clerko M&amp;A journeys end to end. A neutral <b>Clerko Agent</b> mediates between the two sides — surfacing information and keeping each side oriented, while every decision stays with the parties.</p>
+  </div></section>
+  <section class="section" style="padding-top:24px"><div class="container">
+    <div class="hub reveal">
+      <a class="hubcard" href="#s-onboard" data-page="s-onboard"><div class="ic" style="background:var(--grad-green)">🏢</div><h3>Seller Journey</h3><p>Scenario 1 — Onboard &amp; verify, build a listing, choose a tier, go live as an anonymised teaser, and track buyer interest.</p><div class="go">Start as a Seller →</div></a>
+      <a class="hubcard" href="#b-prefs" data-page="b-prefs"><div class="ic" style="background:var(--grad)">🎯</div><h3>Buyer Journey</h3><p>Scenario 2 — Set preferences, discover a fit, sign the NDA, unlock the Company Details Pack.</p><div class="go">Start as a Buyer →</div></a>
+      <a class="hubcard" href="#dealroom" data-page="dealroom"><div class="ic" style="background:var(--grad-purple)">🤝</div><h3>Deal Room</h3><p>Scenario 3 — Structured Q&amp;A, staged documents, indicative offer, and the Clerko Agent summary — to agreed headline terms.</p><div class="go">Enter the Deal Room →</div></a>
+      <a class="hubcard" href="#dashboard" data-page="dashboard"><div class="ic" style="background:var(--grad-blue)">📊</div><h3>User Workspace</h3><p>The full member dashboard — KPIs, deal pipeline, active deal rooms, documents, and billing, with a Seller/Buyer switch.</p><div class="go">Open the dashboard →</div></a>
+      <a class="hubcard" href="#admin" data-page="admin"><div class="ic" style="background:linear-gradient(135deg,#0ea5e9,#4f46e5)">🛡️</div><h3>Admin Console</h3><p>Platform health — revenue, moderation queue, KYC/KYB, deals, and compliance flags in one command centre.</p><div class="go">Open the admin console →</div></a>
+    </div>
+    <div class="note" style="margin-top:24px">🔒 Scenario 4 (escrow, ownership transfer &amp; completion) is <b>deferred</b> for this round — included as a <a href="#escrow" data-page="escrow" style="color:var(--indigo);font-weight:700">context preview</a>.</div>
+  </div></section>
+</section>
+
+<!-- ============ SCENARIO 1 — SELLER ============ -->
+<!-- S1.1 Onboarding / KYC-KYB -->
+<section class="view" id="s-onboard" data-title="Seller Onboarding">
+  <div class="flowbar"><div class="container flowbar__in">
+    <span class="role"><span class="b" style="background:var(--grad-green)">🏢</span> Seller Journey</span>
+    <div class="steps2">
+      <span class="step2 on"><span class="n">1</span>Verify</span><span class="sep"></span>
+      <span class="step2"><span class="n">2</span>Listing</span><span class="sep"></span>
+      <span class="step2"><span class="n">3</span>Tier</span><span class="sep"></span>
+      <span class="step2"><span class="n">4</span>Review</span><span class="sep"></span>
+      <span class="step2"><span class="n">5</span>Dashboard</span>
+    </div>
+  </div></div>
+  <section class="section"><div class="container" style="max-width:820px">
+    <div class="apphead"><h1>Verify your identity &amp; business</h1><p>Before you can list, we confirm who you are (KYC), the business (KYB), and that you're authorised to sell. <span class="pill-tag amber">May be completed later</span></p></div>
+    <div class="appcard reveal">
+      <div class="kyc-item"><div class="ic" style="background:var(--grad-blue)">🪪</div><div><b style="color:var(--ink)">Identity verification (KYC)</b><br><span style="color:var(--muted);font-size:14px">Government ID + liveness check</span></div><span class="st ok">✓ Verified</span></div>
+      <div class="kyc-item"><div class="ic" style="background:var(--grad-purple)">🏢</div><div><b style="color:var(--ink)">Business verification (KYB)</b><br><span style="color:var(--muted);font-size:14px">CR extract via Sijilat, UBO check</span></div><span class="st ok">✓ Verified</span></div>
+      <div class="kyc-item"><div class="ic" style="background:var(--grad-green)">✍️</div><div><b style="color:var(--ink)">Authority to sell</b><br><span style="color:var(--muted);font-size:14px">Confirm you're authorised to act for the company</span></div><span class="st pend">● In review</span></div>
+      <div class="note green" style="margin-top:8px">🛡️ Your documents are encrypted and only used for verification and compliance.</div>
+      <div class="flow-actions"><a class="btn btn--outline" href="#platform" data-page="platform">← Back</a><a class="btn btn--green" href="#s-listing" data-page="s-listing">Continue to listing →</a></div>
+    </div>
+  </div></section>
+</section>
+
+<!-- S1.2 Listing builder -->
+<section class="view" id="s-listing" data-title="Listing Builder">
+  <div class="flowbar"><div class="container flowbar__in">
+    <span class="role"><span class="b" style="background:var(--grad-green)">🏢</span> Seller Journey</span>
+    <div class="steps2">
+      <span class="step2 done"><span class="n">✓</span>Verify</span><span class="sep"></span>
+      <span class="step2 on"><span class="n">2</span>Listing</span><span class="sep"></span>
+      <span class="step2"><span class="n">3</span>Tier</span><span class="sep"></span>
+      <span class="step2"><span class="n">4</span>Review</span><span class="sep"></span>
+      <span class="step2"><span class="n">5</span>Dashboard</span>
+    </div>
+  </div></div>
+  <section class="section"><div class="container">
+    <div class="apphead"><h1>Build your listing</h1><p>Complete the structured profile. Buyers first see an <b>anonymised teaser</b> — your identity stays gated behind an NDA.</p></div>
+    <div class="flow2">
+      <div class="appcard reveal">
+        <div class="grid-f">
+          <div class="field"><label>Sector</label><select><option>Technology</option><option>Manufacturing</option><option>Consulting</option><option>Food &amp; Beverage</option></select></div>
+          <div class="field"><label>Company size</label><select><option>1–10 employees</option><option selected>11–50 employees</option><option>51–200 employees</option></select></div>
+        </div>
+        <div class="grid-f">
+          <div class="field"><label>Annual revenue (BD)</label><input value="3,200,000"></div>
+          <div class="field"><label>EBITDA (BD)</label><input value="640,000"></div>
+        </div>
+        <div class="field"><label>Financial summary</label><textarea>Profitable, recurring-revenue SaaS with 25% YoY growth and a diversified client base across the GCC.</textarea></div>
+        <div class="grid-f">
+          <div class="field"><label>Asking price (BD)</label><input value="8,500,000"></div>
+          <div class="field"><label>Deal preference</label><select><option>Full sale</option><option>Majority stake</option><option>Minority stake</option></select></div>
+        </div>
+        <div class="flow-actions"><a class="btn btn--outline" href="#s-onboard" data-page="s-onboard">← Back</a><a class="btn btn--green" href="#s-tier" data-page="s-tier">Save &amp; choose tier →</a></div>
+      </div>
+      <div class="preview-teaser reveal">
+        <div class="cap"><div><span class="anon">🔒 Identity gated</span><div style="font-size:22px;font-weight:800;margin-top:8px">BD 8.5M</div><small>Asking Price</small></div></div>
+        <div class="bd">
+          <div style="font-weight:700;color:var(--ink)">Anonymised Teaser Preview</div>
+          <p style="color:var(--muted);font-size:14px;margin-top:6px">Profitable Technology company · 11–50 staff · GCC</p>
+          <div class="kv2" style="margin-top:14px"><div><b>BD 3.2M</b>Revenue</div><div><b>+25%</b>Growth</div></div>
+          <div class="ltags" style="margin-top:12px"><span class="ltag">Recurring revenue</span><span class="ltag">Diversified clients</span></div>
+        </div>
+      </div>
+    </div>
+  </div></section>
+</section>
+
+<!-- S1.3 Tier selection -->
+<section class="view" id="s-tier" data-title="Choose Tier">
+  <div class="flowbar"><div class="container flowbar__in">
+    <span class="role"><span class="b" style="background:var(--grad-green)">🏢</span> Seller Journey</span>
+    <div class="steps2">
+      <span class="step2 done"><span class="n">✓</span>Verify</span><span class="sep"></span>
+      <span class="step2 done"><span class="n">✓</span>Listing</span><span class="sep"></span>
+      <span class="step2 on"><span class="n">3</span>Tier</span><span class="sep"></span>
+      <span class="step2"><span class="n">4</span>Review</span><span class="sep"></span>
+      <span class="step2"><span class="n">5</span>Dashboard</span>
+    </div>
+  </div></div>
+  <section class="section"><div class="container">
+    <div class="apphead"><h1>Choose your subscription tier</h1><p>Higher tiers unlock more visibility, valuation &amp; documentation support, and closer involvement from our team.</p></div>
+    <div class="tier3 reveal" data-tiersel>
+      <div class="tsel" data-tier><h3>Standard</h3><div class="pr">BD 299<span style="font-size:14px;color:var(--muted)">/mo</span></div>
+        <ul class="checks"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Anonymised teaser listing</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Standard visibility</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Interest pipeline dashboard</li></ul></div>
+      <div class="tsel on" data-tier><h3>Premium <span class="pill-tag" style="margin-left:6px">Popular</span></h3><div class="pr">BD 699<span style="font-size:14px;color:var(--muted)">/mo</span></div>
+        <ul class="checks"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Everything in Standard</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Priority placement + valuation support</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Documentation assistance</li></ul></div>
+      <div class="tsel" data-tier><h3>Enterprise</h3><div class="pr">BD 1,299<span style="font-size:14px;color:var(--muted)">/mo</span></div>
+        <ul class="checks"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Everything in Premium</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Dedicated deal advisor</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Full valuation &amp; documentation service</li></ul></div>
+    </div>
+    <div class="flow-actions"><a class="btn btn--outline" href="#s-listing" data-page="s-listing">← Back</a><a class="btn btn--green" href="#s-review" data-page="s-review">Submit for review →</a></div>
+  </div></section>
+</section>
+
+<!-- S1.4 Admin review -->
+<section class="view" id="s-review" data-title="Under Review">
+  <div class="flowbar"><div class="container flowbar__in">
+    <span class="role"><span class="b" style="background:var(--grad-green)">🏢</span> Seller Journey</span>
+    <div class="steps2">
+      <span class="step2 done"><span class="n">✓</span>Verify</span><span class="sep"></span>
+      <span class="step2 done"><span class="n">✓</span>Listing</span><span class="sep"></span>
+      <span class="step2 done"><span class="n">✓</span>Tier</span><span class="sep"></span>
+      <span class="step2 on"><span class="n">4</span>Review</span><span class="sep"></span>
+      <span class="step2"><span class="n">5</span>Dashboard</span>
+    </div>
+  </div></div>
+  <section class="section"><div class="container" style="max-width:760px">
+    <div class="appcard reveal text-center" style="text-align:center">
+      <div style="width:72px;height:72px;border-radius:50%;background:#fef3c7;color:#b45309;display:grid;place-items:center;font-size:30px;margin:0 auto 18px">🔍</div>
+      <h1 style="font-size:28px">Listing under admin review</h1>
+      <p style="color:var(--muted);margin-top:12px;max-width:520px;margin-left:auto;margin-right:auto">Our team is checking your listing for completeness and quality. We'll request any revisions in-platform — nothing goes live until it's approved.</p>
+      <div class="note amber" style="margin-top:22px;text-align:left">📝 <b>Revision requested:</b> Please add the last 2 years of audited financials to the documents section. Reply in-platform to resubmit.</div>
+      <div class="flow-actions" style="justify-content:center"><a class="btn btn--outline" href="#s-tier" data-page="s-tier">← Back</a><a class="btn btn--green" href="#s-dashboard" data-page="s-dashboard">Approved — go to dashboard →</a></div>
+    </div>
+  </div></section>
+</section>
+
+<!-- S1.5 Seller dashboard -->
+<section class="view" id="s-dashboard" data-title="Seller Dashboard">
+  <div class="flowbar"><div class="container flowbar__in">
+    <span class="role"><span class="b" style="background:var(--grad-green)">🏢</span> Seller Journey</span>
+    <div class="steps2">
+      <span class="step2 done"><span class="n">✓</span>Verify</span><span class="sep"></span>
+      <span class="step2 done"><span class="n">✓</span>Listing</span><span class="sep"></span>
+      <span class="step2 done"><span class="n">✓</span>Tier</span><span class="sep"></span>
+      <span class="step2 done"><span class="n">✓</span>Review</span><span class="sep"></span>
+      <span class="step2 on"><span class="n">5</span>Dashboard</span>
+    </div>
+  </div></div>
+  <section class="section"><div class="container">
+    <div class="apphead" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px">
+      <div><h1>Seller Dashboard</h1><p>Your anonymised teaser is live. Track buyer interest as it arrives.</p></div>
+      <span class="pill-tag green">● Teaser live · Premium tier</span>
+    </div>
+    <div class="dash-stats reveal">
+      <div class="dstat"><div class="ic" style="background:var(--grad-blue)">👁</div><b>245</b><span>Teaser views</span></div>
+      <div class="dstat"><div class="ic" style="background:var(--grad-purple)">📝</div><b>12</b><span>NDA requests</span></div>
+      <div class="dstat"><div class="ic" style="background:var(--grad-green)">🔓</div><b>5</b><span>Packs unlocked</span></div>
+      <div class="dstat"><div class="ic" style="background:var(--grad-orange)">📩</div><b>2</b><span>Indicative offers</span></div>
+    </div>
+    <h2 style="font-size:20px;margin:34px 0 16px">Interest pipeline</h2>
+    <div class="reveal" style="overflow-x:auto">
+    <table class="table" style="min-width:640px">
+      <thead><tr><th>Buyer (anonymised)</th><th>Stage</th><th>Verified</th><th>Last activity</th><th></th></tr></thead>
+      <tbody>
+        <tr><td>Buyer #A7 · Strategic acquirer</td><td><span class="badge2 offer">Indicative offer</span></td><td>✓ KYC</td><td>2h ago</td><td><a href="#dealroom" data-page="dealroom" style="color:var(--indigo);font-weight:700">Open Deal Room →</a></td></tr>
+        <tr><td>Buyer #B3 · PE fund</td><td><span class="badge2 nda">Pack unlocked</span></td><td>✓ KYC</td><td>Yesterday</td><td><a href="#dealroom" data-page="dealroom" style="color:var(--indigo);font-weight:700">Open Deal Room →</a></td></tr>
+        <tr><td>Buyer #C1 · Family office</td><td><span class="badge2 new">NDA signed</span></td><td>✓ KYC</td><td>2 days ago</td><td><span style="color:var(--muted)">Awaiting pack</span></td></tr>
+        <tr><td>Buyer #D9 · Individual</td><td><span class="badge2 new">NDA requested</span></td><td>● Pending</td><td>3 days ago</td><td><span style="color:var(--muted)">—</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="flow-actions"><a class="btn btn--outline" href="#platform" data-page="platform">← Back to journeys</a><a class="btn btn--grad" href="#b-prefs" data-page="b-prefs">See the Buyer side →</a></div>
+  </div></section>
+</section>
+
+<!-- ============ SCENARIO 2 — BUYER ============ -->
+<!-- B2.1 Preferences -->
+<section class="view" id="b-prefs" data-title="Buyer Preferences">
+  <div class="flowbar"><div class="container flowbar__in">
+    <span class="role"><span class="b" style="background:var(--grad)">🎯</span> Buyer Journey</span>
+    <div class="steps2">
+      <span class="step2 on"><span class="n">1</span>Preferences</span><span class="sep"></span>
+      <span class="step2"><span class="n">2</span>Discover</span><span class="sep"></span>
+      <span class="step2"><span class="n">3</span>NDA</span><span class="sep"></span>
+      <span class="step2"><span class="n">4</span>Unlock</span><span class="sep"></span>
+      <span class="step2"><span class="n">5</span>Details Pack</span>
+    </div>
+  </div></div>
+  <section class="section"><div class="container" style="max-width:820px">
+    <div class="apphead"><h1>Set your acquisition preferences</h1><p>Register free and tell us what you're looking for — we'll send matching alerts as new listings appear. Browsing teasers is open; engaging is where verification kicks in.</p></div>
+    <div class="appcard reveal">
+      <div class="grid-f">
+        <div class="field"><label>Target sector</label><select><option>Technology</option><option>Manufacturing</option><option>Any</option></select></div>
+        <div class="field"><label>Deal size (BD)</label><select><option>Up to 1M</option><option selected>1M – 5M</option><option>5M – 20M</option></select></div>
+      </div>
+      <div class="grid-f">
+        <div class="field"><label>Location</label><select><option>Bahrain</option><option>GCC</option><option>Global</option></select></div>
+        <div class="field"><label>Buyer type</label><select><option>Strategic acquirer</option><option>PE / fund</option><option>Individual</option></select></div>
+      </div>
+      <label class="fopt" style="margin-top:4px"><input type="checkbox" checked> Email me matching-listing alerts</label>
+      <div class="note" style="margin-top:16px">🆓 Registration and teaser browsing are free. You'll verify (KYC) and pay only when you request a specific company.</div>
+      <div class="flow-actions"><a class="btn btn--outline" href="#platform" data-page="platform">← Back</a><a class="btn btn--grad" href="#b-teaser" data-page="b-teaser">Browse the marketplace →</a></div>
+    </div>
+  </div></section>
+</section>
+
+<!-- B2.2 Teaser page -->
+<section class="view" id="b-teaser" data-title="Listing Teaser">
+  <div class="flowbar"><div class="container flowbar__in">
+    <span class="role"><span class="b" style="background:var(--grad)">🎯</span> Buyer Journey</span>
+    <div class="steps2">
+      <span class="step2 done"><span class="n">✓</span>Preferences</span><span class="sep"></span>
+      <span class="step2 on"><span class="n">2</span>Discover</span><span class="sep"></span>
+      <span class="step2"><span class="n">3</span>NDA</span><span class="sep"></span>
+      <span class="step2"><span class="n">4</span>Unlock</span><span class="sep"></span>
+      <span class="step2"><span class="n">5</span>Details Pack</span>
+    </div>
+  </div></div>
+  <section class="section"><div class="container">
+    <div class="apphead"><p style="margin:0"><a href="#marketplace" data-page="marketplace" style="color:var(--indigo);font-weight:600">← Marketplace</a> · matched to your preferences</p></div>
+    <div class="flow2">
+      <div class="appcard reveal">
+        <span class="pill-tag green">✓ Verified listing</span> <span class="pill-tag amber" style="margin-left:6px">🔒 Identity gated</span>
+        <h1 style="font-size:30px;margin-top:14px">Profitable GCC Technology Company</h1>
+        <p style="color:var(--muted);margin-top:8px">A recurring-revenue SaaS business with a diversified client base and strong growth. Full identity and financials are released after NDA.</p>
+        <div class="dash-stats" style="grid-template-columns:repeat(3,1fr);margin-top:20px">
+          <div class="dstat"><b>BD 8.5M</b><span>Asking price</span></div>
+          <div class="dstat"><b>BD 3.2M</b><span>Revenue</span></div>
+          <div class="dstat"><b>+25%</b><span>YoY growth</span></div>
+        </div>
+        <div class="ltags" style="margin-top:16px"><span class="ltag">Recurring revenue</span><span class="ltag">Diversified clients</span><span class="ltag">Est. 2018</span><span class="ltag">11–50 staff</span></div>
+        <div class="note" style="margin-top:18px">🔒 The company name, detailed financials, and documents unlock after you sign the NDA and pay the access fee.</div>
+      </div>
+      <div class="preview-teaser reveal" style="position:sticky">
+        <div class="bd" style="padding:24px">
+          <h3 style="font-size:18px">Ready to go deeper?</h3>
+          <p style="color:var(--muted);font-size:14px;margin-top:8px">Sign the NDA to reveal identity, then unlock the full Company Details Pack.</p>
+          <a class="btn btn--grad" style="width:100%;margin-top:16px" href="#b-nda" data-page="b-nda">Request access &amp; sign NDA →</a>
+          <a class="btn btn--outline" style="width:100%;margin-top:10px" href="#b-prefs" data-page="b-prefs">Save for later</a>
+        </div>
+      </div>
+    </div>
+  </div></section>
+</section>
+
+<!-- B2.3 NDA signing -->
+<section class="view" id="b-nda" data-title="Sign NDA">
+  <div class="flowbar"><div class="container flowbar__in">
+    <span class="role"><span class="b" style="background:var(--grad)">🎯</span> Buyer Journey</span>
+    <div class="steps2">
+      <span class="step2 done"><span class="n">✓</span>Preferences</span><span class="sep"></span>
+      <span class="step2 done"><span class="n">✓</span>Discover</span><span class="sep"></span>
+      <span class="step2 on"><span class="n">3</span>NDA</span><span class="sep"></span>
+      <span class="step2"><span class="n">4</span>Unlock</span><span class="sep"></span>
+      <span class="step2"><span class="n">5</span>Details Pack</span>
+    </div>
+  </div></div>
+  <section class="section"><div class="container" style="max-width:780px">
+    <div class="apphead"><h1>Sign the Non-Disclosure Agreement</h1><p>Signing digitally binds you to confidentiality and reveals the company's identity for this listing.</p></div>
+    <div class="appcard reveal">
+      <div style="max-height:200px;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:18px;color:var(--slate);font-size:14px;background:#fbfbff">
+        <b>Mutual Non-Disclosure Agreement</b><br><br>This Agreement governs confidential information disclosed via the Clerko M&amp;A platform in connection with a potential transaction. The receiving party agrees to (a) keep all disclosed information strictly confidential; (b) use it solely to evaluate the opportunity; (c) not contact the counterparty outside the platform; and (d) comply with Clerko's prohibited-activities policy. All access is watermarked and logged…
+      </div>
+      <div class="field" style="margin-top:18px"><label>Type your full legal name to sign</label><input placeholder="e.g. Michael Rodriguez"></div>
+      <label class="fopt"><input type="checkbox"> I agree to the NDA terms and to keep all information confidential.</label>
+      <div class="flow-actions"><a class="btn btn--outline" href="#b-teaser" data-page="b-teaser">← Back</a><a class="btn btn--grad" href="#b-unlock" data-page="b-unlock">✍️ Sign &amp; continue →</a></div>
+    </div>
+  </div></section>
+</section>
+
+<!-- B2.4 Unlock / access fee -->
+<section class="view" id="b-unlock" data-title="Unlock Access">
+  <div class="flowbar"><div class="container flowbar__in">
+    <span class="role"><span class="b" style="background:var(--grad)">🎯</span> Buyer Journey</span>
+    <div class="steps2">
+      <span class="step2 done"><span class="n">✓</span>Preferences</span><span class="sep"></span>
+      <span class="step2 done"><span class="n">✓</span>Discover</span><span class="sep"></span>
+      <span class="step2 done"><span class="n">✓</span>NDA</span><span class="sep"></span>
+      <span class="step2 on"><span class="n">4</span>Unlock</span><span class="sep"></span>
+      <span class="step2"><span class="n">5</span>Details Pack</span>
+    </div>
+  </div></div>
+  <section class="section"><div class="container" style="max-width:820px">
+    <div class="apphead"><h1>Unlock the Company Details Pack</h1><p>Pay a one-time access fee for this company — or activate a premium plan to unlock more listings and advanced tools.</p></div>
+    <div class="grid-f reveal">
+      <div class="appcard">
+        <span class="pill-tag">Per-company access</span>
+        <div style="font-size:34px;font-weight:800;color:var(--ink);margin:12px 0">BD 250</div>
+        <p style="color:var(--muted);font-size:14px">One-time fee to unlock this company's full Details Pack.</p>
+        <ul class="checks" style="list-style:none;padding:0;margin:16px 0 0;display:grid;gap:9px;font-size:14px;color:var(--slate)"><li>🔓 Full valuation &amp; financials</li><li>⚖️ Legal &amp; court/debt checks</li><li>📄 Supporting documents (watermarked)</li></ul>
+        <a class="btn btn--grad" style="width:100%;margin-top:18px" href="#b-pack" data-page="b-pack">Pay &amp; unlock →</a>
+      </div>
+      <div class="appcard" style="border:2px solid var(--indigo)">
+        <span class="pill-tag" style="background:var(--grad);color:#fff">Premium plan</span>
+        <div style="font-size:34px;font-weight:800;color:var(--ink);margin:12px 0">BD 699<span style="font-size:15px;color:var(--muted)">/mo</span></div>
+        <p style="color:var(--muted);font-size:14px">Unlock multiple listings plus deeper information and advanced tools.</p>
+        <ul class="checks" style="list-style:none;padding:0;margin:16px 0 0;display:grid;gap:9px;font-size:14px;color:var(--slate)"><li>🔓 Unlock up to 10 packs / month</li><li>🔔 Priority matching alerts</li><li>🧰 Advanced due-diligence tools</li></ul>
+        <a class="btn btn--outline" style="width:100%;margin-top:18px" href="#b-pack" data-page="b-pack">Activate premium →</a>
+      </div>
+    </div>
+    <div class="note green" style="margin-top:18px">✅ On unlock, the Seller is notified that a qualified, NDA-bound Buyer has accessed the pack. <b>Escrow &amp; deposit payments are handled later (Scenario 4).</b></div>
+  </div></section>
+</section>
+
+<!-- B2.5 Company Details Pack -->
+<section class="view" id="b-pack" data-title="Company Details Pack">
+  <div class="flowbar"><div class="container flowbar__in">
+    <span class="role"><span class="b" style="background:var(--grad)">🎯</span> Buyer Journey</span>
+    <div class="steps2">
+      <span class="step2 done"><span class="n">✓</span>Preferences</span><span class="sep"></span>
+      <span class="step2 done"><span class="n">✓</span>Discover</span><span class="sep"></span>
+      <span class="step2 done"><span class="n">✓</span>NDA</span><span class="sep"></span>
+      <span class="step2 done"><span class="n">✓</span>Unlock</span><span class="sep"></span>
+      <span class="step2 on"><span class="n">5</span>Details Pack</span>
+    </div>
+  </div></div>
+  <section class="section"><div class="container">
+    <div class="apphead"><h1>Company Details Pack — Meridian Cloud W.L.L.</h1><p>Identity revealed under NDA. Everything below is watermarked and every view is logged.</p></div>
+    <div class="wm-banner reveal">🔏 Watermarked to your account · Access logged · NDA-bound — do not distribute</div>
+    <div class="appcard reveal">
+      <div class="tabs" data-tabs>
+        <button class="on" data-tab="ov">Overview</button>
+        <button data-tab="val">Valuation</button>
+        <button data-tab="fin">Financials</button>
+        <button data-tab="legal">Legal</button>
+        <button data-tab="checks">Court / Debt checks</button>
+        <button data-tab="docs">Documents</button>
+      </div>
+      <div class="tabpane on" data-pane="ov">
+        <h3>Meridian Cloud W.L.L.</h3>
+        <p style="color:var(--muted);margin-top:8px">Bahrain-registered SaaS provider (est. 2018) serving mid-market clients across the GCC with subscription infrastructure software. 42 employees, HQ in Manama.</p>
+        <div class="dash-stats" style="grid-template-columns:repeat(4,1fr);margin-top:18px"><div class="dstat"><b>BD 3.2M</b><span>Revenue</span></div><div class="dstat"><b>BD 640K</b><span>EBITDA</span></div><div class="dstat"><b>+25%</b><span>Growth</span></div><div class="dstat"><b>42</b><span>Employees</span></div></div>
+      </div>
+      <div class="tabpane" data-pane="val"><h3>Valuation summary</h3><p style="color:var(--muted);margin-top:8px">Indicative range BD 7.9M–9.1M based on 12–14× EBITDA, benchmarked against comparable GCC SaaS transactions. Asking price BD 8.5M.</p><div class="terms-card" style="margin-top:14px"><div class="row"><span>Method: EBITDA multiple</span><b>BD 8.3M</b></div><div class="row"><span>Method: Revenue multiple</span><b>BD 8.9M</b></div><div class="row" style="border:0"><span>DCF (base case)</span><b>BD 8.1M</b></div></div></div>
+      <div class="tabpane" data-pane="fin"><h3>Financial summary (last 3 years)</h3><div style="overflow-x:auto"><table class="table" style="margin-top:12px;min-width:520px"><thead><tr><th>Year</th><th>Revenue</th><th>EBITDA</th><th>Growth</th></tr></thead><tbody><tr><td>2023</td><td>BD 2.05M</td><td>BD 390K</td><td>—</td></tr><tr><td>2024</td><td>BD 2.56M</td><td>BD 510K</td><td>+25%</td></tr><tr><td>2025</td><td>BD 3.20M</td><td>BD 640K</td><td>+25%</td></tr></tbody></table></div></div>
+      <div class="tabpane" data-pane="legal"><h3>Legal summary</h3><ul class="checks" style="list-style:none;padding:0;margin:12px 0 0;display:grid;gap:10px;color:var(--slate)"><li>✅ Clean corporate structure — single W.L.L., no minority disputes</li><li>✅ IP assigned to the company; key contracts assignable</li><li>⚠️ Two client contracts contain change-of-control clauses</li></ul></div>
+      <div class="tabpane" data-pane="checks"><h3>Court &amp; debt checks</h3><ul class="checks" style="list-style:none;padding:0;margin:12px 0 0;display:grid;gap:10px;color:var(--slate)"><li>✅ No active litigation on record</li><li>✅ No registered defaults</li><li>✅ Outstanding debt BD 180K (disclosed, within facility)</li></ul></div>
+      <div class="tabpane" data-pane="docs"><h3>Supporting documents</h3><div class="qa" style="margin-top:12px"><div class="msg">📄 Audited financials 2023–2025.pdf <span class="pill-tag" style="margin-left:8px">Watermarked</span></div><div class="msg">📄 Cap table &amp; corporate structure.pdf <span class="pill-tag" style="margin-left:8px">Watermarked</span></div><div class="msg">📄 Key customer contracts (redacted).pdf <span class="pill-tag" style="margin-left:8px">Watermarked</span></div></div></div>
+      <div class="flow-actions"><a class="btn btn--outline" href="#b-unlock" data-page="b-unlock">← Back</a><a class="btn btn--grad" href="#dealroom" data-page="dealroom">Proceed to Deal Room →</a></div>
+    </div>
+  </div></section>
+</section>
+
+<!-- ============ SCENARIO 3 — DEAL ROOM ============ -->
+<section class="view" id="dealroom" data-title="Deal Room">
+  <div class="flowbar"><div class="container flowbar__in">
+    <span class="role"><span class="b" style="background:var(--grad-purple)">🤝</span> Deal Room · Meridian Cloud × Buyer #A7</div>
+    <span class="pill-tag green" style="margin-left:auto">🔐 Role-based access</span>
+  </div>
+  <section class="section"><div class="container">
+    <div class="apphead"><h1>Deal Room</h1><p>A confidential workspace for this Buyer–company pairing. Move from interest to agreed headline terms — the Clerko Agent keeps both sides oriented, but never decides.</p></div>
+    <div class="deal reveal">
+      <nav class="deal-nav">
+        <a class="on" data-deal="qa">💬 Q&amp;A</a>
+        <a data-deal="docs">📄 Documents</a>
+        <a data-deal="offer">📩 Offer</a>
+        <a data-deal="terms">📋 Headline terms</a>
+        <a data-deal="audit">🧾 Audit trail</a>
+      </nav>
+      <div>
+        <div class="tabpane on" data-dpane="qa">
+          <h3 style="margin-bottom:14px">Structured Q&amp;A</h3>
+          <div class="qa">
+            <div class="msg q"><div class="who"><span class="av" style="background:var(--grad)">B</span><b style="color:var(--ink)">Buyer #A7</b><span style="color:var(--muted);font-size:12px;margin-left:auto">2 days ago</span></div>Can you confirm the churn rate over the last 12 months and the concentration of the top 3 clients?</div>
+            <div class="msg a"><div class="who"><span class="av" style="background:var(--grad-green)">S</span><b style="color:var(--ink)">Seller</b><span style="color:var(--muted);font-size:12px;margin-left:auto">1 day ago</span></div>Gross churn was 6%. Top 3 clients represent 22% of revenue. I've released the cohort analysis under Documents.</div>
+            <div class="msg q"><div class="who"><span class="av" style="background:var(--grad)">B</span><b style="color:var(--ink)">Buyer #A7</b><span style="color:var(--muted);font-size:12px;margin-left:auto">4h ago</span></div>Thanks. Are the two change-of-control clauses waivable with consent?</div>
+          </div>
+          <div class="field" style="margin-top:16px"><textarea placeholder="Ask a structured question…"></textarea></div>
+          <a class="btn btn--grad btn--sm" href="#" data-demo="Question posted — demo">Post question</a>
+        </div>
+        <div class="tabpane" data-dpane="docs">
+          <h3 style="margin-bottom:14px">Staged document release</h3>
+          <div class="qa">
+            <div class="msg">📄 Cohort &amp; churn analysis.pdf <span class="pill-tag green" style="margin-left:8px">Released</span></div>
+            <div class="msg">📄 Customer concentration.xlsx <span class="pill-tag green" style="margin-left:8px">Released</span></div>
+            <div class="msg">📄 Employment &amp; key-person contracts.pdf <span class="pill-tag amber" style="margin-left:8px">Staged — release on offer</span></div>
+          </div>
+        </div>
+        <div class="tabpane" data-dpane="offer">
+          <h3 style="margin-bottom:14px">Submit an indicative offer</h3>
+          <div class="appcard">
+            <div class="grid-f"><div class="field"><label>Offer price (BD)</label><input value="8,000,000"></div><div class="field"><label>Structure</label><select><option>Full acquisition</option><option>Majority stake</option></select></div></div>
+            <div class="grid-f"><div class="field"><label>Deposit (%)</label><input value="50"></div><div class="field"><label>Conditions</label><input value="Due diligence, change-of-control consents"></div></div>
+            <a class="btn btn--grad" href="#" data-demo="Indicative offer submitted — demo">Submit indicative offer</a>
+          </div>
+        </div>
+        <div class="tabpane" data-dpane="terms">
+          <h3 style="margin-bottom:14px">Agreed headline terms</h3>
+          <div class="terms-card">
+            <div class="row"><span>Price</span><b>BD 8.25M</b></div>
+            <div class="row"><span>Structure</span><b>Full acquisition (100%)</b></div>
+            <div class="row"><span>Deposit</span><b>50% on signing</b></div>
+            <div class="row" style="border:0"><span>Conditions</span><b>DD + change-of-control consents</b></div>
+          </div>
+          <div class="note green" style="margin-top:16px">✅ Both parties recorded these headline terms. Settlement (deposit &amp; escrow) is handled in <a href="#escrow" data-page="escrow" style="color:var(--indigo);font-weight:700">Scenario 4</a>.</div>
+        </div>
+        <div class="tabpane" data-dpane="audit">
+          <h3 style="margin-bottom:14px">Audit trail</h3>
+          <div class="qa">
+            <div class="msg">🕑 Deal Room created · role-based access granted — 5 days ago</div>
+            <div class="msg">🔓 Buyer #A7 unlocked Company Details Pack — 4 days ago</div>
+            <div class="msg">💬 3 Q&amp;A exchanges · 2 documents released — 1 day ago</div>
+            <div class="msg">📩 Indicative offer BD 8.0M submitted → countered BD 8.25M — 6h ago</div>
+            <div class="msg">📋 Headline terms recorded &amp; acknowledged by both parties — 2h ago</div>
+          </div>
+        </div>
+      </div>
+      <aside class="agent">
+        <div class="agent__hd">🤖 Clerko Agent</div>
+        <div class="agent__bd">
+          <h4>Summary</h4>
+          <p style="font-size:14px;color:var(--slate)">Buyer #A7 (strategic acquirer) is progressing well. Diligence focused on churn and client concentration — both addressed. One open legal point on change-of-control consents.</p>
+          <h4>Open points</h4>
+          <ul><li>Change-of-control consents on 2 client contracts</li><li>Employee retention plan post-close</li></ul>
+          <h4>Agreed so far</h4>
+          <div class="term"><span>Price</span><b>BD 8.25M</b></div>
+          <div class="term"><span>Deposit</span><b>50%</b></div>
+          <div class="term" style="border:0"><span>Structure</span><b>Full acquisition</b></div>
+          <p class="foot">The Clerko Agent summarises and orients only — it never advises or decides. All decisions stay with the parties and their advisers.</p>
+        </div>
+      </aside>
+    </div>
+    <div class="flow-actions"><a class="btn btn--outline" href="#b-pack" data-page="b-pack">← Details Pack</a><a class="btn btn--grad" href="#escrow" data-page="escrow">Scenario 4 — Completion (deferred) →</a></div>
+  </div></section>
+</section>
+
+<!-- ============ SCENARIO 4 — ESCROW (DEFERRED) ============ -->
+<section class="view" id="escrow" data-title="Completion (deferred)">
+  <div class="flowbar"><div class="container flowbar__in">
+    <span class="role"><span class="b" style="background:#94a3b8">🔒</span> Scenario 4 · Completion</span>
+    <span class="pill-tag amber" style="margin-left:auto">Deferred — for context only</span>
+  </div></div>
+  <section class="section"><div class="container" style="max-width:820px">
+    <div class="apphead"><h1>Escrow, transfer &amp; completion</h1><p>Deferred for this round. Shown for context. <b>Principle:</b> Clerko never holds client money — settlement runs through a regulated third-party escrow/trust provider via API.</p></div>
+    <div class="esc-steps reveal deferred">
+      <div class="esc-step"><span class="n">1</span><div><b style="color:var(--ink)">Deposit into external escrow</b><br><span style="color:var(--muted);font-size:14px">Buyer pays the agreed deposit (e.g. 50%) into the regulated trust account; Deal Room shows funding status.</span></div></div>
+      <div class="esc-step"><span class="n">2</span><div><b style="color:var(--ink)">Ownership transfer</b><br><span style="color:var(--muted);font-size:14px">Legal transfer via Sijilat / MOICT; both parties upload confirmations to the completion checklist.</span></div></div>
+      <div class="esc-step"><span class="n">3</span><div><b style="color:var(--ink)">Balance, fee &amp; release</b><br><span style="color:var(--muted);font-size:14px">On confirmed completion, the balance is paid, Clerko's success fee is deducted, and net proceeds release to the Seller.</span></div></div>
+      <div class="esc-step"><span class="n">4</span><div><b style="color:var(--ink)">Confirm &amp; archive</b><br><span style="color:var(--muted);font-size:14px">Both parties confirm the final amount (drives fee &amp; KPIs); the full deal record is archived for both.</span></div></div>
+    </div>
+    <div class="flow-actions"><a class="btn btn--outline" href="#dealroom" data-page="dealroom">← Deal Room</a><a class="btn btn--grad" href="#platform" data-page="platform">Back to journeys</a></div>
+  </div></section>
+</section>
+<!-- ===================== USER DASHBOARD ===================== -->
+<section class="view" id="dashboard" data-title="Dashboard">
+  <div class="dsh" data-dshell>
+    <aside class="dsh-side">
+      <div class="brandm"><span class="bx">Clerko</span> Workspace</div>
+      <div class="roleswitch" data-roleswitch><button class="on" data-role="seller">Seller</button><button data-role="buyer">Buyer</button></div>
+      <button class="nav on" data-ds="ov">📊 Overview</button>
+      <button class="nav" data-ds="deals">🤝 My Deals <span class="side-badge">3</span></button>
+      <a data-page="marketplace" href="#marketplace">🏢 Marketplace</a>
+      <a data-page="dealroom" href="#dealroom">💬 Deal Rooms</a>
+      <button class="nav" data-ds="docs">📄 Documents</button>
+      <button class="nav" data-ds="billing">💳 Billing</button>
+      <div class="grow"></div>
+      <a data-page="platform" href="#platform">🧭 Journeys</a>
+      <a data-page="admin" href="#admin">🛡️ Admin console</a>
+      <a data-page="home" href="#home">↩ Exit workspace</a>
+    </aside>
+    <main class="dsh-main">
+      <div class="dsh-top">
+        <div><h1 data-hello>Welcome back, Michael 👋</h1><div class="sub" data-hellosub>Here's your deal activity as a Seller.</div></div>
+        <div class="dsh-search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="Search deals, buyers, documents…"></div>
+        <div class="dsh-ic" data-demo="3 new notifications">🔔<span class="dot"></span></div>
+        <div class="dsh-av">MR</div>
+      </div>
+
+      <!-- Overview pane -->
+      <div class="dspane on" data-dspane="ov">
+        <div class="kpis four">
+          <div class="kpi"><div class="kt"><div class="ki" style="background:var(--grad)">🤝</div><span class="delta up">▲ 2</span></div><b>3</b><span>Active deals</span>
+            <svg class="spark" viewBox="0 0 120 34" preserveAspectRatio="none"><polyline fill="none" stroke="#4f46e5" stroke-width="2" points="0,26 20,22 40,24 60,16 80,18 100,9 120,6"/></svg></div>
+          <div class="kpi"><div class="kt"><div class="ki" style="background:var(--grad-blue)">👁</div><span class="delta up">▲ 18%</span></div><b>245</b><span>Teaser views</span>
+            <svg class="spark" viewBox="0 0 120 34" preserveAspectRatio="none"><polyline fill="none" stroke="#3b82f6" stroke-width="2" points="0,28 20,20 40,22 60,14 80,12 100,10 120,7"/></svg></div>
+          <div class="kpi"><div class="kt"><div class="ki" style="background:var(--grad-purple)">🔓</div><span class="delta up">▲ 5</span></div><b>5</b><span>Packs unlocked</span>
+            <svg class="spark" viewBox="0 0 120 34" preserveAspectRatio="none"><polyline fill="none" stroke="#7c3aed" stroke-width="2" points="0,30 24,28 48,22 72,20 96,12 120,8"/></svg></div>
+          <div class="kpi"><div class="kt"><div class="ki" style="background:var(--grad-green)">📩</div><span class="delta up">▲ 1</span></div><b>2</b><span>Offers received</span>
+            <svg class="spark" viewBox="0 0 120 34" preserveAspectRatio="none"><polyline fill="none" stroke="#10b981" stroke-width="2" points="0,30 30,30 60,24 90,18 120,10"/></svg></div>
+        </div>
+
+        <div class="dgrid d-2">
+          <div class="dcard">
+            <h3>Deal value pipeline <span style="color:var(--muted);font-size:13px;font-weight:500">Last 6 months</span></h3>
+            <svg viewBox="0 0 640 220" style="width:100%;height:230px;margin-top:8px">
+              <defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4f46e5" stop-opacity="0.28"/><stop offset="1" stop-color="#4f46e5" stop-opacity="0"/></linearGradient></defs>
+              <g stroke="#eef0f6" stroke-width="1"><line x1="0" y1="40" x2="640" y2="40"/><line x1="0" y1="90" x2="640" y2="90"/><line x1="0" y1="140" x2="640" y2="140"/><line x1="0" y1="190" x2="640" y2="190"/></g>
+              <path d="M0,170 L128,150 L256,155 L384,110 L512,95 L640,55 L640,200 L0,200 Z" fill="url(#ag)"/>
+              <polyline fill="none" stroke="#4f46e5" stroke-width="3" points="0,170 128,150 256,155 384,110 512,95 640,55"/>
+              <g fill="#4f46e5"><circle cx="128" cy="150" r="4"/><circle cx="256" cy="155" r="4"/><circle cx="384" cy="110" r="4"/><circle cx="512" cy="95" r="4"/><circle cx="640" cy="55" r="4"/></g>
+              <g fill="#94a3b8" font-size="12" text-anchor="middle"><text x="0" y="215">Jan</text><text x="128" y="215">Feb</text><text x="256" y="215">Mar</text><text x="384" y="215">Apr</text><text x="512" y="215">May</text><text x="632" y="215">Jun</text></g>
+            </svg>
+            <div class="legend"><span><span class="lg-dot" style="background:#4f46e5"></span>Indicative deal value (BD)</span></div>
+          </div>
+          <div class="dcard">
+            <h3>Interest funnel</h3>
+            <div class="funnel">
+              <div class="fn"><span class="lb">Teaser views</span><span class="bar" style="width:100%;background:var(--grad-blue)">245</span></div>
+              <div class="fn"><span class="lb">NDA requests</span><span class="bar" style="width:60%;background:var(--grad)">12</span></div>
+              <div class="fn"><span class="lb">Packs unlocked</span><span class="bar" style="width:40%;background:var(--grad-purple)">5</span></div>
+              <div class="fn"><span class="lb">Offers</span><span class="bar" style="width:22%;background:var(--grad-green)">2</span></div>
+            </div>
+            <div class="note" style="margin-top:16px">🤖 <b>Clerko Agent:</b> Buyer #A7 is closest to close — one open legal point remains.</div>
+          </div>
+        </div>
+
+        <div class="dgrid d-2">
+          <div class="dcard">
+            <h3>Active deal rooms <a data-page="dealroom" href="#dealroom">Open →</a></h3>
+            <table class="dtable"><thead><tr><th>Buyer</th><th>Stage</th><th>Progress</th><th></th></tr></thead><tbody>
+              <tr><td><b style="color:var(--ink)">Buyer #A7</b><br><span style="color:var(--muted);font-size:12px">Strategic acquirer</span></td><td><span class="st-pill ok">Offer</span></td><td style="min-width:120px"><div class="progress"><i style="width:80%"></i></div></td><td><a data-page="dealroom" href="#dealroom" style="color:var(--indigo);font-weight:700">Open</a></td></tr>
+              <tr><td><b style="color:var(--ink)">Buyer #B3</b><br><span style="color:var(--muted);font-size:12px">PE fund</span></td><td><span class="st-pill rev">Pack unlocked</span></td><td><div class="progress"><i style="width:55%"></i></div></td><td><a data-page="dealroom" href="#dealroom" style="color:var(--indigo);font-weight:700">Open</a></td></tr>
+              <tr><td><b style="color:var(--ink)">Buyer #C1</b><br><span style="color:var(--muted);font-size:12px">Family office</span></td><td><span class="st-pill pend">NDA signed</span></td><td><div class="progress"><i style="width:30%"></i></div></td><td><span style="color:var(--muted)">—</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="dcard">
+            <h3>Recent activity</h3>
+            <ul class="feed">
+              <li><span class="fi" style="background:var(--grad-green)">📩</span><div><b>New indicative offer — BD 8.0M</b><span>Buyer #A7 in Deal Room</span></div><time>2h</time></li>
+              <li><span class="fi" style="background:var(--grad-purple)">🔓</span><div><b>Pack unlocked</b><span>Buyer #B3 accessed your details pack</span></div><time>1d</time></li>
+              <li><span class="fi" style="background:var(--grad-blue)">📝</span><div><b>NDA signed</b><span>Buyer #C1 signed the NDA</span></div><time>2d</time></li>
+              <li><span class="fi" style="background:var(--grad-orange)">👁</span><div><b>Teaser trending</b><span>+42 views this week</span></div><time>3d</time></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Deals pane -->
+      <div class="dspane" data-dspane="deals">
+        <div class="dcard"><h3>My deals</h3>
+          <table class="dtable"><thead><tr><th>Counterparty</th><th>Company</th><th>Stage</th><th>Value</th><th>Updated</th></tr></thead><tbody>
+            <tr><td>Buyer #A7</td><td>Meridian Cloud</td><td><span class="st-pill ok">Headline terms</span></td><td><b style="color:var(--ink)">BD 8.25M</b></td><td>2h ago</td></tr>
+            <tr><td>Buyer #B3</td><td>Meridian Cloud</td><td><span class="st-pill rev">Diligence</span></td><td>BD 8.0M</td><td>1d ago</td></tr>
+            <tr><td>Buyer #C1</td><td>Meridian Cloud</td><td><span class="st-pill pend">NDA</span></td><td>—</td><td>2d ago</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+      <!-- Docs pane -->
+      <div class="dspane" data-dspane="docs">
+        <div class="dcard"><h3>Documents</h3>
+          <table class="dtable"><thead><tr><th>Document</th><th>Status</th><th>Shared with</th></tr></thead><tbody>
+            <tr><td>📄 Audited financials 2023–2025.pdf</td><td><span class="st-pill ok">Released</span></td><td>Buyer #A7, #B3</td></tr>
+            <tr><td>📄 Cap table &amp; structure.pdf</td><td><span class="st-pill ok">Released</span></td><td>Buyer #A7</td></tr>
+            <tr><td>📄 Key contracts (redacted).pdf</td><td><span class="st-pill pend">Staged</span></td><td>—</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+      <!-- Billing pane -->
+      <div class="dspane" data-dspane="billing">
+        <div class="dgrid d-2e">
+          <div class="dcard"><h3>Subscription</h3><p style="margin-top:8px;color:var(--muted)">Premium tier · BD 699/mo · renews 12 Aug 2026</p><a class="btn btn--outline btn--sm" style="margin-top:14px" data-page="pricing" href="#pricing">Manage plan</a></div>
+          <div class="dcard"><h3>Invoices</h3><table class="dtable"><tbody><tr><td>Jul 2026</td><td>BD 699</td><td><span class="st-pill ok">Paid</span></td></tr><tr><td>Jun 2026</td><td>BD 699</td><td><span class="st-pill ok">Paid</span></td></tr></tbody></table></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
+
+<!-- ===================== ADMIN DASHBOARD ===================== -->
+<section class="view" id="admin" data-title="Admin Console">
+  <div class="dsh" data-dshell>
+    <aside class="dsh-side">
+      <div class="brandm"><span class="bx">Clerko</span> Admin</div>
+      <button class="nav on" data-ds="aov">📊 Overview</button>
+      <button class="nav" data-ds="mod">🛡️ Moderation <span class="side-badge">7</span></button>
+      <button class="nav" data-ds="users">🪪 Users &amp; KYC</button>
+      <button class="nav" data-ds="adeals">🤝 Deals</button>
+      <button class="nav" data-ds="comp">⚖️ Compliance <span class="side-badge">2</span></button>
+      <div class="grow"></div>
+      <a data-page="dashboard" href="#dashboard">👤 User workspace</a>
+      <a data-page="home" href="#home">↩ Exit console</a>
+    </aside>
+    <main class="dsh-main">
+      <div class="dsh-top">
+        <div><h1>Platform Overview</h1><div class="sub">Bahrain · Live marketplace health &amp; compliance</div></div>
+        <div class="dsh-search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="Search users, listings, deals…"></div>
+        <div class="dsh-ic" data-demo="9 items need attention">🔔<span class="dot"></span></div>
+        <div class="dsh-av" style="background:linear-gradient(135deg,#0ea5e9,#4f46e5)">AD</div>
+      </div>
+
+      <!-- Admin Overview -->
+      <div class="dspane on" data-dspane="aov">
+        <div class="kpis">
+          <div class="kpi"><div class="kt"><div class="ki" style="background:var(--grad)">💰</div><span class="delta up">▲ 12%</span></div><b>BD 142M</b><span>Deal volume (YTD)</span></div>
+          <div class="kpi"><div class="kt"><div class="ki" style="background:var(--grad-blue)">🏢</div><span class="delta up">▲ 8</span></div><b>89</b><span>Active listings</span></div>
+          <div class="kpi"><div class="kt"><div class="ki" style="background:var(--grad-orange)">🔍</div><span class="delta down">▲ 7</span></div><b>7</b><span>Pending reviews</span></div>
+          <div class="kpi"><div class="kt"><div class="ki" style="background:var(--grad-green)">🪪</div><span class="delta up">▲ 34</span></div><b>1,247</b><span>Verified users</span></div>
+          <div class="kpi"><div class="kt"><div class="ki" style="background:var(--grad-purple)">🧾</div><span class="delta up">▲ 15%</span></div><b>BD 3.2M</b><span>Success fees (YTD)</span></div>
+        </div>
+
+        <div class="dgrid d-2">
+          <div class="dcard">
+            <h3>Revenue &amp; success fees <span style="color:var(--muted);font-size:13px;font-weight:500">Monthly, BD</span></h3>
+            <svg viewBox="0 0 640 220" style="width:100%;height:230px;margin-top:8px">
+              <g stroke="#eef0f6" stroke-width="1"><line x1="0" y1="40" x2="640" y2="40"/><line x1="0" y1="90" x2="640" y2="90"/><line x1="0" y1="140" x2="640" y2="140"/><line x1="0" y1="190" x2="640" y2="190"/></g>
+              <g>
+                <rect x="24" y="120" width="60" height="70" rx="6" fill="#4f46e5"/><rect x="120" y="100" width="60" height="90" rx="6" fill="#4f46e5"/><rect x="216" y="130" width="60" height="60" rx="6" fill="#4f46e5"/><rect x="312" y="80" width="60" height="110" rx="6" fill="#7c3aed"/><rect x="408" y="70" width="60" height="120" rx="6" fill="#7c3aed"/><rect x="504" y="46" width="60" height="144" rx="6" fill="#7c3aed"/>
+              </g>
+              <g fill="#94a3b8" font-size="12" text-anchor="middle"><text x="54" y="210">Jan</text><text x="150" y="210">Feb</text><text x="246" y="210">Mar</text><text x="342" y="210">Apr</text><text x="438" y="210">May</text><text x="534" y="210">Jun</text></g>
+            </svg>
+            <div class="legend"><span><span class="lg-dot" style="background:#4f46e5"></span>Subscriptions</span><span><span class="lg-dot" style="background:#7c3aed"></span>Success fees</span></div>
+          </div>
+          <div class="dcard">
+            <h3>Deals by stage</h3>
+            <div style="display:flex;align-items:center;gap:20px;margin-top:10px">
+              <svg viewBox="0 0 120 120" style="width:130px;height:130px">
+                <circle cx="60" cy="60" r="46" fill="none" stroke="#eef0f6" stroke-width="16"/>
+                <circle cx="60" cy="60" r="46" fill="none" stroke="#3b82f6" stroke-width="16" stroke-dasharray="115 174" stroke-dashoffset="0" transform="rotate(-90 60 60)"/>
+                <circle cx="60" cy="60" r="46" fill="none" stroke="#7c3aed" stroke-width="16" stroke-dasharray="72 217" stroke-dashoffset="-115" transform="rotate(-90 60 60)"/>
+                <circle cx="60" cy="60" r="46" fill="none" stroke="#10b981" stroke-width="16" stroke-dasharray="43 246" stroke-dashoffset="-187" transform="rotate(-90 60 60)"/>
+                <text x="60" y="58" text-anchor="middle" font-size="20" font-weight="800" fill="#0f172a">64</text><text x="60" y="74" text-anchor="middle" font-size="10" fill="#94a3b8">active</text>
+              </svg>
+              <div class="legend" style="flex-direction:column;gap:10px">
+                <span><span class="lg-dot" style="background:#3b82f6"></span>Discovery / NDA — 40%</span>
+                <span><span class="lg-dot" style="background:#7c3aed"></span>Deal room — 25%</span>
+                <span><span class="lg-dot" style="background:#10b981"></span>Terms / closing — 15%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dcard" style="margin-top:18px">
+          <h3>Moderation queue <a data-ds="mod" style="cursor:pointer">View all →</a></h3>
+          <table class="dtable"><thead><tr><th>Listing</th><th>Seller</th><th>Sector</th><th>Submitted</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+            <tr><td><b style="color:var(--ink)">Meridian Cloud</b></td><td>#S-118 (KYB ✓)</td><td>Technology</td><td>2h ago</td><td><span class="st-pill pend">Pending</span></td><td><div class="mini-actions"><button class="ma-ok" data-demo="Listing approved">Approve</button><button class="ma-rev" data-demo="Revision requested">Revise</button><button class="ma-no" data-demo="Listing rejected">Reject</button></div></td></tr>
+            <tr><td><b style="color:var(--ink)">Gulf Manufacturing</b></td><td>#S-092 (KYB ✓)</td><td>Manufacturing</td><td>5h ago</td><td><span class="st-pill pend">Pending</span></td><td><div class="mini-actions"><button class="ma-ok" data-demo="Listing approved">Approve</button><button class="ma-rev" data-demo="Revision requested">Revise</button><button class="ma-no" data-demo="Listing rejected">Reject</button></div></td></tr>
+            <tr><td><b style="color:var(--ink)">Marina Hospitality</b></td><td>#S-140 (KYB ●)</td><td>Hospitality</td><td>1d ago</td><td><span class="st-pill flag">KYB pending</span></td><td><div class="mini-actions"><button class="ma-rev" data-demo="Revision requested">Revise</button><button class="ma-no" data-demo="Listing rejected">Reject</button></div></td></tr>
+          </tbody></table>
+        </div>
+      </div>
+
+      <!-- Moderation pane -->
+      <div class="dspane" data-dspane="mod">
+        <div class="dcard"><h3>Listing moderation — 7 pending</h3>
+          <table class="dtable"><thead><tr><th>Listing</th><th>Seller</th><th>Quality</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+            <tr><td>Meridian Cloud</td><td>#S-118</td><td>✅ Complete</td><td><span class="st-pill pend">Pending</span></td><td><div class="mini-actions"><button class="ma-ok" data-demo="Approved">Approve</button><button class="ma-rev" data-demo="Revision requested">Revise</button></div></td></tr>
+            <tr><td>Gulf Manufacturing</td><td>#S-092</td><td>✅ Complete</td><td><span class="st-pill pend">Pending</span></td><td><div class="mini-actions"><button class="ma-ok" data-demo="Approved">Approve</button><button class="ma-rev" data-demo="Revision requested">Revise</button></div></td></tr>
+            <tr><td>Fresh Foods Bahrain</td><td>#S-071</td><td>⚠️ Missing financials</td><td><span class="st-pill rev">Revision sent</span></td><td><div class="mini-actions"><button class="ma-rev" data-demo="Reminder sent">Remind</button></div></td></tr>
+            <tr><td>Creative Media Agency</td><td>#S-156</td><td>⚠️ Teaser too revealing</td><td><span class="st-pill flag">Flagged</span></td><td><div class="mini-actions"><button class="ma-rev" data-demo="Revision requested">Revise</button><button class="ma-no" data-demo="Rejected">Reject</button></div></td></tr>
+          </tbody></table>
+        </div>
+      </div>
+      <!-- Users pane -->
+      <div class="dspane" data-dspane="users">
+        <div class="dcard"><h3>Users &amp; verification</h3>
+          <table class="dtable"><thead><tr><th>User</th><th>Type</th><th>KYC</th><th>KYB</th><th>Joined</th></tr></thead><tbody>
+            <tr><td>#S-118 · Meridian Cloud</td><td>Seller</td><td><span class="st-pill ok">Verified</span></td><td><span class="st-pill ok">Verified</span></td><td>Jun 2026</td></tr>
+            <tr><td>#A7 · Strategic acquirer</td><td>Buyer</td><td><span class="st-pill ok">Verified</span></td><td>—</td><td>Jun 2026</td></tr>
+            <tr><td>#S-140 · Marina Hospitality</td><td>Seller</td><td><span class="st-pill ok">Verified</span></td><td><span class="st-pill pend">In review</span></td><td>Jul 2026</td></tr>
+            <tr><td>#D9 · Individual</td><td>Buyer</td><td><span class="st-pill pend">Pending</span></td><td>—</td><td>Jul 2026</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+      <!-- Deals pane -->
+      <div class="dspane" data-dspane="adeals">
+        <div class="dcard"><h3>Active deals</h3>
+          <table class="dtable"><thead><tr><th>Deal room</th><th>Stage</th><th>Value</th><th>Escrow</th></tr></thead><tbody>
+            <tr><td>Meridian × #A7</td><td><span class="st-pill ok">Headline terms</span></td><td>BD 8.25M</td><td><span class="st-pill pend">Deferred</span></td></tr>
+            <tr><td>Gulf Mfg × #B3</td><td><span class="st-pill rev">Diligence</span></td><td>BD 5.0M</td><td>—</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+      <!-- Compliance pane -->
+      <div class="dspane" data-dspane="comp">
+        <div class="dcard"><h3>Compliance flags — 2 open</h3>
+          <ul class="feed">
+            <li><span class="fi" style="background:#dc2626">⚠️</span><div><b>Possible off-platform contact</b><span>Deal room Gulf × #B3 — message flagged by policy filter</span></div><time>Review</time></li>
+            <li><span class="fi" style="background:#f59e0b">🔎</span><div><b>KYB re-check due</b><span>#S-140 Marina Hospitality — CR extract expiring</span></div><time>Review</time></li>
+            <li><span class="fi" style="background:var(--green)">✅</span><div><b>Prohibited-activities scan clean</b><span>All active deal rooms — last 24h</span></div><time>OK</time></li>
+          </ul>
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <div class="brand"><span class="brand__logo">Clerko</span> M&amp;A</div>
+        <p>Bahrain's premier M&amp;A marketplace connecting buyers and sellers with secure transactions and expert guidance.</p>
+      </div>
+      <div><h4>Platform</h4><ul><li><a data-page="marketplace" href="#marketplace">Marketplace</a></li><li><a data-page="pricing" href="#pricing">Pricing</a></li><li><a href="#">Variations</a></li><li><a href="#">How it Works</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Advisors</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact</a></li></ul></div>
+      <div><h4>Legal</h4><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li><li><a href="#">NDA Policy</a></li><li><a href="#">Compliance</a></li></ul></div>
+    </div>
+    <div class="footer__bottom"><span>© 2025 Clerko M&amp;A. All rights reserved. Bahrain.</span><span style="display:flex;gap:18px"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></span></div>
+  </div>
+</footer>
+<script>
+(function(){
+ "use strict";
+ var pages=['home','marketplace','pricing','variations','platform','s-onboard','s-listing','s-tier','s-review','s-dashboard','b-prefs','b-teaser','b-nda','b-unlock','b-pack','dealroom','escrow','dashboard','admin'];
+ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.1});
+ function showReveals(sc){(sc||document).querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');});}
+ document.querySelectorAll('#home .reveal').forEach(function(el){io.observe(el);});
+ function setNav(pg){document.querySelectorAll('.nav__links a[data-page]').forEach(function(a){a.classList.toggle('active',a.getAttribute('data-page')===pg);});}
+ function setPage(pg,anchor){if(pages.indexOf(pg)<0)pg='home';
+  document.querySelectorAll('.view').forEach(function(v){v.classList.toggle('active-view',v.id===pg);});
+  setNav(pg);var v=document.getElementById(pg);if(v)showReveals(v);
+  document.title='Clerko M&A — '+((v&&v.getAttribute('data-title'))||'Home');
+  var nl=document.querySelector('.nav__links');if(nl)nl.classList.remove('show');
+  var mcb=document.getElementById('clerko-menu');if(mcb)mcb.checked=false;
+  if(anchor){var t=document.getElementById(anchor.replace('#',''));if(t){t.scrollIntoView({behavior:'smooth',block:'start'});return;}}
+  window.scrollTo(0,0);}
+ function route(){var h=location.hash.replace('#','');if(!h){setPage('home');return;}
+  if(pages.indexOf(h)>=0)setPage(h);else{var c=document.querySelector('.view.active-view');var t=document.getElementById(h);if(t&&c&&c.contains(t))t.scrollIntoView({behavior:'smooth'});else setPage('home','#'+h);}}
+ document.addEventListener('click',function(e){
+  var l=e.target.closest('[data-page]');
+  if(l){e.preventDefault();var pg=l.getAttribute('data-page');var hf=l.getAttribute('href')||'';var an=(hf.charAt(0)==='#'&&pages.indexOf(hf.slice(1))<0)?hf:null;
+   try{history.pushState(null,'',an&&pg==='home'?hf:'#'+pg);}catch(_){}setPage(pg,an);return;}
+  var d=e.target.closest('[data-demo]');if(d){e.preventDefault();toast(d.getAttribute('data-demo'));}
+  // pricing seg
+  var ps=e.target.closest('#pricing [data-side]');
+  if(ps){var seg=ps.closest('[data-seg]');seg.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});ps.classList.add('on');
+   var buyer=ps.getAttribute('data-side')==='buyer';seg.classList.toggle('seg--buyer',buyer);
+   var pv=document.querySelector('#pricing [data-plan-title]'),psb=document.querySelector('#pricing [data-plan-sub]');
+   if(buyer){pv.textContent='Buyer Access Plans';psb.textContent='Find and acquire the right business. Priority access to verified listings and deal-flow tools for serious buyers.';}
+   else{pv.textContent='Business Listing Plans';psb.textContent='Showcase your business with confidence. Our comprehensive verification process and premium marketplace ensure you connect with serious, qualified buyers.';}}
+  // variation card select
+  var vc=e.target.closest('.vcard');
+  if(vc){document.querySelectorAll('.vcard').forEach(function(x){x.classList.remove('on');});vc.classList.add('on');
+   var pv=document.querySelector('[data-vpreview]');pv.querySelector('[data-vp-title]').textContent=vc.getAttribute('data-vtitle');pv.querySelector('[data-vp-desc]').textContent=vc.getAttribute('data-vdesc');pv.querySelector('.vcard__ic').textContent=vc.querySelector('.vcard__ic').textContent;}
+  // variation filter chip
+  var ch=e.target.closest('[data-vf]');
+  if(ch){document.querySelectorAll('[data-vf]').forEach(function(x){x.classList.remove('on');});ch.classList.add('on');
+   var f=ch.getAttribute('data-vf');document.querySelectorAll('.vcard').forEach(function(card){card.style.display=(f==='all'||card.getAttribute('data-vtype')===f)?'':'none';});}
+  // tier select (seller flow)
+  var ts=e.target.closest('[data-tiersel] [data-tier]');
+  if(ts){ts.closest('[data-tiersel]').querySelectorAll('[data-tier]').forEach(function(x){x.classList.remove('on');});ts.classList.add('on');}
+  // pack viewer tabs
+  var tb=e.target.closest('[data-tabs] [data-tab]');
+  if(tb){var box=tb.closest('.appcard');box.querySelectorAll('[data-tab]').forEach(function(x){x.classList.remove('on');});tb.classList.add('on');
+   var k=tb.getAttribute('data-tab');box.querySelectorAll('[data-pane]').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-pane')===k);});}
+  // deal room nav
+  var dn=e.target.closest('[data-deal]');
+  if(dn){var room=dn.closest('.deal');room.querySelectorAll('[data-deal]').forEach(function(x){x.classList.remove('on');});dn.classList.add('on');
+   var k=dn.getAttribute('data-deal');room.querySelectorAll('[data-dpane]').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-dpane')===k);});}
+  // dashboard sidebar pane switch
+  var ds=e.target.closest('[data-ds]');
+  if(ds){var sh=ds.closest('[data-dshell]');sh.querySelectorAll('.dsh-side [data-ds]').forEach(function(x){x.classList.remove('on');});
+   sh.querySelectorAll('.dsh-side [data-ds="'+ds.getAttribute('data-ds')+'"]').forEach(function(x){x.classList.add('on');});
+   var k=ds.getAttribute('data-ds');sh.querySelectorAll('[data-dspane]').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-dspane')===k);});}
+  // dashboard role switch
+  var rs=e.target.closest('[data-roleswitch] [data-role]');
+  if(rs){var w=rs.closest('[data-roleswitch]');w.querySelectorAll('[data-role]').forEach(function(x){x.classList.remove('on');});rs.classList.add('on');
+   var buyer=rs.getAttribute('data-role')==='buyer';var h=document.querySelector('[data-hello]'),hs=document.querySelector('[data-hellosub]');
+   if(h)h.textContent=buyer?'Welcome back, Michael 👋':'Welcome back, Michael 👋';
+   if(hs)hs.textContent=buyer?"Here's your acquisition activity as a Buyer.":"Here's your deal activity as a Seller.";}
+ });
+ // marketplace filters + search
+ function mktFilter(){var scope=document.getElementById('marketplace');if(!scope)return;
+  var term=(scope.querySelector('[data-search]').value||'').toLowerCase();
+  var vf=scope.querySelector('[data-filter="verified"]').checked, ff=scope.querySelector('[data-filter="featured"]').checked;
+  var shown=0;scope.querySelectorAll('[data-cat]').forEach(function(card){var cat=card.getAttribute('data-cat');
+   var ok=card.textContent.toLowerCase().indexOf(term)>-1 && (!vf||/verified/.test(cat)) && (!ff||/featured/.test(cat));
+   card.style.display=ok?'':'none';if(ok)shown++;});
+  var c=scope.querySelector('[data-count]');if(c)c.textContent=shown+' Companies Available';}
+ document.addEventListener('input',function(e){if(e.target.matches('#marketplace [data-search]'))mktFilter();});
+ document.addEventListener('change',function(e){if(e.target.matches('#marketplace [data-filter]'))mktFilter();});
+ // home journey toggle
+ var JD={seller:{title:'Complete Professional Verification',desc:'Get verified with our secure KYC process and unlock full access to qualified buyers.',step:'Step 1 of 4',pct:'98%',time:'2-3 business days',benefit:'Verified badge + priority listing'},
+  buyer:{title:'Discover Strategic Opportunities',desc:'Browse verified listings and connect directly with qualified sellers across the region.',step:'Step 1 of 4',pct:'92%',time:'Instant access',benefit:'Curated deal flow + saved searches'}};
+ var hseg=document.querySelector('#home [data-seg]'),hj=document.querySelector('#home [data-journey]');
+ if(hseg){hseg.addEventListener('click',function(e){var b=e.target.closest('[data-side]');if(!b)return;
+  hseg.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});b.classList.add('on');
+  var side=b.getAttribute('data-side'),d=JD[side];hseg.classList.toggle('seg--buyer',side==='buyer');hj.classList.toggle('buyer',side==='buyer');
+  hj.querySelector('[data-j-title]').textContent=d.title;hj.querySelector('[data-j-desc]').textContent=d.desc;hj.querySelector('[data-j-step]').textContent=d.step;hj.querySelector('[data-j-pct]').textContent=d.pct;hj.querySelector('[data-j-time]').textContent=d.time;hj.querySelector('[data-j-benefit]').textContent=d.benefit;});}
+ // testimonials
+ var T=[{q:'"The platform\'s due diligence tools saved us weeks of work. Highly recommended."',n:'Michael Rodriguez',r:'Business Owner',c:'TechFlow Solutions',i:'MR'},
+  {q:'"We found the perfect strategic buyer within six weeks. The process was seamless."',n:'Sara Al Khalifa',r:'Founder',c:'Gulf Retail Group',i:'SK'},
+  {q:'"Expert guidance at every step. Clerko made a complex acquisition feel straightforward."',n:'James Whitfield',r:'Managing Partner',c:'Meridian Capital',i:'JW'}];
+ var box=document.querySelector('[data-testi]');
+ if(box){var dots=box.querySelector('[data-t-dots]'),ix=0,tm;T.forEach(function(_,k){var b=document.createElement('button');b.onclick=function(){go(k);start();};dots.appendChild(b);});
+  function go(k){ix=(k+T.length)%T.length;var t=T[ix];box.querySelector('[data-t-quote]').textContent=t.q;box.querySelector('[data-t-name]').textContent=t.n;box.querySelector('[data-t-role]').textContent=t.r;box.querySelector('[data-t-co]').textContent=t.c;box.querySelector('[data-t-init]').textContent=t.i;dots.querySelectorAll('button').forEach(function(d,i){d.classList.toggle('on',i===ix);});}
+  function start(){clearInterval(tm);tm=setInterval(function(){go(ix+1);},6000);}go(0);start();}
+ // toast
+ var te;function toast(m){if(!te){te=document.createElement('div');te.style.cssText='position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:#0f172a;color:#fff;padding:13px 20px;border-radius:12px;font:600 14px/1.4 sans-serif;z-index:200;box-shadow:0 12px 30px rgba(0,0,0,.25);opacity:0;transition:.25s';document.body.appendChild(te);}te.textContent=m;requestAnimationFrame(function(){te.style.opacity='1';});clearTimeout(te._t);te._t=setTimeout(function(){te.style.opacity='0';},2400);}
+ window.addEventListener('popstate',route);
+ document.addEventListener('DOMContentLoaded',function(){showReveals(document.getElementById('home'));route();});
+ showReveals(document.getElementById('home'));route();
+})();</script>
+</body></html>
