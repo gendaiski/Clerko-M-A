@@ -1,0 +1,700 @@
+<title>Clerko M&amp;A Platform Demo</title>
+<style>
+:root{
+  --bg:#f6f7fc; --card:#ffffff; --ink:#0f172a; --text:#334155; --muted:#64748b; --line:#e3e6f3;
+  --soft:#eef0fb; --indigo:#4f46e5; --indigo-2:#4338ca; --purple:#7c3aed; --green:#059669; --green-bg:#e7f7f0;
+  --amber:#b45309; --amber-bg:#fdf3e2; --red:#dc2626; --red-bg:#fdecec; --blue:#2563eb; --blue-bg:#e8effd;
+  --violet-bg:#f1ebfd; --grad:linear-gradient(135deg,#4f46e5,#7c3aed); --grad-green:linear-gradient(135deg,#10b981,#059669);
+  --shadow:0 8px 24px rgba(30,27,75,.07);
+  font-family:"Segoe UI",ui-sans-serif,system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  color-scheme:dark; --bg:#0c0f1d; --card:#141830; --ink:#f1f3fb; --text:#cdd3e6; --muted:#8e97b5; --line:#262c4a;
+  --soft:#1b2042; --indigo:#8b87ff; --indigo-2:#a5a2ff; --green:#34d399; --green-bg:#0f2e25; --amber:#fbbf24; --amber-bg:#33260c;
+  --red:#f87171; --red-bg:#3a1414; --blue:#7aa7ff; --blue-bg:#15213f; --violet-bg:#241a44; --shadow:0 8px 24px rgba(0,0,0,.35);
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark; --bg:#0c0f1d; --card:#141830; --ink:#f1f3fb; --text:#cdd3e6; --muted:#8e97b5; --line:#262c4a;
+  --soft:#1b2042; --indigo:#8b87ff; --indigo-2:#a5a2ff; --green:#34d399; --green-bg:#0f2e25; --amber:#fbbf24; --amber-bg:#33260c;
+  --red:#f87171; --red-bg:#3a1414; --blue:#7aa7ff; --blue-bg:#15213f; --violet-bg:#241a44; --shadow:0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-size:15px;line-height:1.55;padding-inline:16px;padding-block:0 40px}
+h1,h2,h3,h4{color:var(--ink);margin:0;line-height:1.2;text-wrap:balance}
+h1{font-size:clamp(22px,3vw,30px);font-weight:800;letter-spacing:-.02em}
+h2{font-size:18px;font-weight:700}
+h3{font-size:15px;font-weight:700}
+p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--indigo);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto}
+.num{font-variant-numeric:tabular-nums}
+
+/* top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin-inline:-16px;padding:10px 16px}
+.top .wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:9px;font-weight:800;color:var(--ink);font-size:17px;border:0;background:none;padding:0}
+.mark{width:32px;height:32px;border-radius:10px;background:var(--grad);display:grid;place-items:center;color:#fff}
+.brand em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.roles{margin-left:auto;display:flex;gap:4px;background:var(--soft);padding:4px;border-radius:12px;flex-wrap:wrap}
+.roles button{border:0;background:none;padding:6px 12px;border-radius:9px;font-size:13px;font-weight:600;color:var(--muted)}
+.roles button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
+.nav{display:flex;gap:4px;overflow-x:auto;margin-top:10px;padding-bottom:2px}
+.nav button{border:0;background:none;padding:7px 12px;border-radius:9px;font-size:14px;font-weight:600;color:var(--muted);white-space:nowrap;display:flex;gap:6px;align-items:center}
+.nav button[aria-current="page"]{background:var(--card);color:var(--indigo);box-shadow:var(--shadow)}
+.count{background:var(--indigo);color:#fff;border-radius:99px;font-size:11px;padding:0 7px;line-height:18px}
+.demo-note{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:16px;padding:10px 14px;border-radius:12px;background:var(--violet-bg);font-size:13px;color:var(--text)}
+.demo-note strong{color:var(--ink)}
+.linkbtn{border:0;background:none;color:var(--indigo);font-weight:600;padding:0;text-decoration:underline;text-underline-offset:3px}
+
+main{margin-top:20px;display:grid;gap:20px}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--indigo);margin-bottom:4px}
+.sub{color:var(--muted);margin-top:4px;max-width:68ch}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.card-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.card-b{padding:18px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+.g3{grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr))}
+.kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.kpi b{display:block;font-size:24px;color:var(--ink);font-weight:800}
+.kpi span{font-size:13px;color:var(--muted)}
+.side{display:grid;gap:20px;grid-template-columns:minmax(0,1fr) 320px;align-items:start}
+@media (max-width:900px){.side{grid-template-columns:1fr}}
+
+/* controls */
+.btn{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:9px 16px;font-weight:600;font-size:14px;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.btn:hover{border-color:var(--indigo)}
+.btn.primary{background:var(--grad);color:#fff;border-color:transparent}
+.btn.green{background:var(--grad-green);color:#fff;border-color:transparent}
+.btn.ghost{border-color:transparent;background:none;color:var(--muted)}
+.btn.danger{color:var(--red)}
+.btn.sm{padding:6px 12px;font-size:13px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+label.f{display:grid;gap:6px;font-size:13px;font-weight:600;color:var(--ink)}
+input[type=text],input[type=number],input[type=date],select,textarea{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;font-size:14px}
+textarea{min-height:84px;resize:vertical}
+.fields{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr))}
+.hint{font-size:12px;color:var(--muted);font-weight:400}
+.err{font-size:13px;color:var(--red);font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:5px 12px;font-size:13px}
+.chip[aria-pressed="true"]{background:var(--indigo);border-color:var(--indigo);color:#fff}
+
+/* badges */
+.b{display:inline-flex;align-items:center;gap:4px;border-radius:99px;padding:2px 9px;font-size:12px;font-weight:700;white-space:nowrap}
+.b-green{background:var(--green-bg);color:var(--green)}.b-amber{background:var(--amber-bg);color:var(--amber)}
+.b-red{background:var(--red-bg);color:var(--red)}.b-blue{background:var(--blue-bg);color:var(--blue)}
+.b-indigo{background:var(--soft);color:var(--indigo)}.b-violet{background:var(--violet-bg);color:var(--purple)}
+.b-slate{background:var(--soft);color:var(--muted)}
+
+/* listing card */
+.lc{display:flex;flex-direction:column;overflow:hidden;border-radius:16px;border:1px solid var(--line);background:var(--card);box-shadow:var(--shadow);text-align:left;padding:0}
+.lc:hover{border-color:var(--indigo)}
+.lc-top{background:var(--grad);color:#fff;padding:16px 18px}
+.lc-top .price{font-size:26px;font-weight:800;margin-top:10px}
+.lc-top .tags{display:flex;gap:6px;flex-wrap:wrap;font-size:11px;font-weight:700}
+.lc-top .tags span{background:rgba(255,255,255,.2);border-radius:99px;padding:2px 8px}
+.lc-b{padding:16px 18px;display:grid;gap:10px}
+.lc-b .sector{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fact{background:var(--soft);border-radius:10px;padding:8px 10px}
+.fact b{display:block;color:var(--ink)}.fact span{font-size:12px;color:var(--muted)}
+
+/* tables & lists */
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}
+th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+dl.kv{display:grid;grid-template-columns:minmax(120px,36%) 1fr;margin:0}
+dl.kv dt,dl.kv dd{padding:8px 0;border-bottom:1px solid var(--line);margin:0}
+dl.kv dt{color:var(--muted)}dl.kv dd{color:var(--ink);font-weight:600}
+.list{display:grid;gap:10px}
+.item{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--card)}
+
+/* stepper */
+.steps{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:13px;font-weight:600;color:var(--muted)}
+.steps .s{display:flex;gap:6px;align-items:center}
+.steps .dot{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--soft);font-size:12px}
+.steps .done .dot{background:var(--green);color:#fff}
+.steps .cur{color:var(--ink)}.steps .cur .dot{background:var(--grad);color:#fff}
+.steps .sep{width:18px;height:1px;background:var(--line)}
+
+/* tabs */
+.tabs{display:inline-flex;gap:4px;background:var(--soft);border-radius:12px;padding:4px;flex-wrap:wrap}
+.tabs button{border:0;background:none;padding:6px 12px;border-radius:9px;font-weight:600;font-size:14px;color:var(--muted)}
+.tabs button[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
+
+/* deal room */
+.q{border:1px solid var(--line);border-radius:14px;padding:14px}
+.who{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:14px}
+.av{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;color:#fff;background:var(--grad);flex:none}
+.av.s{background:var(--grad-green)}
+.ans{margin-top:10px;margin-left:14px;padding-left:14px;border-left:2px solid var(--line);display:grid;gap:10px}
+.offer{border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.offer-h{background:var(--grad);color:#fff;padding:10px 16px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-weight:600}
+.offer-b{padding:14px 16px;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+.offer-b small{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700}
+.offer-b b{color:var(--ink)}
+.agent{border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--card);box-shadow:var(--shadow)}
+.agent-h{background:var(--grad);color:#fff;padding:12px 16px;font-weight:700;display:flex;gap:8px;align-items:center}
+.agent-b{padding:16px;display:grid;gap:12px;font-size:14px}
+.agent-b ul{margin:0;padding-left:18px;color:var(--text)}
+.tiny{font-size:12px;color:var(--muted)}
+.timeline{list-style:none;margin:0;padding:0 0 0 18px;border-left:2px solid var(--line);display:grid;gap:12px}
+.timeline li{position:relative;font-size:14px}
+.timeline li::before{content:"";position:absolute;left:-25px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--indigo);box-shadow:0 0 0 3px var(--card)}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px}
+.callout{border-radius:12px;padding:12px 14px;font-size:14px}
+.callout.ok{background:var(--green-bg);color:var(--green)}
+.callout.warn{background:var(--amber-bg);color:var(--amber)}
+.callout.info{background:var(--blue-bg);color:var(--blue)}
+.callout.bad{background:var(--red-bg);color:var(--red)}
+.nda{max-height:320px;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--bg);font-size:14px;display:grid;gap:10px}
+.progress{height:8px;border-radius:99px;background:var(--soft);overflow:hidden}
+.progress i{display:block;height:100%;background:var(--grad);transition:width .6s}
+
+/* modal & toast */
+.backdrop{position:fixed;inset:0;background:rgba(15,23,42,.55);display:grid;place-items:center;padding:16px;z-index:50}
+.modal{background:var(--card);border-radius:18px;max-width:520px;width:100%;max-height:90vh;overflow:auto;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.modal .card-b{display:grid;gap:14px}
+.docpage{position:relative;overflow:hidden;background:#fff;color:#1e293b;border-radius:10px;border:1px solid #e2e8f0;padding:22px;min-height:300px;font-size:13px}
+.docpage .wm{position:absolute;inset:-40%;display:grid;align-content:center;gap:48px;transform:rotate(-28deg);pointer-events:none;color:rgba(79,70,229,.13);font-weight:800;font-size:14px;white-space:nowrap}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:14px;font-weight:600;z-index:60;max-width:calc(100% - 32px)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="top"><div class="wrap">
+  <button class="brand" data-go="home" aria-label="Clerko M&amp;A home"><span class="mark" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l5-5 4 4 7-8"/><path d="M15 8h5v5"/></svg></span>Clerko <em>M&amp;A</em></button>
+  <div class="roles" role="group" aria-label="View the platform as">
+    <button data-role="guest">Visitor</button>
+    <button data-role="buyer">Buyer</button>
+    <button data-role="seller">Seller</button>
+    <button data-role="admin">Admin</button>
+  </div>
+  <nav class="nav" id="nav" style="width:100%" aria-label="Sections"></nav>
+</div></div>
+
+<div class="wrap">
+  <div class="demo-note">
+    <span><strong>Interactive demo.</strong> Switch between Buyer, Seller and Admin at the top to play every side of a deal. Payments, CR extraction and the Clerko Agent are simulated. Your changes are kept in this browser.</span>
+    <button class="linkbtn" data-act="reset">Reset demo</button>
+  </div>
+  <main id="app"></main>
+</div>
+<div id="layer"></div>
+
+<script>
+/* ---------- helpers ---------- */
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const bd = (n, full) => {
+  if (n == null || isNaN(n)) return '—';
+  if (!full && n >= 1e6) return 'BD ' + (+(n / 1e6).toFixed(2)) + 'M';
+  if (!full && n >= 1e4) return 'BD ' + (+(n / 1e3).toFixed(0)) + 'K';
+  return 'BD ' + Number(n).toLocaleString('en-US');
+};
+const now = () => new Date().toISOString();
+const ago = (iso) => {
+  const s = Math.round((Date.now() - new Date(iso)) / 1000);
+  if (s < 60) return 'just now'; if (s < 3600) return Math.round(s / 60) + 'm ago';
+  if (s < 86400) return Math.round(s / 3600) + 'h ago'; const d = Math.round(s / 86400);
+  return d === 1 ? 'Yesterday' : d + ' days ago';
+};
+const hoursAgo = (h) => new Date(Date.now() - h * 3600e3).toISOString();
+const uid = () => Math.random().toString(36).slice(2, 9);
+function hash(str) { let h = 2166136261; for (const c of str) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return (h >>> 0).toString(16).padStart(8, '0'); }
+
+const SECTORS = { technology: 'Technology', consulting: 'Consulting', manufacturing: 'Manufacturing', food: 'Food & Beverage', hospitality: 'Hospitality', marketing: 'Marketing & Media', logistics: 'Logistics' };
+const TIERS = { standard: { name: 'Standard', price: 299, f: ['Anonymised teaser listing', 'Standard visibility', 'Interest pipeline dashboard'] }, premium: { name: 'Premium', price: 699, f: ['Everything in Standard', 'Priority placement + valuation support', 'Documentation assistance'] }, enterprise: { name: 'Enterprise', price: 1299, f: ['Everything in Premium', 'Dedicated deal advisor', 'Full valuation & documentation service'] } };
+const STAGES = { nda_requested: ['NDA requested', 'slate'], nda_signed: ['NDA signed', 'blue'], pack_unlocked: ['Pack unlocked', 'indigo'], deal_room: ['Deal room', 'violet'], offer: ['Indicative offer', 'amber'], headline_terms: ['Headline terms', 'green'], withdrawn: ['Withdrawn', 'slate'] };
+const RANK = { nda_requested: 1, nda_signed: 2, pack_unlocked: 3, deal_room: 4, offer: 5, headline_terms: 6 };
+const STRUCT = { full: 'Full acquisition', majority: 'Majority stake', minority: 'Minority stake' };
+const QCATS = { financial: 'Financial', commercial: 'Commercial', legal: 'Legal', operational: 'Operational', people: 'People & HR', document_request: 'Document request', other: 'Other' };
+const badge = (label, tone = 'slate') => `<span class="b b-${tone}">${esc(label)}</span>`;
+
+/* ---------- seed ---------- */
+function seed() {
+  const L = (id, ref, company, headline, sector, band, est, revenue, ebitda, growth, price, tier, views, highlights, status = 'live') => ({ id, ref, company, headline, sector, band, est, revenue, ebitda, growth, price, tier, featured: tier !== 'standard', views, highlights, status, loc: 'Manama, Bahrain', summary: 'An established Bahrain business with a strong track record. Full identity, financials and documents are released after the NDA.' });
+  const s = {
+    role: 'buyer', view: 'buyer', param: null, tab: 'qa', packTab: 'overview', filter: [],
+    users: { buyer: { name: 'Aisha Khan', email: 'buyer@clerko.test', alias: 'Buyer #A7', type: 'Strategic acquirer', kyc: 'verified' }, seller: { name: 'Michael Rodriguez', email: 'seller@clerko.test', kyc: 'verified' } },
+    premium: false,
+    companies: [
+      { id: 'c1', name: 'Meridian Cloud W.L.L.', cr: '114231-1', form: 'With Limited Liability Company', crStatus: 'ACTIVE', reg: '2018-03-14', exp: '2027-03-14', capital: 50000, address: 'Flat 21, Building 1565, Road 1722, Block 317, Manama', kyb: 'verified', extraction: 'completed', owner: 'seller' },
+      { id: 'c2', name: 'Seef Logistics W.L.L.', cr: '118902-1', form: 'With Limited Liability Company', crStatus: 'ACTIVE', reg: '2016-05-02', exp: '2026-10-12', capital: 100000, address: 'Building 22, Road 2803, Block 428, Seef', kyb: 'pending', extraction: 'completed', owner: 'other' },
+    ],
+    listings: [
+      L('l1', 'L-26602', 'c1', 'Profitable GCC SaaS company with recurring revenue', 'technology', '11–50', 2018, 3200000, 640000, 25, 8500000, 'premium', 245, ['Recurring revenue', 'Diversified clients', 'Proprietary platform']),
+      L('l2', 'L-44067', null, 'High-growth digital transformation consultancy', 'consulting', '11–50', 2019, 950000, 260000, 35, 2800000, 'premium', 156, ['Digital transformation', 'Blue-chip clients']),
+      L('l3', 'L-51190', null, 'ISO-certified light manufacturer, export ready', 'manufacturing', '51–200', 2015, 4100000, 720000, 12, 5200000, 'standard', 189, ['ISO certified', 'Export ready']),
+      L('l4', 'L-30511', null, 'Established fresh-food brand with retail network', 'food', '11–50', 2017, 720000, 150000, 18, 1400000, 'standard', 98, ['Retail network', 'Brand recognition']),
+      L('l5', 'L-77120', null, 'Prime-location hospitality business with loyal customers', 'hospitality', '51–200', 2016, 2600000, 540000, 22, 3900000, 'enterprise', 210, ['Prime location', 'Loyal customers']),
+      L('l6', 'L-60233', null, 'Digital-first creative agency with recurring retainers', 'marketing', '11–50', 2020, 410000, 90000, 40, 680000, 'standard', 74, ['Digital first', 'Recurring retainers']),
+      L('l7', 'L-48835', 'c2', 'Regional logistics operator with long-term contracts', 'logistics', '51–200', 2016, 1900000, 310000, 9, 2400000, 'standard', 0, ['Long-term contracts'], 'pending_review'),
+    ],
+    companyNames: { l2: 'Gulf Advisory Partners W.L.L.', l3: 'Sitra Precision Industries B.S.C. (c)', l4: 'Bahrain Fresh Foods W.L.L.', l5: 'Marina Bay Hospitality W.L.L.', l6: 'Pixel & Palm Media S.P.C.' },
+    engagements: [
+      { id: 'e1', listing: 'l1', buyer: 'Buyer #A7', type: 'Strategic acquirer', stage: 'offer', mine: true, at: hoursAgo(2) },
+      { id: 'e2', listing: 'l1', buyer: 'Buyer #B3', type: 'PE / fund', stage: 'pack_unlocked', at: hoursAgo(26) },
+      { id: 'e3', listing: 'l1', buyer: 'Buyer #C1', type: 'Family office', stage: 'nda_signed', at: hoursAgo(50) },
+      { id: 'e4', listing: 'l1', buyer: 'Buyer #D9', type: 'Individual', stage: 'nda_requested', at: hoursAgo(74), kycPending: true },
+    ],
+    room: {
+      status: 'open',
+      questions: [
+        { id: 'q1', from: 'buyer', cat: 'financial', body: 'Can you confirm the churn rate over the last 12 months and the concentration of the top 3 clients?', status: 'answered', at: hoursAgo(48), answers: [{ from: 'seller', body: 'Gross churn was 6%. The top 3 clients represent 22% of revenue. I have released the cohort analysis under Documents.', at: hoursAgo(26) }] },
+        { id: 'q2', from: 'buyer', cat: 'legal', body: 'Are the two change-of-control clauses waivable with consent?', status: 'open', at: hoursAgo(4), answers: [] },
+      ],
+      released: [{ id: 'd4', title: 'Cohort & churn analysis', cat: 'Financials', at: hoursAgo(26) }],
+      staged: [{ id: 'd5', title: 'Employment & key-person contracts', cat: 'People & HR' }],
+      offers: [{ id: 'o1', from: 'buyer', price: 8000000, structure: 'full', stake: 100, deposit: 50, cond: 'Subject to due diligence and change-of-control consents', status: 'open', counter: false, at: hoursAgo(6) }],
+      terms: null, agent: { buyer: false, seller: false, summary: null },
+    },
+    pack: [
+      { id: 'd1', title: 'Audited financials 2023–2025', cat: 'Financials' },
+      { id: 'd2', title: 'Cap table & corporate structure', cat: 'Corporate' },
+      { id: 'd3', title: 'Key customer contracts (redacted)', cat: 'Contracts' },
+    ],
+    kyc: [{ id: 'k1', name: 'Omar Haddad', email: 'new.buyer@clerko.test', idType: 'Bahrain CPR', idNo: '900112345', expiry: '2029-06-30', status: 'pending', at: hoursAgo(3) }],
+    flags: [], audit: [], sellerDraft: null, upload: null,
+  };
+  const log = (e, by, d) => s.audit.push({ event: e, by, detail: d, at: now() });
+  log('Deal room opened', 'Buyer', 'Meridian Cloud × Buyer #A7'); log('Question asked', 'Buyer', 'Financial'); log('Reply posted', 'Seller', ''); log('Document released', 'Seller', 'Cohort & churn analysis'); log('Question asked', 'Buyer', 'Legal'); log('Offer submitted', 'Buyer', 'BD 8,000,000');
+  return s;
+}
+let S;
+try { S = JSON.parse(localStorage.getItem('clerko-demo') || 'null'); } catch (e) { S = null; }
+if (!S || !S.room) S = seed();
+const save = () => { try { localStorage.setItem('clerko-demo', JSON.stringify(S)); } catch (e) {} };
+function audit(event, by, detail = '') { S.audit.push({ event, by, detail, at: now() }); }
+function chain() { let prev = ''; return S.audit.map((a) => { prev = hash(prev + a.event + a.by + a.detail + a.at); return { ...a, h: prev }; }); }
+const listing = (id) => S.listings.find((l) => l.id === id);
+const company = (id) => S.companies.find((c) => c.id === id);
+const companyName = (l) => (l.company ? company(l.company).name : S.companyNames[l.id]);
+const buyerEng = (lid) => S.engagements.find((e) => e.listing === lid && e.mine);
+const advance = (e, st) => { if ((RANK[st] || 0) > (RANK[e.stage] || 0)) e.stage = st; e.at = now(); };
+
+/* ---------- UI primitives ---------- */
+function toast(msg) { document.querySelectorAll('.toast').forEach((x) => x.remove()); const t = document.createElement('div'); t.className = 'toast'; t.setAttribute('role', 'status'); t.textContent = msg; document.body.append(t); setTimeout(() => t.remove(), 2600); }
+function modal(html) { $('#layer').innerHTML = `<div class="backdrop" data-act="close-bg"><div class="modal" role="dialog" aria-modal="true">${html}</div></div>`; $('#layer .modal button, #layer .modal input')?.focus(); }
+const closeModal = () => { $('#layer').innerHTML = ''; };
+function pay(amount, desc, onPaid) {
+  modal(`<div class="card-h"><div><div class="eyebrow">Development checkout</div><h2>Stands in for Tap Payments</h2></div></div>
+  <div class="card-b"><p>${esc(desc)}</p><div style="font-size:30px;font-weight:800;color:var(--ink)" class="num">${bd(amount, true)}</div>
+  <p class="tiny">On the live platform this opens Tap's secure checkout (cards, BENEFIT, Apple Pay). The charge is confirmed with Tap before anything unlocks.</p>
+  <div class="row"><button class="btn green" data-act="pay-ok">Simulate successful payment</button><button class="btn" data-act="pay-fail">Simulate failed payment</button></div></div>`);
+  pay.cb = onPaid;
+}
+function stepper(steps, cur) { return `<div class="steps">${steps.map((s, i) => `<span class="s ${i < cur ? 'done' : i === cur ? 'cur' : ''}"><span class="dot">${i < cur ? '✓' : i + 1}</span>${esc(s)}</span>${i < steps.length - 1 ? '<span class="sep"></span>' : ''}`).join('')}</div>`; }
+function listingCard(l) {
+  return `<button class="lc" data-go="listing" data-p="${l.id}">
+   <div class="lc-top"><div class="tags">${l.tier !== 'standard' ? `<span>${esc(TIERS[l.tier].name)}</span>` : ''}<span>✓ Verified</span>${l.featured ? '<span>Featured</span>' : ''}</div>
+   <div class="price num">${bd(l.price)}</div><div style="font-size:13px;opacity:.85">Asking price · ${l.views} views</div></div>
+   <div class="lc-b"><div class="sector">${esc(SECTORS[l.sector])}</div><h3>${esc(l.headline)}</h3>
+   <div class="facts"><div class="fact"><b class="num">${bd(l.revenue)}</b><span>Revenue</span></div><div class="fact"><b>${esc(l.band)}</b><span>Employees</span></div></div>
+   <div class="tiny"><span style="color:var(--green);font-weight:700">+${l.growth}% growth</span> · ${esc(l.loc)} · Est. ${l.est}</div>
+   <div class="chips">${l.highlights.slice(0, 3).map((h) => badge(h, 'indigo')).join('')}</div></div></button>`;
+}
+
+/* ---------- navigation ---------- */
+const NAV = {
+  guest: [['home', 'Home'], ['market', 'Marketplace'], ['pricing', 'Pricing']],
+  buyer: [['buyer', 'My acquisitions'], ['market', 'Marketplace'], ['room', 'Deal room']],
+  seller: [['seller', 'Seller dashboard'], ['company', 'Company verification'], ['newListing', 'New listing'], ['room', 'Deal room']],
+  admin: [['admin', 'Overview'], ['moderation', 'Listing moderation'], ['kyb', 'Companies (KYB)'], ['kyc', 'Identity (KYC)'], ['compliance', 'Compliance'], ['room', 'Deal room'], ['audit', 'Audit trail']],
+};
+const HOME = { guest: 'home', buyer: 'buyer', seller: 'seller', admin: 'admin' };
+function go(view, param = null) { S.view = view; S.param = param; save(); render(); window.scrollTo({ top: 0 }); }
+function counts() {
+  return {
+    room: S.room.status === 'open' ? S.room.questions.filter((q) => q.status === 'open').length + S.room.offers.filter((o) => o.status === 'open').length : 0,
+    moderation: S.listings.filter((l) => l.status === 'pending_review').length,
+    kyb: S.companies.filter((c) => c.kyb === 'pending' && c.extraction === 'completed').length,
+    kyc: S.kyc.filter((k) => k.status === 'pending').length,
+    compliance: S.flags.filter((f) => f.status === 'open').length,
+  };
+}
+function renderNav() {
+  document.querySelectorAll('.roles button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.role === S.role)));
+  const c = counts();
+  $('#nav').innerHTML = NAV[S.role].map(([v, label]) => `<button data-go="${v}" ${S.view === v ? 'aria-current="page"' : ''}>${esc(label)}${c[v] ? `<span class="count">${c[v]}</span>` : ''}</button>`).join('');
+}
+
+/* ---------- views ---------- */
+const V = {};
+V.home = () => `
+ <section class="card" style="overflow:hidden"><div class="card-b" style="display:grid;gap:14px;padding:28px">
+  <div class="eyebrow">Bahrain's confidential M&amp;A marketplace</div>
+  <h1 style="font-size:clamp(28px,4.4vw,44px)">Buy and sell businesses, <span style="background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">confidentially</span>.</h1>
+  <p class="sub" style="font-size:16px">Anonymised listings, verified members, an NDA before any identity is revealed, and a structured deal room that takes both sides to agreed headline terms.</p>
+  <div class="row"><button class="btn green" data-role-go="seller">Sell your business</button><button class="btn" data-go="market">Browse the marketplace</button></div>
+ </div></section>
+ <section class="grid g3">${[['Anonymised teasers', 'Listings never name the company. Identity is released only under NDA.'], ['Verified members', 'Buyers pass identity checks; companies are verified against their Sijilat CR.'], ['Watermarked documents', 'Every document is stamped to the viewer and every view is logged.'], ['Structured deal room', 'Q&A, staged documents, offers and headline terms, with a full audit trail.']].map(([t, d]) => `<div class="card card-b"><h3>${t}</h3><p class="tiny" style="margin-top:6px;font-size:14px">${d}</p></div>`).join('')}</section>
+ <section class="grid"><div class="head"><h2>Featured opportunities</h2><button class="btn sm" data-go="market">View all listings</button></div>
+ <div class="grid g3">${S.listings.filter((l) => l.status === 'live' && l.featured).slice(0, 3).map(listingCard).join('')}</div></section>`;
+
+V.pricing = () => `<div class="head"><div><div class="eyebrow">Pricing</div><h1>Plans for sellers and buyers</h1><p class="sub">Monthly, billed through Tap. Browsing teasers is always free.</p></div></div>
+ <div class="grid g3">${Object.entries(TIERS).map(([k, t]) => `<div class="card card-b" style="display:grid;gap:10px">${k === 'premium' ? badge('Most popular', 'violet') : ''}<h2>${t.name}</h2><div style="font-size:26px;font-weight:800;color:var(--ink)" class="num">BD ${t.price}<span class="tiny"> / month</span></div><ul style="margin:0;padding-left:18px">${t.f.map((f) => `<li>${f}</li>`).join('')}</ul></div>`).join('')}
+ <div class="card card-b" style="display:grid;gap:10px">${badge('Buyers', 'green')}<h2>Per company or Premium</h2><p><b class="num">BD 250</b> to unlock one Company Details Pack, or <b class="num">BD 699 / month</b> for Buyer Premium with 10 unlocks a month.</p></div></div>`;
+
+V.market = () => {
+  const live = S.listings.filter((l) => l.status === 'live' && (!S.filter.length || S.filter.includes(l.sector)));
+  return `<div class="head"><div><div class="eyebrow">Marketplace</div><h1>Businesses for sale in Bahrain</h1><p class="sub">Anonymised teasers from verified sellers. Company names are revealed only after an NDA.</p></div></div>
+  <div class="chips" role="group" aria-label="Filter by sector">${Object.entries(SECTORS).map(([k, v]) => `<button class="chip" data-act="filter" data-p="${k}" aria-pressed="${S.filter.includes(k)}">${v}</button>`).join('')}</div>
+  <p class="tiny">${live.length} ${live.length === 1 ? 'business' : 'businesses'} available</p>
+  <div class="grid g3">${live.map(listingCard).join('') || '<div class="card card-b">No listings in these sectors yet.</div>'}</div>`;
+};
+
+V.listing = () => {
+  const l = listing(S.param); if (!l) return V.market();
+  const e = buyerEng(l.id);
+  let cta;
+  if (S.role === 'guest') cta = `<p>Create a free account to request access.</p><button class="btn primary" data-role-go="buyer">Continue as the demo buyer</button>`;
+  else if (S.role !== 'buyer') cta = `<p class="tiny">Switch to the Buyer role to request access to this business.</p><button class="btn" data-role-go="buyer">View as buyer</button>`;
+  else if (!e) cta = `<p>Sign the NDA to reveal the company's identity, then unlock the full Company Details Pack.</p><button class="btn primary" data-act="request" data-p="${l.id}">Request access &amp; sign NDA</button>`;
+  else if (e.stage === 'nda_requested') cta = `<button class="btn primary" data-go="nda" data-p="${e.id}">Continue to the NDA</button>`;
+  else if (e.stage === 'nda_signed') cta = `<button class="btn primary" data-go="unlock" data-p="${e.id}">Unlock the Details Pack</button>`;
+  else cta = `<button class="btn primary" data-go="pack" data-p="${e.id}">Open the Details Pack</button>${RANK[e.stage] >= 4 && l.id === 'l1' ? `<button class="btn" data-go="room">Open deal room</button>` : ''}`;
+  return `<button class="btn ghost sm" data-go="market">← Marketplace</button>
+  <div class="side"><section class="card card-b" style="display:grid;gap:14px">
+   <div class="row">${badge('✓ Verified listing', 'green')}${badge('Identity gated', 'amber')}<span class="tiny mono">${l.ref}</span></div>
+   <h1>${esc(l.headline)}</h1><p class="sub">${esc(l.summary)}</p>
+   <div class="kpis"><div class="kpi"><b class="num">${bd(l.price)}</b><span>Asking price</span></div><div class="kpi"><b class="num">${bd(l.revenue)}</b><span>Revenue</span></div><div class="kpi"><b class="num" style="color:var(--green)">+${l.growth}%</b><span>YoY growth</span></div></div>
+   <dl class="kv"><dt>Sector</dt><dd>${SECTORS[l.sector]}</dd><dt>Employees</dt><dd>${l.band}</dd><dt>Location</dt><dd>${l.loc}</dd><dt>Established</dt><dd>${l.est}</dd><dt>Deal type</dt><dd>Full sale</dd></dl>
+   <div class="chips">${l.highlights.map((h) => badge(h, 'indigo')).join('')}</div>
+   <div class="callout info">The company name, detailed financials and documents unlock after you sign the NDA and pay the access fee.</div>
+  </section><aside class="card card-b" style="display:grid;gap:12px"><h2>Ready to go deeper?</h2>${e ? `<div>${badge(STAGES[e.stage][0], STAGES[e.stage][1])}</div>` : ''}${cta}</aside></div>`;
+};
+
+V.nda = () => {
+  const e = S.engagements.find((x) => x.id === S.param); const l = listing(e.listing);
+  const clauses = [['Parties', `Between you (the Recipient) and the owner(s) of the business listed as ${l.ref} (the Discloser), administered through Clerko M&A.`], ['Purpose', 'Confidential Information is disclosed solely to evaluate a possible acquisition of, or investment in, the business.'], ['Obligations', 'Keep all information strictly confidential, use it only for the Purpose, and share it only with advisers bound by equivalent duties.'], ['No contact outside the platform', 'Communicate with the Discloser only through Clerko and do not approach the business, its staff, customers or suppliers directly.'], ['Monitoring', 'Documents are watermarked to your account and every access is logged.'], ['Term and law', 'Two years from signature. Governed by the laws of the Kingdom of Bahrain.']];
+  return `${stepper(['Preferences', 'Discover', 'NDA', 'Unlock', 'Details Pack'], 2)}
+  <div class="head"><div><div class="eyebrow">Step 3 · Non-disclosure agreement</div><h1>Sign the NDA for ${l.ref}</h1><p class="sub">Signing reveals the company's identity. The signed PDF is stored with a SHA-256 fingerprint of exactly this text.</p></div></div>
+  <div class="side"><section class="card card-b" style="display:grid;gap:14px">
+   <div class="nda" tabindex="0" aria-label="NDA text">${clauses.map(([h, b], i) => `<div><b style="color:var(--ink)">${i + 1}. ${h}</b><p>${b}</p></div>`).join('')}</div>
+   <form id="nda-form" style="display:grid;gap:12px"><label class="f" for="nda-name">Type your full legal name to sign<input type="text" id="nda-name" placeholder="${esc(S.users.buyer.name)}" autocomplete="off"><span class="hint">Must match your verified identity: ${esc(S.users.buyer.name)}</span></label>
+   <label class="row" style="font-size:14px"><input type="checkbox" id="nda-agree"> I agree to the NDA terms and to keep all information confidential.</label>
+   <div id="nda-err" class="err" hidden></div><div><button class="btn primary">Sign &amp; continue</button></div></form>
+  </section><aside class="card card-b" style="display:grid;gap:8px"><div class="tiny">You are signing for</div><h3>${esc(l.headline)}</h3><div class="num">${bd(l.price)} · ${SECTORS[l.sector]}</div></aside></div>`;
+};
+
+V.unlock = () => {
+  const e = S.engagements.find((x) => x.id === S.param); const l = listing(e.listing);
+  return `${stepper(['Preferences', 'Discover', 'NDA', 'Unlock', 'Details Pack'], 3)}
+  <div class="head"><div><div class="eyebrow">Step 4 · Identity revealed</div><h1>${esc(companyName(l))}</h1><p class="sub">Unlock the Company Details Pack: valuation, financials, legal and court/debt checks, and watermarked documents.</p></div></div>
+  <div class="grid g2"><div class="card card-b" style="display:grid;gap:10px"><h2>Per-company access</h2><div style="font-size:28px;font-weight:800;color:var(--ink)" class="num">BD 250</div><p class="tiny">One-time fee for this company's full Details Pack.</p><div><button class="btn primary" data-act="unlock-pay" data-p="${e.id}">Pay &amp; unlock</button></div></div>
+  <div class="card card-b" style="display:grid;gap:10px"><h2>Buyer Premium</h2><div style="font-size:28px;font-weight:800;color:var(--ink)" class="num">BD 699<span class="tiny"> / month</span></div><p class="tiny">Unlock up to 10 packs a month, with priority alerts.</p><div>${S.premium ? `<button class="btn green" data-act="unlock-premium" data-p="${e.id}">Use 1 of your premium unlocks</button>` : `<button class="btn" data-act="premium">Activate Premium</button>`}</div></div></div>
+  <div class="callout info">The seller is told that a qualified, NDA-bound buyer has unlocked the pack. Deposits and escrow come later (Scenario 4).</div>`;
+};
+
+V.pack = () => {
+  const e = S.engagements.find((x) => x.id === S.param); const l = listing(e.listing); const c = l.company ? company(l.company) : null;
+  const t = S.packTab;
+  const tabs = [['overview', 'Overview'], ['valuation', 'Valuation'], ['financials', 'Financials'], ['legal', 'Legal & court checks'], ['documents', 'Documents']];
+  const body = {
+    overview: `<dl class="kv"><dt>Company</dt><dd>${esc(companyName(l))}</dd><dt>Commercial Registration</dt><dd class="num">${esc(c ? c.cr : '114260-1')}</dd><dt>Legal form</dt><dd>With Limited Liability Company</dd><dt>CR status</dt><dd>${badge('ACTIVE', 'green')}</dd><dt>Issued capital</dt><dd class="num">${bd(c ? c.capital : 50000, true)}</dd><dt>Sector</dt><dd>${SECTORS[l.sector]} · ${l.loc}</dd></dl>`,
+    valuation: `<p>Indicative range <b class="num">${bd(l.price * 0.93)} – ${bd(l.price * 1.07)}</b>, benchmarked against comparable GCC transactions.</p><div class="tbl"><table><thead><tr><th>Method</th><th>Value</th></tr></thead><tbody><tr><td>EBITDA multiple</td><td class="num">${bd(l.price * 0.98)}</td></tr><tr><td>Revenue multiple</td><td class="num">${bd(l.price * 1.04)}</td></tr><tr><td>DCF (base case)</td><td class="num">${bd(l.price * 0.95)}</td></tr></tbody></table></div>`,
+    financials: `<div class="tbl"><table><thead><tr><th>Year</th><th>Revenue</th><th>EBITDA</th><th>Growth</th></tr></thead><tbody>${[[2023, 1.56, 1.64, '—'], [2024, 1.25, 1.25, '+25%'], [2025, 1, 1, '+25%']].map(([y, r, eb, g]) => `<tr><td>${y}</td><td class="num">${bd(Math.round(l.revenue / r))}</td><td class="num">${bd(Math.round(l.ebitda / eb))}</td><td>${g}</td></tr>`).join('')}</tbody></table></div>`,
+    legal: `<div class="list">${[['ok', 'Clean corporate structure, no minority disputes'], ['ok', 'IP assigned to the company; key contracts assignable'], ['warn', 'Two client contracts contain change-of-control clauses'], ['ok', 'No active litigation on record'], ['ok', 'No registered defaults']].map(([s, x]) => `<div class="item row">${s === 'ok' ? badge('✓ Clear', 'green') : badge('! Review', 'amber')}<span>${x}</span></div>`).join('')}</div>`,
+    documents: `<div class="list">${S.pack.map((d) => `<div class="item row" style="justify-content:space-between"><div><b style="color:var(--ink)">${esc(d.title)}</b><div class="tiny">${esc(d.cat)} · watermarked PDF</div></div><button class="btn sm" data-act="doc" data-p="${esc(d.title)}">Open</button></div>`).join('')}</div>`,
+  }[t];
+  return `${stepper(['Preferences', 'Discover', 'NDA', 'Unlock', 'Details Pack'], 4)}
+  <div class="head"><div><div class="eyebrow">Company Details Pack · ${l.ref}</div><h1>${esc(companyName(l))}</h1></div>${l.id === 'l1' ? `<button class="btn primary" data-act="enter-room" data-p="${e.id}">Proceed to deal room</button>` : ''}</div>
+  <div class="callout info">Watermarked to ${esc(S.users.buyer.alias)} · every view is logged · NDA-bound, do not distribute.</div>
+  <section class="card"><div class="card-h"><div class="tabs" role="tablist">${tabs.map(([k, v]) => `<button role="tab" aria-selected="${t === k}" data-act="pack-tab" data-p="${k}">${v}</button>`).join('')}</div></div><div class="card-b">${body}</div></section>
+  ${l.id !== 'l1' ? '<p class="tiny">In this demo the full deal room is set up for the Meridian Cloud listing.</p>' : ''}`;
+};
+
+V.buyer = () => {
+  const mine = S.engagements.filter((e) => e.mine);
+  const next = (e) => e.stage === 'nda_requested' ? ['nda', 'Sign NDA'] : e.stage === 'nda_signed' ? ['unlock', 'Unlock pack'] : RANK[e.stage] >= 4 && e.listing === 'l1' ? ['room', 'Open deal room'] : ['pack', 'Open pack'];
+  return `<div class="head"><div><div class="eyebrow">Buyer workspace · ${esc(S.users.buyer.alias)}</div><h1>Welcome back, ${esc(S.users.buyer.name.split(' ')[0])}</h1><p class="sub">Identity verified. Track every business you are looking at, from NDA to agreed terms.</p></div><button class="btn" data-go="market">Browse marketplace</button></div>
+  <div class="kpis"><div class="kpi"><b>${mine.length}</b><span>Businesses in progress</span></div><div class="kpi"><b>${mine.filter((e) => RANK[e.stage] >= 3).length}</b><span>Packs unlocked</span></div><div class="kpi"><b>${S.room.offers.filter((o) => o.from === 'buyer').length}</b><span>Offers made</span></div><div class="kpi"><b>${S.premium ? 'Active' : 'Off'}</b><span>Buyer Premium</span></div></div>
+  <section class="card"><div class="card-h"><h2>My acquisitions</h2></div><div class="card-b list">${mine.map((e) => { const l = listing(e.listing); const n = next(e); return `<div class="item row" style="justify-content:space-between"><div style="display:grid;gap:4px"><b style="color:var(--ink)">${RANK[e.stage] >= 2 ? esc(companyName(l)) : esc(l.headline)}</b><div class="row tiny">${badge(STAGES[e.stage][0], STAGES[e.stage][1])}<span>${l.ref} · ${bd(l.price)} · ${ago(e.at)}</span></div></div><button class="btn sm primary" data-go="${n[0]}" data-p="${e.id}">${n[1]}</button></div>`; }).join('') || '<p>No businesses yet. Browse the marketplace to request access.</p>'}</div></section>`;
+};
+
+V.seller = () => {
+  const my = S.listings.filter((l) => l.company && company(l.company).owner === 'seller');
+  const eng = S.engagements.filter((e) => my.some((l) => l.id === e.listing));
+  const at = (st) => eng.filter((e) => RANK[e.stage] >= RANK[st]).length;
+  return `<div class="head"><div><div class="eyebrow">Seller workspace</div><h1>Seller dashboard</h1><p class="sub">Your anonymised teasers and the buyers moving through them.</p></div><div class="row"><button class="btn" data-go="company">Add a company</button><button class="btn primary" data-go="newListing">New listing</button></div></div>
+  <div class="kpis"><div class="kpi"><b class="num">${my.reduce((a, l) => a + l.views, 0)}</b><span>Teaser views</span></div><div class="kpi"><b>${eng.length}</b><span>NDA requests</span></div><div class="kpi"><b>${at('nda_signed')}</b><span>NDAs signed</span></div><div class="kpi"><b>${at('pack_unlocked')}</b><span>Packs unlocked</span></div><div class="kpi"><b>${at('offer')}</b><span>Offers</span></div></div>
+  <section class="card"><div class="card-h"><h2>My listings</h2></div><div class="card-b list">${my.map((l) => `<div class="item row" style="justify-content:space-between"><div><b style="color:var(--ink)">${esc(l.headline)}</b><div class="tiny">${l.ref} · ${esc(companyName(l))} · ${bd(l.price)} · ${TIERS[l.tier]?.name ?? 'No tier'}</div></div>${l.status === 'live' ? badge('Live', 'green') : l.status === 'pending_review' ? badge('Under admin review', 'amber') : l.status === 'revision' ? badge('Revision requested', 'violet') : badge('Draft', 'slate')}</div>`).join('')}</div></section>
+  <section class="card"><div class="card-h"><div><h2>Interest pipeline</h2><p class="tiny">Buyers stay anonymous until you agree terms.</p></div></div><div class="card-b tbl"><table><thead><tr><th>Buyer</th><th>Stage</th><th>Verified</th><th>Last activity</th><th></th></tr></thead><tbody>${eng.map((e) => `<tr><td><b style="color:var(--ink)">${esc(e.buyer)}</b><div class="tiny">${esc(e.type)}</div></td><td>${badge(STAGES[e.stage][0], STAGES[e.stage][1])}</td><td>${e.kycPending ? badge('KYC pending', 'amber') : badge('✓ KYC', 'green')}</td><td>${ago(e.at)}</td><td>${e.id === 'e1' ? '<button class="btn sm primary" data-go="room">Open deal room</button>' : '—'}</td></tr>`).join('')}</tbody></table></div></section>`;
+};
+
+V.company = () => {
+  const u = S.upload;
+  const steps = ['Uploading the PDF', 'Reading the CR profile (Xtracta)', 'Mapping fields to the company profile', 'Sent to compliance for verification'];
+  let body;
+  if (!u) body = `<ol style="margin:0;padding-left:18px;display:grid;gap:6px"><li>Go to <b>sijilat.bh</b> and search your CR number.</li><li>Open the company summary and save it as a PDF.</li><li>Upload it here. We read it automatically and our compliance team verifies it.</li></ol>
+   <label class="f" for="cr-file">CR profile PDF<input type="file" id="cr-file" accept="application/pdf"><span class="hint">Or use the sample below. Nothing leaves your device in this demo.</span></label>
+   <fieldset style="border:0;padding:0;margin:0;display:grid;gap:8px"><legend class="f" style="margin-bottom:6px">Your capacity</legend>${['Shareholder / partner', 'Authorised signatory', 'Holder of a power of attorney'].map((c, i) => `<label class="item row" style="font-size:14px"><input type="radio" name="cap" ${i === 0 ? 'checked' : ''}> ${c}</label>`).join('')}</fieldset>
+   <label class="row" style="font-size:14px"><input type="checkbox" id="auth" checked> I confirm I am authorised to act for this company in a sale.</label>
+   <div class="row"><button class="btn primary" data-act="upload">Upload &amp; read profile</button><button class="btn" data-act="upload" data-p="sample">Use sample Sijilat PDF</button></div>`;
+  else {
+    const pct = Math.min(100, (u.step / steps.length) * 100);
+    body = `<div class="progress" aria-hidden="true"><i style="width:${pct}%"></i></div><ol style="margin:0;padding-left:18px;display:grid;gap:6px">${steps.map((s, i) => `<li style="color:${i < u.step ? 'var(--green)' : i === u.step ? 'var(--ink)' : 'var(--muted)'}">${i < u.step ? '✓ ' : ''}${s}</li>`).join('')}</ol>
+    ${u.step >= steps.length ? `<h3>Extracted company profile</h3><dl class="kv"><dt>CR No.</dt><dd class="num">120477-1</dd><dt>Commercial name (EN)</dt><dd>Seef Digital Services W.L.L.</dd><dt>CR type</dt><dd>With Limited Liability Company</dd><dt>Status</dt><dd>${badge('ACTIVE', 'green')}</dd><dt>Registration date</dt><dd>9 Feb 2021</dd><dt>Expiry date</dt><dd>9 Feb 2027</dd><dt>Issued capital</dt><dd class="num">BD 20,000</dd><dt>Address</dt><dd>Building 118, Road 2804, Block 428, Seef</dd></dl>
+    <div class="row">${badge(company('c3')?.kyb === 'verified' ? 'KYB verified' : 'KYB pending: an admin checks this against the PDF', company('c3')?.kyb === 'verified' ? 'green' : 'amber')}</div>
+    <div class="row"><button class="btn primary" data-go="newListing">Create a listing</button><button class="btn ghost sm" data-act="upload-reset">Upload another</button></div>` : ''}`;
+  }
+  return `${stepper(['Verify', 'Listing', 'Tier', 'Review', 'Live'], 0)}<div class="head"><div><div class="eyebrow">Business verification (KYB)</div><h1>Add your company</h1><p class="sub">Upload your company's CR profile from Sijilat. Identity (KYC) for ${esc(S.users.seller.name)} is already verified.</p></div></div><section class="card card-b" style="display:grid;gap:16px">${body}</section>`;
+};
+
+V.newListing = () => {
+  const d = S.sellerDraft || { company: 'c1', headline: '', summary: '', sector: 'technology', revenue: '', price: '', growth: '' };
+  const opts = S.companies.filter((c) => c.owner === 'seller');
+  return `${stepper(['Verify', 'Listing', 'Tier', 'Review', 'Live'], 1)}<div class="head"><div><div class="eyebrow">New listing</div><h1>Build your anonymised teaser</h1><p class="sub">Buyers see the teaser first. The company's identity stays hidden until they sign an NDA.</p></div></div>
+  <div class="side"><form class="card card-b" id="listing-form" style="display:grid;gap:14px">
+   <label class="f" for="lf-company">Company<select id="lf-company">${opts.map((c) => `<option value="${c.id}" ${d.company === c.id ? 'selected' : ''}>${esc(c.name)}</option>`).join('')}</select></label>
+   <label class="f" for="lf-headline">Headline<input type="text" id="lf-headline" value="${esc(d.headline)}" placeholder="e.g. Profitable GCC SaaS company with recurring revenue" maxlength="120"></label>
+   <label class="f" for="lf-summary">Teaser summary<textarea id="lf-summary" placeholder="What makes the business attractive, without naming it">${esc(d.summary)}</textarea></label>
+   <div class="fields"><label class="f" for="lf-sector">Sector<select id="lf-sector">${Object.entries(SECTORS).map(([k, v]) => `<option value="${k}" ${d.sector === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label>
+   <label class="f" for="lf-revenue">Annual revenue (BD)<input type="number" id="lf-revenue" value="${esc(d.revenue)}" placeholder="950000"></label>
+   <label class="f" for="lf-price">Asking price (BD)<input type="number" id="lf-price" value="${esc(d.price)}" placeholder="2800000"></label>
+   <label class="f" for="lf-growth">Growth %<input type="number" id="lf-growth" value="${esc(d.growth)}" placeholder="20"></label></div>
+   <div id="lf-err" class="err" hidden></div>
+   <div><button class="btn primary">Save &amp; choose tier</button></div>
+  </form><aside class="card" id="preview"></aside></div>`;
+};
+function listingPreview() {
+  const h = $('#lf-headline')?.value || 'Your headline appears here'; const p = +$('#lf-price')?.value || 0; const r = +$('#lf-revenue')?.value || 0; const g = $('#lf-growth')?.value;
+  const c = company($('#lf-company')?.value); const clash = nameClash(c, h + ' ' + ($('#lf-summary')?.value || ''));
+  $('#preview').innerHTML = `<div class="card-h"><h3>Anonymised teaser preview</h3>${badge('Identity gated', 'amber')}</div><div class="card-b" style="display:grid;gap:10px"><div style="font-size:24px;font-weight:800;color:var(--ink)" class="num">${p ? bd(p) : 'BD —'}</div><b style="color:var(--ink)">${esc(h)}</b><div class="tiny">${SECTORS[$('#lf-sector')?.value]} · Manama, Bahrain</div><div class="facts"><div class="fact"><b class="num">${r ? bd(r) : '—'}</b><span>Revenue</span></div><div class="fact"><b>${g ? '+' + esc(g) + '%' : '—'}</b><span>Growth</span></div></div>${clash ? `<div class="callout bad">The teaser mentions "${esc(clash)}". It is public, so remove the company name.</div>` : ''}</div>`;
+}
+function nameClash(c, text) {
+  if (!c) return null; const base = c.name.replace(/\b(w\.?l\.?l\.?|b\.?s\.?c\.?|s\.?p\.?c\.?|\(c\))/gi, '').trim().toLowerCase();
+  return base.length >= 3 && text.toLowerCase().includes(base) ? base : null;
+}
+
+V.tier = () => `${stepper(['Verify', 'Listing', 'Tier', 'Review', 'Live'], 2)}<div class="head"><div><div class="eyebrow">Choose a tier</div><h1>How visible should your listing be?</h1><p class="sub">Billed monthly through Tap (cards, BENEFIT, Apple Pay). After payment an admin reviews the listing before it goes live.</p></div></div>
+ <div class="grid g3">${Object.entries(TIERS).map(([k, t]) => `<div class="card card-b" style="display:grid;gap:10px">${k === 'premium' ? badge('Popular', 'violet') : ''}<h2>${t.name}</h2><div style="font-size:26px;font-weight:800;color:var(--ink)" class="num">BD ${t.price}<span class="tiny"> / month</span></div><ul style="margin:0;padding-left:18px">${t.f.map((f) => `<li>${f}</li>`).join('')}</ul><div><button class="btn ${k === 'premium' ? 'primary' : ''}" data-act="tier" data-p="${k}">Continue with ${t.name}</button></div></div>`).join('')}</div>`;
+
+/* ---------- deal room ---------- */
+const party = () => (S.role === 'seller' ? 'seller' : S.role === 'buyer' ? 'buyer' : null);
+const pname = (p) => (p === party() ? 'You' : p === 'buyer' ? 'Buyer #A7' : 'Seller');
+V.room = () => {
+  const r = S.room; const me = party(); const act = me && r.status === 'open';
+  const open = r.offers.find((o) => o.status === 'open');
+  const tabs = [['qa', 'Q&A', r.questions.filter((q) => q.status === 'open').length], ['documents', 'Documents', r.released.length], ['offers', 'Offers', open ? 1 : 0], ['terms', 'Headline terms', 0], ['audit', 'Audit trail', 0]];
+  const stepCur = r.terms?.agreed ? 3 : r.terms ? 2 : 1;
+  return `<header class="card card-b" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
+   <div style="display:grid;gap:6px"><div class="eyebrow">Confidential deal room · L-26602</div><h1>Meridian Cloud W.L.L. × Buyer #A7</h1><div class="row tiny">${badge(STAGES[S.engagements[0].stage][0], STAGES[S.engagements[0].stage][1])}<span>Asking BD 8.5M · Buyer: strategic acquirer</span>${r.status === 'closed' ? badge('Closed', 'slate') : ''}</div></div>
+   <div style="display:grid;gap:6px;justify-items:end">${me ? badge('You are the ' + me + ' · role-based access', 'green') : badge('Admin observer · read-only', 'violet')}${act ? '<button class="btn ghost sm" data-act="withdraw">Withdraw from deal</button>' : ''}</div></header>
+  ${S.role === 'guest' ? '<div class="callout warn">Deal rooms are private. Switch to Buyer or Seller to take part.</div>' : ''}
+  ${stepper(['Deal room opened', 'Offers', 'Headline terms', 'Completion (later release)'], stepCur)}
+  <div class="side"><section class="card"><div class="card-h"><div class="tabs" role="tablist">${tabs.map(([k, v, n]) => `<button role="tab" aria-selected="${S.tab === k}" data-act="room-tab" data-p="${k}">${v}${n ? ` <span class="count">${n}</span>` : ''}</button>`).join('')}</div></div><div class="card-b" style="display:grid;gap:16px">${ROOM[S.tab](r, me, act, open)}</div></section>
+  <aside>${agentPanel(r, me, act, open)}</aside></div>`;
+};
+const ROOM = {};
+ROOM.qa = (r, me, act) => `${act ? `<form id="ask-form" class="item" style="display:grid;gap:10px;background:var(--bg)"><div class="fields"><label class="f" for="ask-cat">Topic<select id="ask-cat">${Object.entries(QCATS).map(([k, v]) => `<option value="${k}">${v}</option>`).join('')}</select></label></div><label class="f" for="ask-body">Your question<textarea id="ask-body" placeholder="Ask a clear, specific question…"></textarea><span class="hint">Email addresses, phone numbers and links are removed automatically. Keep all contact on Clerko.</span></label><div><button class="btn primary">Post question</button></div></form>` : ''}
+ ${r.questions.slice().reverse().map((q) => `<div class="q"><div class="who"><span class="av ${q.from === 'seller' ? 's' : ''}">${q.from[0].toUpperCase()}</span><b style="color:var(--ink)">${pname(q.from)}</b>${badge(QCATS[q.cat], 'indigo')}${badge(q.status[0].toUpperCase() + q.status.slice(1), q.status === 'open' ? 'amber' : q.status === 'answered' ? 'green' : 'slate')}<span class="tiny" style="margin-left:auto">${ago(q.at)}</span></div><p style="margin-top:6px">${esc(q.body)}</p>
+ ${q.answers.length ? `<div class="ans">${q.answers.map((a) => `<div><div class="who"><span class="av ${a.from === 'seller' ? 's' : ''}">${a.from[0].toUpperCase()}</span><b style="color:var(--ink)">${pname(a.from)}</b><span class="tiny" style="margin-left:auto">${ago(a.at)}</span></div><p style="margin-top:4px">${esc(a.body)}</p></div>`).join('')}</div>` : ''}
+ ${act && q.status !== 'closed' ? `<form class="reply" data-q="${q.id}" style="display:grid;gap:8px;margin-top:10px"><label class="f" for="rep-${q.id}"><span class="hint">Reply</span><textarea id="rep-${q.id}" style="min-height:60px" placeholder="Write a reply…"></textarea></label><div class="row"><button class="btn sm">Post reply</button>${q.from === me ? `<button type="button" class="btn ghost sm" data-act="close-q" data-p="${q.id}">Mark resolved</button>` : ''}</div></form>` : ''}</div>`).join('')}`;
+ROOM.documents = (r, me, act) => `<p class="tiny" style="font-size:14px">Every document is watermarked to the viewer and logged. The seller decides when staged documents are released to this buyer.</p>
+ <h3>Released in this deal room</h3><div class="list">${r.released.map((d) => `<div class="item row" style="justify-content:space-between"><div><b style="color:var(--ink)">${esc(d.title)}</b><div class="tiny">${esc(d.cat)} · released ${ago(d.at)}</div></div><button class="btn sm" data-act="doc" data-p="${esc(d.title)}">Open</button></div>`).join('') || '<p class="tiny">Nothing released yet.</p>'}</div>
+ ${me === 'seller' ? `<h3>Staged: not yet released</h3><div class="list">${r.staged.map((d) => `<div class="item row" style="justify-content:space-between"><div><b style="color:var(--ink)">${esc(d.title)}</b><div class="tiny">${esc(d.cat)}</div></div>${act ? `<button class="btn sm primary" data-act="release" data-p="${d.id}">Release to buyer</button>` : ''}</div>`).join('') || '<p class="tiny">No staged documents.</p>'}</div>` : ''}
+ <h3>Company Details Pack</h3><div class="list">${S.pack.map((d) => `<div class="item row" style="justify-content:space-between"><div><b style="color:var(--ink)">${esc(d.title)}</b><div class="tiny">${esc(d.cat)}</div></div><button class="btn sm" data-act="doc" data-p="${esc(d.title)}">Open</button></div>`).join('')}</div>`;
+ROOM.offers = (r, me, act, open) => {
+  const offerForm = (id, title, submit, base) => `<form class="offer-form item" data-counter="${id || ''}" style="display:grid;gap:12px;background:var(--bg)"><h3>${title}</h3><div class="fields"><label class="f" for="of-price-${id}">Price (BD)<input type="number" id="of-price-${id}" value="${base.price}"></label><label class="f" for="of-struct-${id}">Structure<select id="of-struct-${id}">${Object.entries(STRUCT).map(([k, v]) => `<option value="${k}" ${base.structure === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label><label class="f" for="of-dep-${id}">Deposit on signing (%)<input type="number" id="of-dep-${id}" value="${base.deposit}"></label></div><label class="f" for="of-cond-${id}">Conditions<input type="text" id="of-cond-${id}" value="${esc(base.cond)}"></label><p class="tiny">Offers are indicative and non-binding until transaction documents are signed with advisers.</p><div><button class="btn primary">${submit}</button></div></form>`;
+  let html = '';
+  if (open) {
+    const mine = open.from === me;
+    html += `<div class="offer"><div class="offer-h"><span>${open.counter ? 'Counter-offer' : 'Indicative offer'} from ${pname(open.from)}</span><span style="opacity:.85">${mine ? 'Awaiting the other party' : me ? 'Awaiting your response' : 'Open'}</span></div>
+    <div class="offer-b"><div><small>Price</small><b class="num">${bd(open.price, true)}</b></div><div><small>Structure</small><b>${STRUCT[open.structure]} (${open.stake}%)</b></div><div><small>Deposit</small><b>${open.deposit}% on signing</b></div><div style="grid-column:1/-1"><small>Conditions</small>${esc(open.cond || 'None')}</div></div>
+    ${act ? `<div class="row" style="padding:0 16px 16px">${mine ? '<button class="btn" data-act="offer" data-p="withdraw">Withdraw offer</button>' : '<button class="btn green" data-act="offer" data-p="accept">Accept</button><button class="btn" data-act="counter-open">Counter</button><button class="btn ghost" data-act="offer" data-p="reject">Decline</button>'}</div>` : ''}</div>`;
+    if (act && !mine && S.countering) html += offerForm(open.id, 'Your counter-offer', 'Send counter-offer', { ...open, price: open.from === 'buyer' ? Math.round(open.price * 1.03) : Math.round(open.price * 0.98) });
+  } else if (r.terms) html += `<div class="callout ok">An offer was accepted. Open <b>Headline terms</b> to confirm them.</div>`;
+  else if (act) html += offerForm('', me === 'buyer' ? 'Submit an indicative offer' : 'Propose terms to the buyer', me === 'buyer' ? 'Submit indicative offer' : 'Send proposal', { price: r.offers[0]?.price || 8500000, structure: 'full', deposit: 50, cond: 'Subject to due diligence' });
+  html += `<h3>Offer history</h3><div class="list">${r.offers.slice().reverse().map((o) => `<div class="item row"><span class="av ${o.from === 'seller' ? 's' : ''}">${o.from[0].toUpperCase()}</span><b style="color:var(--ink)">${pname(o.from)}</b><span class="tiny">${o.counter ? 'countered with' : 'offered'}</span><b class="num" style="color:var(--ink)">${bd(o.price, true)}</b><span class="tiny">${STRUCT[o.structure]} · ${o.deposit}% deposit · ${ago(o.at)}</span><span style="margin-left:auto">${badge(o.status[0].toUpperCase() + o.status.slice(1), { open: 'amber', accepted: 'green', countered: 'violet', rejected: 'red', withdrawn: 'slate' }[o.status])}</span></div>`).join('') || '<p class="tiny">No offers yet.</p>'}</div>`;
+  return html;
+};
+ROOM.terms = (r, me, act) => {
+  const t = r.terms; if (!t) return '<div class="item">No headline terms yet. When one party accepts the other\'s offer, its terms appear here for both to confirm.</div>';
+  const mineAck = me && t[me + 'Ack'];
+  return `<dl class="kv"><dt>Price</dt><dd class="num">${bd(t.price, true)}</dd><dt>Structure</dt><dd>${STRUCT[t.structure]} (${t.stake}%)</dd><dt>Deposit</dt><dd>${t.deposit}% on signing</dd><dt>Conditions</dt><dd>${esc(t.cond || 'None')}</dd></dl>
+  <div class="grid g2">${['buyer', 'seller'].map((p) => `<div class="item row">${t[p + 'Ack'] ? badge('✓ Confirmed', 'green') : badge('Not yet confirmed', 'slate')}<b style="color:var(--ink)">${p === me ? 'You (' + p + ')' : p === 'buyer' ? 'Buyer #A7' : 'Seller'}</b></div>`).join('')}</div>
+  ${t.agreed ? `<div class="callout ok">Both parties have confirmed these headline terms. They are recorded in the audit trail.</div><div class="callout info">Next: deposit, escrow, ownership transfer and completion (Scenario 4) come in a later release. Clerko never holds client money.</div>` : act && !mineAck ? '<div><button class="btn green" data-act="ack">Confirm headline terms</button></div><p class="tiny">Confirming records your agreement to these headline terms, subject to definitive transaction documents.</p>' : me ? '<p class="tiny">Waiting for the other party to confirm.</p>' : ''}`;
+};
+ROOM.audit = () => { const c = chain(); return `<div class="callout ok">Hash chain intact · ${c.length} entries · each entry is linked to the one before, so no entry can be edited or removed unnoticed.</div><ol class="timeline">${c.slice().reverse().map((a) => `<li><b style="color:var(--ink)">${esc(a.event)}</b>${a.detail ? ` · <span>${esc(a.detail)}</span>` : ''}<div class="tiny">${esc(a.by)} · ${ago(a.at)} · <span class="mono">${a.h}</span></div></li>`).join('')}</ol>`; };
+
+function agentPanel(r, me, act, open) {
+  const a = r.agent; const both = a.buyer && a.seller; const mineOn = me && a[me];
+  let inner;
+  if (!both) inner = `<p>A neutral assistant that summarises this deal room for both sides. It reads the questions, answers and offers, never document contents, and only runs when <b>both parties</b> switch it on.</p><div class="list"><div class="row">${a.buyer ? badge('✓', 'green') : badge('–', 'slate')} Buyer: ${a.buyer ? 'switched on' : 'not yet'}</div><div class="row">${a.seller ? badge('✓', 'green') : badge('–', 'slate')} Seller: ${a.seller ? 'switched on' : 'not yet'}</div></div>${act ? `<div><button class="btn sm ${mineOn ? '' : 'primary'}" data-act="agent-opt">${mineOn ? 'Switch off for my side' : 'Switch on for my side'}</button></div>` : ''}${act && !both && mineOn ? '<p class="tiny">Switch to the other role at the top to opt in for the other side.</p>' : ''}`;
+  else if (a.summary) inner = `<div><h4>Summary</h4><p>${esc(a.summary.text)}</p></div><div><h4>Open points</h4><ul>${a.summary.open.map((x) => `<li>${esc(x)}</li>`).join('') || '<li>None outstanding</li>'}</ul></div><div><h4>Buyer is focusing on</h4><ul>${a.summary.buyer.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div><p class="tiny">Updated ${ago(a.summary.at)}. In the live platform Claude writes this; the demo composes it from the room's record.</p>${act ? '<div class="row"><button class="btn sm primary" data-act="agent-run">Refresh summary</button></div>' : ''}`;
+  else inner = `<p>Both parties have switched the agent on.</p>${act ? '<div><button class="btn sm primary" data-act="agent-run">Generate summary</button></div>' : ''}`;
+  const snap = r.terms || open;
+  return `<div class="agent"><div class="agent-h"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01"/></svg>Clerko Agent</div><div class="agent-b">${inner}
+  ${snap ? `<div style="border-top:1px solid var(--line);padding-top:12px"><h4>${r.terms ? (r.terms.agreed ? 'Agreed headline terms' : 'Accepted terms, awaiting confirmation') : 'Offer on the table'}</h4><dl class="kv"><dt>Price</dt><dd class="num">${bd(snap.price)}</dd><dt>Structure</dt><dd>${STRUCT[snap.structure]}</dd><dt>Deposit</dt><dd>${snap.deposit}%</dd></dl></div>` : ''}
+  <p class="tiny" style="border-top:1px solid var(--line);padding-top:12px">The Clerko Agent summarises and orients only. It never advises or decides; all decisions stay with the parties and their advisers.</p></div></div>`;
+}
+
+/* ---------- admin ---------- */
+V.admin = () => {
+  const c = counts(); const agreed = S.room.terms?.agreed ? S.room.terms.price : 0;
+  const q = [['moderation', 'Listings to review', c.moderation], ['kyb', 'Companies to verify', c.kyb], ['kyc', 'Identity checks', c.kyc], ['compliance', 'Compliance flags', c.compliance]];
+  return `<div class="head"><div><div class="eyebrow">Admin console</div><h1>Platform overview</h1><p class="sub">Marketplace health, verification queues and compliance.</p></div></div>
+  <div class="kpis"><div class="kpi"><b class="num">${bd(agreed)}</b><span>Agreed deal value</span></div><div class="kpi"><b>${S.listings.filter((l) => l.status === 'live').length}</b><span>Live listings</span></div><div class="kpi"><b>${S.engagements.length}</b><span>Buyer engagements</span></div><div class="kpi"><b>${S.room.status === 'open' ? 1 : 0}</b><span>Open deal rooms</span></div></div>
+  <div class="grid g3">${q.map(([v, t, n]) => `<button class="card card-b" data-go="${v}" style="text-align:left;display:grid;gap:6px"><div class="row" style="justify-content:space-between"><h3>${t}</h3><b style="font-size:24px;color:${n ? 'var(--amber)' : 'var(--green)'}">${n}</b></div><span class="tiny">${n ? 'Needs attention →' : 'Nothing waiting'}</span></button>`).join('')}</div>`;
+};
+V.moderation = () => {
+  const rows = S.listings.filter((l) => l.status !== 'live' || l.id === 'l1');
+  return `<div class="head"><div><div class="eyebrow">Admin</div><h1>Listing moderation</h1><p class="sub">Approval needs the seller's identity (KYC) and the company (KYB) to be verified.</p></div></div>
+  <div class="list">${rows.map((l) => { const c = company(l.company); return `<section class="card card-b" style="display:grid;gap:10px"><div class="row" style="justify-content:space-between"><div><div class="tiny mono">${l.ref}</div><h3>${esc(l.headline)}</h3><div class="tiny">${esc(c?.name)} · ${SECTORS[l.sector]} · ${bd(l.price)} · ${TIERS[l.tier]?.name}</div></div>${l.status === 'live' ? badge('Live', 'green') : l.status === 'revision' ? badge('Revision requested', 'violet') : badge('Under review', 'amber')}</div>
+   <div class="row">${badge('Seller KYC verified', 'green')}${c?.kyb === 'verified' ? badge('Company KYB verified', 'green') : badge('Company KYB pending', 'amber')}</div>
+   ${l.status === 'pending_review' ? `<div class="row"><button class="btn green sm" data-act="approve" data-p="${l.id}">Approve &amp; publish</button><button class="btn sm" data-act="revise" data-p="${l.id}">Request revision</button>${c?.kyb !== 'verified' ? `<button class="btn ghost sm" data-go="kyb">Verify company first →</button>` : ''}</div>` : ''}</section>`; }).join('')}</div>`;
+};
+V.kyb = () => `<div class="head"><div><div class="eyebrow">Admin · KYB</div><h1>Company verification</h1><p class="sub">Check the extracted profile against the Sijilat CR PDF, then verify or reject.</p></div></div>
+ <div class="list">${S.companies.map((c) => `<section class="card"><div class="card-h"><div><h3>${esc(c.name)}</h3><div class="tiny">CR ${esc(c.cr)} · extracted by Xtracta</div></div>${badge(c.kyb === 'verified' ? 'Verified' : c.kyb === 'rejected' ? 'Rejected' : 'Pending', c.kyb === 'verified' ? 'green' : c.kyb === 'rejected' ? 'red' : 'amber')}</div>
+ <div class="card-b grid g2"><div class="docpage" aria-label="CR PDF preview"><b>Ministry of Industry and Commerce · Sijilat</b><p style="margin-top:8px">Commercial Registration Profile</p><p style="margin-top:8px">CR No.: ${esc(c.cr)}<br>Commercial Name (EN): ${esc(c.name)}<br>CR Type: ${esc(c.form)}<br>Status: ${esc(c.crStatus)}<br>Registration Date: ${esc(c.reg)}<br>Expiration Date: ${esc(c.exp)}<br>Issued Capital: ${Number(c.capital).toLocaleString('en-US')}</p></div>
+ <div style="display:grid;gap:12px;align-content:start"><dl class="kv"><dt>CR No.</dt><dd class="num">${esc(c.cr)}</dd><dt>Name</dt><dd>${esc(c.name)}</dd><dt>Status</dt><dd>${esc(c.crStatus)}</dd><dt>Expiry</dt><dd>${esc(c.exp)}</dd><dt>Address</dt><dd>${esc(c.address)}</dd></dl>
+ ${c.kyb === 'pending' ? `<div class="row"><button class="btn green sm" data-act="kyb" data-p="${c.id}">Verify company</button><button class="btn sm danger" data-act="kyb-reject" data-p="${c.id}">Reject</button></div>` : ''}</div></div></section>`).join('')}</div>`;
+V.kyc = () => `<div class="head"><div><div class="eyebrow">Admin · KYC</div><h1>Identity verification</h1></div></div>
+ <div class="list">${S.kyc.map((k) => `<section class="card card-b" style="display:grid;gap:10px"><div class="row" style="justify-content:space-between"><div><h3>${esc(k.name)}</h3><div class="tiny">${esc(k.email)} · ${esc(k.idType)} ${esc(k.idNo)} · expires ${esc(k.expiry)}</div></div>${badge(k.status === 'pending' ? 'Pending' : k.status === 'verified' ? 'Verified' : 'Rejected', k.status === 'pending' ? 'amber' : k.status === 'verified' ? 'green' : 'red')}</div>
+ ${k.status === 'pending' ? `<div class="row"><button class="btn green sm" data-act="kyc" data-p="${k.id}">Verify identity</button><button class="btn sm danger" data-act="kyc-reject" data-p="${k.id}">Reject</button></div>` : ''}</section>`).join('')}</div>`;
+V.compliance = () => `<div class="head"><div><div class="eyebrow">Admin · Compliance</div><h1>Off-platform contact flags</h1><p class="sub">Messages that tried to share contact details. Parties saw the redacted text; admins see the original.</p></div></div>
+ ${S.flags.length ? `<div class="list">${S.flags.map((f) => `<section class="card card-b" style="display:grid;gap:8px"><div class="row" style="justify-content:space-between"><b style="color:var(--ink)">Possible off-platform contact · ${esc(f.by)}</b>${badge(f.status === 'open' ? 'Open' : f.status === 'cleared' ? 'Cleared' : 'Actioned', f.status === 'open' ? 'amber' : f.status === 'cleared' ? 'green' : 'red')}</div><div class="item mono" style="font-size:13px">${esc(f.text)}</div>${f.status === 'open' ? `<div class="row"><button class="btn sm" data-act="flag" data-p="${f.id}:cleared">Clear</button><button class="btn sm danger" data-act="flag" data-p="${f.id}:actioned">Mark actioned</button></div>` : ''}</section>`).join('')}</div>` : '<div class="card card-b">No flags yet. Try it: in the deal room, post a question containing an email address or phone number.</div>'}`;
+V.audit = () => `<div class="head"><div><div class="eyebrow">Admin</div><h1>Audit trail</h1></div></div><section class="card card-b">${ROOM.audit()}</section>`;
+
+/* ---------- render ---------- */
+function render() {
+  if (!NAV[S.role].some(([v]) => v === S.view) && !['listing', 'nda', 'unlock', 'pack', 'tier', 'room', 'market', 'home', 'pricing'].includes(S.view)) S.view = HOME[S.role];
+  if (S.view === 'room' && !S.tab) S.tab = 'qa';
+  renderNav();
+  $('#app').innerHTML = (V[S.view] || V[HOME[S.role]])();
+  if (S.view === 'newListing') listingPreview();
+}
+
+/* ---------- actions ---------- */
+const REDACT = '[contact details removed]';
+function screen(text) {
+  let hit = false;
+  let clean = text.replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, () => { hit = true; return REDACT; })
+    .replace(/\b(?:https?:\/\/|www\.)\S+/gi, () => { hit = true; return REDACT; })
+    .replace(/(?<!\d)(?:\+|00)?\d[\d\s().-]{6,}\d(?!\d)/g, (m) => (m.replace(/\D/g, '').length >= 8 && !/^\d{4}\s*[-/.]\s*\d{1,4}/.test(m.trim()) ? ((hit = true), REDACT) : m));
+  if (/\b(whats\s?app|telegram|signal|call me|text me)\b/i.test(text)) hit = true;
+  return { clean, hit };
+}
+function flagIfNeeded(original, hit) {
+  if (!hit) return;
+  S.flags.unshift({ id: uid(), by: party() === 'buyer' ? 'Buyer #A7' : 'Seller', text: original, status: 'open' });
+  audit('Message flagged by the contact policy', 'System'); toast('Contact details were removed and flagged to compliance.');
+}
+function summarise() {
+  const r = S.room; const open = r.offers.find((o) => o.status === 'open');
+  const qs = r.questions.filter((q) => q.status === 'open');
+  const text = `The buyer and seller have exchanged ${r.questions.length} questions, ${r.questions.length - qs.length} of them answered, and ${r.released.length} document${r.released.length === 1 ? ' has' : 's have'} been released. ` + (r.terms ? (r.terms.agreed ? `Both parties have confirmed headline terms at ${bd(r.terms.price, true)}.` : `An offer at ${bd(r.terms.price, true)} was accepted and awaits confirmation.`) : open ? `There is an open ${open.counter ? 'counter-offer' : 'offer'} from the ${open.from} at ${bd(open.price, true)}.` : 'No offer is currently on the table.');
+  const openPts = qs.map((q) => `${QCATS[q.cat]}: ${q.body.length > 80 ? q.body.slice(0, 80) + '…' : q.body}`);
+  if (r.terms && !r.terms.agreed) openPts.push(`Headline terms awaiting confirmation by the ${r.terms.buyerAck ? 'seller' : 'buyer'}`);
+  r.agent.summary = { text, open: openPts, buyer: [...new Set(r.questions.filter((q) => q.from === 'buyer').map((q) => QCATS[q.cat] + ' diligence'))], at: now() };
+}
+
+document.addEventListener('click', (ev) => {
+  const t = ev.target.closest('[data-role],[data-role-go],[data-go],[data-act]'); if (!t) return;
+  const p = t.dataset.p;
+  if (t.dataset.role) { S.role = t.dataset.role; S.view = HOME[S.role]; S.countering = false; save(); render(); return; }
+  if (t.dataset.roleGo) { S.role = t.dataset.roleGo; go(HOME[S.role]); return; }
+  if (t.dataset.go) { go(t.dataset.go, p ?? null); return; }
+  const a = t.dataset.act; const r = S.room;
+  switch (a) {
+    case 'close-bg': if (ev.target === t) closeModal(); return;
+    case 'close': closeModal(); return;
+    case 'reset': S = seed(); save(); render(); toast('Demo reset to the starting point.'); return;
+    case 'filter': S.filter = S.filter.includes(p) ? S.filter.filter((x) => x !== p) : [...S.filter, p]; break;
+    case 'request': { const e = { id: uid(), listing: p, buyer: 'Buyer #A7', type: 'Strategic acquirer', stage: 'nda_requested', mine: true, at: now() }; S.engagements.push(e); audit('Access requested', 'Buyer', listing(p).ref); save(); go('nda', e.id); toast('Seller notified of your interest.'); return; }
+    case 'unlock-pay': pay(250, `Company Details Pack for ${listing(S.engagements.find((e) => e.id === p).listing).ref}`, () => { const e = S.engagements.find((x) => x.id === p); advance(e, 'pack_unlocked'); audit('Pack unlocked', 'Buyer', 'Per-company, BD 250'); go('pack', p); toast('Payment received. Details Pack unlocked.'); }); return;
+    case 'premium': pay(699, 'Clerko Buyer Premium, one month', () => { S.premium = true; audit('Buyer Premium activated', 'Buyer'); save(); render(); toast('Buyer Premium is active.'); }); return;
+    case 'unlock-premium': { const e = S.engagements.find((x) => x.id === p); advance(e, 'pack_unlocked'); audit('Pack unlocked', 'Buyer', 'Premium plan'); save(); go('pack', p); toast('Unlocked with your Premium plan.'); return; }
+    case 'pay-ok': closeModal(); pay.cb?.(); return;
+    case 'pay-fail': closeModal(); toast('The payment did not go through. Nothing was unlocked.'); return;
+    case 'pack-tab': S.packTab = p; break;
+    case 'enter-room': advance(S.engagements.find((e) => e.id === p), 'deal_room'); S.tab = 'qa'; save(); go('room'); return;
+    case 'doc': modal(`<div class="card-h"><div><div class="eyebrow">Watermarked document</div><h2>${esc(p)}</h2></div><button class="btn sm" data-act="close">Close</button></div><div class="card-b"><div class="docpage"><div class="wm" aria-hidden="true">${Array(8).fill(`CONFIDENTIAL · Clerko M&amp;A · ${esc(S.role === 'seller' ? 'Seller' : 'Buyer #A7')} · ${new Date().toLocaleDateString('en-GB')} · NDA-bound`).map((x) => `<span>${x}</span>`).join('')}</div><b>${esc(p)}</b><p style="margin-top:10px">Sample content for the demo. On the live platform the real PDF is stamped with the viewer's account, email and time on every page, and this view is written to the access log.</p></div><p class="tiny">This view was logged.</p></div>`); audit('Document viewed', S.role === 'seller' ? 'Seller' : 'Buyer', p); save(); return;
+    case 'room-tab': S.tab = p; S.countering = false; break;
+    case 'close-q': { const q = r.questions.find((x) => x.id === p); q.status = 'closed'; audit('Question marked resolved', cap(party())); break; }
+    case 'release': { const d = r.staged.find((x) => x.id === p); r.staged = r.staged.filter((x) => x.id !== p); r.released.push({ ...d, at: now() }); audit('Document released', 'Seller', d.title); toast('Released to Buyer #A7.'); break; }
+    case 'counter-open': S.countering = !S.countering; break;
+    case 'offer': {
+      const o = r.offers.find((x) => x.status === 'open'); if (!o) break;
+      if (p === 'withdraw') { o.status = 'withdrawn'; audit('Offer withdrawn', cap(party())); toast('Offer withdrawn.'); }
+      if (p === 'reject') { o.status = 'rejected'; audit('Offer declined', cap(party())); toast('Offer declined.'); }
+      if (p === 'accept') { o.status = 'accepted'; r.terms = { price: o.price, structure: o.structure, stake: o.stake, deposit: o.deposit, cond: o.cond, buyerAck: party() === 'buyer', sellerAck: party() === 'seller', agreed: false }; audit('Offer accepted', cap(party()), bd(o.price, true)); S.tab = 'terms'; toast('Offer accepted. Headline terms are ready to confirm.'); }
+      S.countering = false; break;
+    }
+    case 'ack': { const tm = r.terms; tm[party() + 'Ack'] = true; audit('Headline terms confirmed', cap(party())); if (tm.buyerAck && tm.sellerAck) { tm.agreed = true; S.engagements[0].stage = 'headline_terms'; audit('Headline terms agreed by both parties', 'System', bd(tm.price, true)); toast('Headline terms agreed by both parties.'); } else toast('Confirmed. Waiting for the other party.'); break; }
+    case 'withdraw': modal(`<div class="card-h"><h2>Withdraw from this deal room?</h2></div><div class="card-b"><p>The deal room closes for both parties and any open offer is withdrawn. The record stays available.</p><div class="row"><button class="btn danger" data-act="withdraw-yes">Withdraw</button><button class="btn" data-act="close">Cancel</button></div></div>`); return;
+    case 'withdraw-yes': closeModal(); r.status = 'closed'; r.offers.forEach((o) => { if (o.status === 'open') o.status = 'withdrawn'; }); S.engagements[0].stage = 'withdrawn'; audit('Party withdrew from the deal room', cap(party())); toast('You withdrew. Use Reset demo to start again.'); break;
+    case 'agent-opt': r.agent[party()] = !r.agent[party()]; audit(r.agent[party()] ? 'Clerko Agent switched on' : 'Clerko Agent switched off', cap(party())); if (!(r.agent.buyer && r.agent.seller)) r.agent.summary = null; break;
+    case 'agent-run': summarise(); audit('Clerko Agent summary generated', cap(party())); toast('Summary updated.'); break;
+    case 'upload': S.upload = { step: 0 }; save(); render(); tick(); return;
+    case 'upload-reset': S.upload = null; break;
+    case 'tier': { const d = S.sellerDraft; pay(TIERS[p].price, `${TIERS[p].name} listing, one month`, () => { const l = { id: uid(), ref: 'L-' + Math.floor(10000 + Math.random() * 89999), company: d.company, headline: d.headline, summary: d.summary, sector: d.sector, band: '11–50', est: 2021, revenue: +d.revenue || 0, ebitda: Math.round((+d.revenue || 0) * 0.2), growth: +d.growth || 0, price: +d.price || 0, tier: p, featured: p !== 'standard', views: 0, highlights: ['New listing'], status: 'pending_review', loc: 'Manama, Bahrain' }; S.listings.push(l); S.sellerDraft = null; audit('Listing submitted for review', 'Seller', l.ref); save(); go('seller'); toast('Paid. Your listing is with our team for review.'); }); return; }
+    case 'approve': { const l = listing(p); if (company(l.company)?.kyb !== 'verified') { toast('Verify the company (KYB) before approving.'); return; } l.status = 'live'; l.views = 0; audit('Listing approved and published', 'Admin', l.ref); toast('Listing is live on the marketplace.'); break; }
+    case 'revise': { const l = listing(p); l.status = 'revision'; audit('Revision requested', 'Admin', l.ref); toast('Seller asked for a revision.'); break; }
+    case 'kyb': { const c = company(p); c.kyb = 'verified'; audit('Company verified (KYB)', 'Admin', c.name); toast(c.name + ' verified.'); break; }
+    case 'kyb-reject': { const c = company(p); c.kyb = 'rejected'; audit('Company rejected (KYB)', 'Admin', c.name); break; }
+    case 'kyc': { const k = S.kyc.find((x) => x.id === p); k.status = 'verified'; audit('Identity verified (KYC)', 'Admin', k.name); toast(k.name + ' verified.'); break; }
+    case 'kyc-reject': { const k = S.kyc.find((x) => x.id === p); k.status = 'rejected'; audit('Identity rejected (KYC)', 'Admin', k.name); break; }
+    case 'flag': { const [id, st] = p.split(':'); S.flags.find((f) => f.id === id).status = st; audit('Compliance flag ' + st, 'Admin'); break; }
+    default: return;
+  }
+  save(); render();
+});
+const cap = (s) => (s ? s[0].toUpperCase() + s.slice(1) : 'Admin');
+function tick() {
+  if (!S.upload || S.upload.step >= 4) return;
+  setTimeout(() => {
+    if (!S.upload) return; S.upload.step++;
+    if (S.upload.step === 4 && !company('c3')) { S.companies.push({ id: 'c3', name: 'Seef Digital Services W.L.L.', cr: '120477-1', form: 'With Limited Liability Company', crStatus: 'ACTIVE', reg: '2021-02-09', exp: '2027-02-09', capital: 20000, address: 'Building 118, Road 2804, Block 428, Seef', kyb: 'pending', extraction: 'completed', owner: 'seller' }); audit('CR profile extracted', 'System', 'Seef Digital Services W.L.L.'); }
+    save(); if (S.view === 'company') render(); tick();
+  }, 900);
+}
+if (S.upload && S.upload.step < 4) tick();
+
+document.addEventListener('submit', (ev) => {
+  ev.preventDefault(); const f = ev.target; const r = S.room;
+  if (f.id === 'nda-form') {
+    const name = $('#nda-name').value.trim(); const err = $('#nda-err');
+    if (name.toLowerCase() !== S.users.buyer.name.toLowerCase()) { err.hidden = false; err.textContent = `Type your full legal name exactly as verified: ${S.users.buyer.name}.`; return; }
+    if (!$('#nda-agree').checked) { err.hidden = false; err.textContent = 'Tick the box to agree to the NDA terms.'; return; }
+    const e = S.engagements.find((x) => x.id === S.param); advance(e, 'nda_signed'); audit('NDA signed', 'Buyer', listing(e.listing).ref + ' · SHA-256 ' + hash(name + e.id) + hash(e.id)); save(); go('unlock', e.id); toast('NDA signed. The company is now revealed to you.'); return;
+  }
+  if (f.id === 'ask-form') {
+    const body = $('#ask-body').value.trim(); if (!body) return;
+    const s = screen(body); r.questions.push({ id: uid(), from: party(), cat: $('#ask-cat').value, body: s.clean, status: 'open', at: now(), answers: [] });
+    audit('Question asked', cap(party()), QCATS[$('#ask-cat').value]); flagIfNeeded(body, s.hit); if (!s.hit) toast('Question posted.');
+  }
+  if (f.classList.contains('reply')) {
+    const q = r.questions.find((x) => x.id === f.dataset.q); const ta = f.querySelector('textarea'); const body = ta.value.trim(); if (!body) return;
+    const s = screen(body); q.answers.push({ from: party(), body: s.clean, at: now() }); if (q.from !== party() && q.status === 'open') q.status = 'answered';
+    audit('Reply posted', cap(party())); flagIfNeeded(body, s.hit); if (!s.hit) toast('Reply posted.');
+  }
+  if (f.classList.contains('offer-form')) {
+    const id = f.dataset.counter; const price = +f.querySelector('[id^=of-price]').value; if (!(price > 0)) { toast('Enter a price above zero.'); return; }
+    const o = { id: uid(), from: party(), price, structure: f.querySelector('[id^=of-struct]').value, stake: f.querySelector('[id^=of-struct]').value === 'full' ? 100 : 60, deposit: +f.querySelector('[id^=of-dep]').value || 0, cond: screen(f.querySelector('[id^=of-cond]').value).clean, status: 'open', counter: !!id, at: now() };
+    if (id) r.offers.find((x) => x.id === id).status = 'countered';
+    r.offers.push(o); advance(S.engagements[0], 'offer'); S.countering = false;
+    audit(id ? 'Counter-offer submitted' : 'Offer submitted', cap(party()), bd(price, true)); toast(id ? 'Counter-offer sent.' : 'Offer sent.');
+  }
+  if (f.id === 'listing-form') {
+    const d = { company: $('#lf-company').value, headline: $('#lf-headline').value.trim(), summary: $('#lf-summary').value.trim(), sector: $('#lf-sector').value, revenue: $('#lf-revenue').value, price: $('#lf-price').value, growth: $('#lf-growth').value };
+    const err = $('#lf-err'); const clash = nameClash(company(d.company), d.headline + ' ' + d.summary);
+    if (!d.headline || !d.summary || !(+d.price > 0) || !(+d.revenue > 0)) { err.hidden = false; err.textContent = 'Add a headline, summary, revenue and asking price.'; return; }
+    if (clash) { err.hidden = false; err.textContent = `The teaser is public and must not name the company. Remove "${clash}".`; return; }
+    S.sellerDraft = d; save(); go('tier'); return;
+  }
+  save(); render();
+});
+document.addEventListener('input', (ev) => { if (ev.target.closest('#listing-form')) listingPreview(); });
+document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape' && $('#layer').innerHTML) closeModal(); });
+render();
+</script>
